@@ -147,11 +147,12 @@ var commands = exports.commands = {
 	makechatroom: function(target, room, user) {
 		if (!this.can('makeroom')) return;
 		var id = toId(target);
-		if (!id) return this.parse('/help makechatroom');
 		if (Rooms.rooms[id]) {
 			return this.sendReply("The room '"+target+"' already exists.");
 		}
 		if (Rooms.global.addChatRoom(target)) {
+			tour.reset(id);
+			hangman.reset(id);
 			return this.sendReply("The room '"+target+"' was created.");
 		}
 		return this.sendReply("An error occurred while trying to create the room '"+target+"'.");
@@ -173,7 +174,7 @@ var commands = exports.commands = {
 	},
 
 	privateroom: function(target, room, user) {
-		if (!this.can('privateroom', null, room)) return;
+		if (!this.can('privateroom')) return;
 		if (target === 'off') {
 			delete room.isPrivate;
 			this.addModCommand(user.name+' made this room public.');
@@ -362,6 +363,27 @@ var commands = exports.commands = {
 		}
 		if (!user.joinRoom(targetRoom || room, connection)) {
 			return connection.sendTo(target, "|noinit|joinfailed|The room '"+target+"' could not be joined.");
+		}
+		/*********************************************************
+	 	 * Welcome Message
+	 	 *********************************************************/
+	 	if (target.toLowerCase() == "lobby") {
+			return connection.sendTo('lobby','|html|<div class="infobox" style="border-color:blue"><center><img src="http://i.imgur.com/DENUu9u.png"><br />' +
+			'<b><u>Welcome to the Breeze Server!</u></b><br />' + 
+			'Home of many leagues for you to join or challenge, battle users in the ladder or in tournaments, learn how to play Pokemon or just chat in lobby!<br /><br />' +
+			'Make sure to type <b>/help</b> to get a list of commands that you can use and <b>/faq</b> to check out frequently asked questions.<br /><br />' +
+			'<a href="http://breezeserver.tk" class="rb">Official Website</a><br /><br />' +
+			'To get a chatroom for your league, please talk to an admin (~) to receive one<br /><br /></div></font></center>');
+		}
+		if (target.toLowerCase() == "staff") {
+			return connection.sendTo('staff','|html|<div class="infobox" style="border-color:blue"><center><img src="http://fc05.deviantart.net/fs70/i/2013/188/c/a/the_water_cooler_gang_by_oweeo-d6cciay.jpg" width="100%"><br/><br/>' +
+			'<b><u>Welcome to the Staff Room!</b></u><br/><br/> This is where staff complain and laugh about users and where awesomeness happens. Not really though.' +
+			'</div></font></center>');
+		}
+		if (target.toLowerCase() == "eeveeevolutionsleague") {
+			return connection.sendTo('eeveeevolutionsleague','|html|<div class="infobox" style="border-color:blue"><center><img width="100%" src="http://fc02.deviantart.net/fs71/f/2013/046/a/c/wallpaper__2__eeveelutions_by_xxrrsteve-d5uyghr.jpg"><br/><br/>' +
+			'<center><b><u>Welcome to the Eevee Evolutions League!</b></u></center>' +
+			'</div></font></center>');
 		}
 	},
 
@@ -859,13 +881,30 @@ var commands = exports.commands = {
 		this.logModCommand(user.name+' declared '+target);
 	},
 
-	gdeclare: 'globaldeclare',
-	globaldeclare: function(target, room, user) {
-		if (!target) return this.parse('/help globaldeclare');
+	gdeclarered: 'gdeclare',
+    gdeclaregreen: 'gdeclare',
+    gdeclare: function(target, room, user, connection, cmd) {
+		if (!target) return this.parse('/help '+cmd);
 		if (!this.can('gdeclare')) return false;
-
-		for (var id in Rooms.rooms) {
-			if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b>'+target+'</b></div>');
+		var staff = '';
+		staff = 'a ' + config.groups[user.group].name;
+		if (user.group == '~') staff = 'an Administrator';
+		if (user.userid === 'creaturephil') staff = 'a Developer';
+		
+		if (cmd === 'gdeclare'){
+				for (var id in Rooms.rooms) {
+						if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><font size=1><i>Global declare from '+staff+'<br /></i></font size>'+target+'</b></div>');
+				}
+		}
+		if (cmd === 'gdeclarered'){
+				for (var id in Rooms.rooms) {
+						if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-red"><b><font size=1><i>Global declare from '+staff+'<br /></i></font size>'+target+'</b></div>');
+				}
+		}
+		else if (cmd === 'gdeclaregreen'){
+				for (var id in Rooms.rooms) {
+						if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-green"><b><font size=1><i>Global declare from '+staff+'<br /></i></font size>'+target+'</b></div>');
+				}
 		}
 		this.logModCommand(user.name+' globally declared '+target);
 	},
@@ -1163,10 +1202,6 @@ var commands = exports.commands = {
 			Sockets.workers[i].kill();
 		}
 
-		if (!room.destroyLog) {
-			process.exit();
-			return;
-		}
 		room.destroyLog(function() {
 			room.logEntry(user.name + ' used /kill');
 		}, function() {
@@ -1366,9 +1401,10 @@ var commands = exports.commands = {
 	},
 
 	eval: function(target, room, user, connection, cmd, message) {
-		if (!user.hasConsoleAccess(connection)) {
+		if (!this.can('lockdown')) return false;
+		/*if (!user.hasConsoleAccess(connection)) {
 			return this.sendReply("/eval - Access denied.");
-		}
+		}*/
 		if (!this.canBroadcast()) return;
 
 		if (!this.broadcasting) this.sendReply('||>> '+target);
@@ -1510,30 +1546,15 @@ var commands = exports.commands = {
 	timer: function(target, room, user) {
 		target = toId(target);
 		if (room.requestKickInactive) {
-			if (target === 'off' || target === 'false' || target === 'stop') {
+			if (target === 'off' || target === 'stop') {
 				room.stopKickInactive(user, user.can('timer'));
-			} else if (target === 'on' || target === 'true' || !target) {
+			} else if (target === 'on' || !target) {
 				room.requestKickInactive(user, user.can('timer'));
 			} else {
 				this.sendReply("'"+target+"' is not a recognized timer state.");
 			}
 		} else {
 			this.sendReply('You can only set the timer from inside a room.');
-		}
-	},
-
-	autotimer: 'forcetimer',
-	forcetimer: function(target, room, user) {
-		target = toId(target);
-		if (!this.can('autotimer')) return;
-		if (target === 'off' || target === 'false' || target === 'stop') {
-			config.forcetimer = false;
-			this.addModCommand("Forcetimer is now OFF: The timer is now opt-in. (set by "+user.name+")");
-		} else if (target === 'on' || target === 'true' || !target) {
-			config.forcetimer = true;
-			this.addModCommand("Forcetimer is now ON: All battles will be timed. (set by "+user.name+")");
-		} else {
-			this.sendReply("'"+target+"' is not a recognized forcetimer setting.");
 		}
 	},
 
@@ -1608,14 +1629,12 @@ var commands = exports.commands = {
 		});
 	},
 
-	away: 'blockchallenges',
 	idle: 'blockchallenges',
 	blockchallenges: function(target, room, user) {
 		user.blockChallenges = true;
 		this.sendReply('You are now blocking all incoming challenge requests.');
 	},
 
-	back: 'allowchallenges',
 	allowchallenges: function(target, room, user) {
 		user.blockChallenges = false;
 		this.sendReply('You are available for challenges from now on.');
@@ -1737,5 +1756,18 @@ var commands = exports.commands = {
 		}
 		user.rename(targetName, targetToken, targetAuth, connection);
 	},
+	gymleader: function(target,room,user) {
+		if(!this.can('hotpatch')) return false;
+		if(!target)return this.sendReplyBox('/gymleader User, badge sets th user as gym leader')
+		var targetUser = this.targetUserOrSelf(target);
+		if (!targetUser) return this.sendReply('User '+this.targetUsername+' not found.');
+		if(!target) return this.sendReplyBox('/gymleader User, badge sets th user as gym leader')
+		targetUser.gymleader = true;
+		targetUser.badge = target;
+		this.parse('/gl '+this.targetUsername)
+		this.sendReplyBox('You have set '+ this.targetUsername +' as a gym leader ('+ targetUser.badge +' badge)');
+		
+},
+		
 
 };
