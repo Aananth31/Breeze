@@ -2,7 +2,7 @@
 
 body{background-image:url("http://i.imgur.com/FXuNSgP.jpg");background-repeat:no-repeat;background-position:center}
 
-.chat-log{font-size:10pt;background: url(http://imgur.com/iwq6Jhe) height=600 no-repeat scroll right bottom;background:#8080ff;color:#000;overflow:auto;}
+.chat-log{font-size:10pt;background: url(http://imgur.com/iwq6Jhe) height=600 font-family: Papyrus, fantasy; no-repeat scroll right bottom;background:#8080ff;color:#000;overflow:auto;}
 
 .menugroup .button{background:#737373}.menugroup
 
@@ -17,3 +17,5 @@ text-align: center;
 border-left: 1px solid #D5DDE4;
 background: #d5d5d5;
 }
+
+.pm-log{font-family: Copperplate, "Copperplate Gothic Light", fantasy;}
