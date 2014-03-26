@@ -12,15 +12,1003 @@
  */
 
 var crypto = require('crypto');
+var poofeh = true;
+var inShop = ['symbol', 'custom', 'animated', 'room', 'trainer', 'fix', 'potd'];
+var closeShop = false;
+var closedShop = 0;
 
 const MAX_REASON_LENGTH = 300;
 
 var commands = exports.commands = {
 
+	createpoints: function(target, room, user, connection) {
+		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+		fs.exists('config/cash.csv', function (exists) {
+			if(exists){
+			return connection.sendTo(room, 'Since this file already exists, you cannot do this.');
+			} else {
+				fs.writeFile('config/cash.csv', 'championonyxe,10000', function (err) {
+					if (err) throw err;
+					console.log('config/cash.csv created.');
+					connection.sendTo(room, 'config/cash.csv created.');
+				});
+			}
+		});
+	},
+
+	createcoins: function(target, room, user, connection) {
+		if (!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+		fs.exists('config/coins.csv', function (exists) {
+			if (exists) {
+				return connection.sendTo(room, 'This file already exists so you do not need to create it again.')
+			} else {
+				fs.writeFile('config/coins.csv', 'championonyxe,10000', function (err) {
+					if (err) throw err;
+					console.log('config/coins.csv created.');
+					connection.sendTo(room, 'config/coins.csv created,');
+				});
+			}
+		});
+	},
+
+	
+
+
+	/*********************************************************
+	 * Money                                     
+	 *********************************************************/
+
+	bp: 'atm',
+        wallet: 'atm',
+        satchel: 'atm',
+        fannypack: 'atm',
+        purse: 'atm',
+        bag: 'atm',
+        atm: function(target, room, user, connection, cmd) {
+        if (!this.canBroadcast()) return;
+        var cMatch = false;
+        var mMatch = false;
+        var money = 0;
+        var coins = 0;
+        var total = '';
+        if (!target) {		
+        var data = fs.readFileSync('config/cash.csv','utf8')
+                var row = (''+data).split("\n");
+                for (var i = row.length; i > -1; i--) {
+                        if (!row[i]) continue;
+                        var parts = row[i].split(",");
+                        var userid = toUserid(parts[0]);
+                        if (user.userid == userid) {
+                        var x = Number(parts[1]);
+                        var money = x;
+                        mMatch = true;
+                        if (mMatch === true) {
+                                break;
+                        }
+                        }
+                }
+                if (mMatch === true) {
+                        var p = 'bucks';
+                        if (money < 2) p = 'buck';
+                        total += user.name + ' has ' + money + ' ' + p + '.'
+                }
+                if (mMatch === false || money == 0) {
+                        total += 'You have no bucks.<br />';
+                }
+                user.money = money;
+                var data = fs.readFileSync('config/coins.csv','utf8')
+                var row = (''+data).split("\n");
+                for (var i = row.length; i > -1; i--) {
+                        if (!row[i]) continue;
+                        var parts = row[i].split(",");
+                        var userid = toUserid(parts[0]);
+                        if (user.userid == userid) {
+                        var x = Number(parts[1]);
+                        var coins = x;
+                        cMatch = true;
+                        if (cMatch === true) {
+                                break;
+                        }
+                        }
+                }
+                if (cMatch === true) {
+                        var p = 'coins';
+                        if (coins < 2) p = 'coin';
+                        total += user.name + ' has ' + coins + ' ' + p + '.'
+                }
+                if (cMatch === false) {
+                        total += 'You have no coins.'
+                }
+                user.coins = coins;
+        } else {
+                var data = fs.readFileSync('config/cash.csv','utf8')
+                target = this.splitTarget(target);
+                var targetUser = this.targetUser;
+                if (!targetUser) {
+                        return this.sendReply('User '+this.targetUsername+' not found.');
+                }
+                var money = 0;
+                var row = (''+data).split("\n");
+                for (var i = row.length; i > -1; i--) {
+                        if (!row[i]) continue;
+                        var parts = row[i].split(",");
+                        var userid = toUserid(parts[0]);
+                        if (targetUser.userid == userid || target == userid) {
+                        var x = Number(parts[1]);
+                        var money = x;
+                        mMatch = true;
+                        if (mMatch === true) {
+                                break;
+                        }
+                        }
+                }
+                if (mMatch === true) {
+                        var p = 'bucks';
+                        if (money < 2) p = 'buck';
+                        total += targetUser.name + ' has ' + money + ' ' + p + '.<br />';
+                } 
+                if (mMatch === false) {
+                        total += targetUser.name + ' has no bucks.<br />';
+                }
+                targetUser.money = money;
+                var data = fs.readFileSync('config/coins.csv','utf8')
+                var coins = 0;
+                var row = (''+data).split("\n");
+                for (var i = row.length; i > -1; i--) {
+                        if (!row[i]) continue;
+                        var parts = row[i].split(",");
+                        var userid = toUserid(parts[0]);
+                        if (targetUser.userid == userid || target == userid) {
+                        var x = Number(parts[1]);
+                        var coins = x;
+                        cMatch = true;
+                        if (cMatch === true) {
+                                break;
+                        }
+                        }
+                }
+                if (cMatch === true) {
+                        var p = 'coins';
+                        if (coins < 2) p = 'coin';
+                        total += targetUser.name + ' has ' + coins + ' ' + p + '.<br />';
+                } 
+                if (cMatch === false) {
+                        total += targetUser.name + ' has no coins.<br />';
+                }
+                targetUser.coins = coins;
+        }
+        return this.sendReplyBox(total);
+        },
+
+        awardbucks: 'givebucks',
+        gb: 'givebucks',
+        givebucks: function(target, room, user) {
+                if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+                if(!target) return this.parse('/help givebucks');
+                if (target.indexOf(',') != -1) {
+                        var parts = target.split(',');
+                        parts[0] = this.splitTarget(parts[0]);
+                        var targetUser = this.targetUser;
+                if (!targetUser) {
+                        return this.sendReply('User '+this.targetUsername+' not found.');
+                }
+                if (isNaN(parts[1])) {
+                        return this.sendReply('Very funny, now use a real number.');
+                }
+                var cleanedUp = parts[1].trim();
+                var giveMoney = Number(cleanedUp);
+                var data = fs.readFileSync('config/cash.csv','utf8')
+                var match = false;
+                var money = 0;
+                var line = '';
+                var row = (''+data).split("\n");
+                for (var i = row.length; i > -1; i--) {
+                        if (!row[i]) continue;
+                        var parts = row[i].split(",");
+                        var userid = toUserid(parts[0]);
+                        if (targetUser.userid == userid) {
+                        var x = Number(parts[1]);
+                        var money = x;
+                        match = true;
+                        if (match === true) {
+                                line = line + row[i];
+                                break;
+                        }
+                        }
+                }
+                targetUser.money = money;
+                targetUser.money += giveMoney;
+                if (match === true) {
+                        var re = new RegExp(line,"g");
+                        fs.readFile('config/cash.csv', 'utf8', function (err,data) {
+                        if (err) {
+                                return console.log(err);
+                        }
+                        var result = data.replace(re, targetUser.userid+','+targetUser.money);
+                        fs.writeFile('config/cash.csv', result, 'utf8', function (err) {
+                                if (err) return console.log(err);
+                        });
+                        });
+                } else {
+                        var log = fs.createWriteStream('config/cash.csv', {'flags': 'a'});
+                        log.write("\n"+targetUser.userid+','+targetUser.money);
+                }
+                var p = 'bucks';
+                if (giveMoney < 2) p = 'buck';
+                this.sendReply(targetUser.name + ' was given ' + giveMoney + ' ' + p + '. This user now has ' + targetUser.money + ' bucks.');
+                targetUser.send(user.name + ' has given you ' + giveMoney + ' ' + p + '.');
+                } else {
+                        return this.parse('/help givebucks');
+                }
+				},
+        
+
+		rfc: 'registerfriendcode',
+        registerfc: 'registerfriendcode',
+        registerfriendcode: function(target, room, user) {
+                if(!target) return this.parse('You need to specify a friend code.');
+                if (isNaN(target)) {
+                        return this.sendReply('Very funny, now use a real number.');
+                }
+				if (target == 0 || target.length !== 12) {
+                        return this.sendReply('That ain\'t a real friendcode, you lazy bum! Check your 3DS!');
+                }
+                var fc = target;
+                var data = fs.readFileSync('config/fc.csv','utf8')
+                var match = false;
+                var line = '';
+                var row = (''+data).split("\n");
+                for (var i = row.length; i > -1; i--) {
+                        if (!row[i]) continue;
+                        var parts = row[i].split(",");
+                        var userid = toUserid(parts[0]);
+                        if (user.userid == userid) {
+                        var x = target
+                        var fc = x;
+                        match = true;
+                        if (match === true) {
+                                line = line + row[i];
+                                break;
+                        }
+                        }
+                }
+                user.fc = fc;
+                if (match === true) {
+                        var re = new RegExp(line,"g");
+                        fs.readFile('config/fc.csv', 'utf8', function (err,data) {
+                        if (err) {
+                                return console.log(err);
+                        }
+                        var result = data.replace(re, user.userid+','+user.fc);
+                        fs.writeFile('config/fc.csv', result, 'utf8', function (err) {
+                                if (err) return console.log(err);
+                        });
+                        });
+                } else {
+                        var log = fs.createWriteStream('config/fc.csv', {'flags': 'a'});
+                        log.write("\n"+user.userid+','+user.fc);
+                }
+                user.send('You have successfully registered the friend code '+target+'!');
+                
+        },
+
+	takebucks: 'removebucks',
+	removebucks: function(target, room, user) {
+		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+		if(!target) return this.parse('/help removebucks');
+		if (target.indexOf(',') != -1) {
+			var parts = target.split(',');
+			parts[0] = this.splitTarget(parts[0]);
+			var targetUser = this.targetUser;
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+		if (isNaN(parts[1])) {
+			return this.sendReply('Very funny, now use a real number.');
+		}
+		var cleanedUp = parts[1].trim();
+		var takeMoney = Number(cleanedUp);
+		var data = fs.readFileSync('config/cash.csv','utf8')
+		var match = false;
+		var money = 0;
+		var line = '';
+		var row = (''+data).split("\n");
+		for (var i = row.length; i > -1; i--) {
+			if (!row[i]) continue;
+			var parts = row[i].split(",");
+			var userid = toUserid(parts[0]);
+			if (targetUser.userid == userid) {
+			var x = Number(parts[1]);
+			var money = x;
+			match = true;
+			if (match === true) {
+				line = line + row[i];
+				break;
+			}
+			}
+		}
+		targetUser.money = money;
+		targetUser.money -= takeMoney;
+		if (match === true) {
+			var re = new RegExp(line,"g");
+			fs.readFile('config/cash.csv', 'utf8', function (err,data) {
+			if (err) {
+				return console.log(err);
+			}
+			var result = data.replace(re, targetUser.userid+','+targetUser.money);
+			fs.writeFile('config/cash.csv', result, 'utf8', function (err) {
+				if (err) return console.log(err);
+			});
+			});
+		} else {
+			var log = fs.createWriteStream('config/cash.csv', {'flags': 'a'});
+			log.write("\n"+targetUser.userid+','+targetUser.money);
+		}
+		var p = 'bucks';
+		if (takeMoney < 2) p = 'buck';
+		this.sendReply(targetUser.name + ' has had ' + takeMoney + ' ' + p + ' removed. This user now has ' + targetUser.money + ' bucks.');
+		targetUser.send(user.name + ' has removed ' + takeMoney + ' bucks from you.');
+		} else {
+			return this.parse('/help removebucks');
+		}
+	},
+
+			fc: 'friendcode',
+friendcode: function(target, room, user, connection, cmd) {
+if (!this.canBroadcast()) return;
+        var aMatch = false;
+        var fc = 0;
+        var total = '';
+ var data = fs.readFileSync('config/fc.csv','utf8')
+                target = this.splitTarget(target);
+                var targetUser = this.targetUser;
+                if (!targetUser) {
+                        return this.sendReply('User '+this.targetUsername+' not found.');
+                }
+                var fc = 0;
+                var row = (''+data).split("\n");
+                for (var i = row.length; i > -1; i--) {
+                        if (!row[i]) continue;
+                        var parts = row[i].split(",");
+                        var userid = toUserid(parts[0]);
+                        if (targetUser.userid == userid || target == userid) {
+                        var x = Number(parts[1]);
+                        var fc = x;
+                        aMatch = true;
+                        if (aMatch === true) {
+                                break;
+                        }
+                        }
+                }
+                if (aMatch === true) {
+						 var s = fc;
+						 /*fc = fc.slice(0,4)+'-'+fc.slice(4,8)+'-'+fc.slice(8,12);*/
+						 if (fc <= 0) s = 'unregistered';
+						 if (fc.length > 12) s = 'invalid';
+						 if (fc.length < 12) s = 'invalid';
+						 this.sendReplyBox(targetUser.name+'\'s X/Y Friend Code is '+s+'.');
+						 }
+               
+if (aMatch === false) {
+return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
+}
+ targetUser.fc = fc;
+},
+
+	buy: function(target, room, user) {
+		if (!target) return this.parse('/help buy');
+		if (closeShop) return this.sendReply('The shop is currently closed and will open shortly.');
+		var target2 = target;
+		target = target.split(', ');
+		var avatar = '';
+		var data = fs.readFileSync('config/cash.csv','utf8')
+		var match = false;
+		var money = 0;
+		var line = '';
+		var row = (''+data).split("\n");
+		for (var i = row.length; i > -1; i--) {
+			if (!row[i]) continue;
+			var parts = row[i].split(",");
+			var userid = toUserid(parts[0]);
+			if (user.userid == userid) {
+			var x = Number(parts[1]);
+			var money = x;
+			match = true;
+			if (match === true) {
+				line = line + row[i];
+				break;
+			}
+			}
+		}
+		user.money = money;
+		var price = 0;
+		if (target2 === 'symbol') {
+			price = 5;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have purchased a custom symbol. You will have this until you log off for more than an hour.');
+				this.sendReply('Use /customsymbol [symbol] to change your symbol now!');
+				user.canCustomSymbol = true;
+				this.add(user.name + ' has purchased a custom symbol!');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target[0] === 'custom') {
+			price = 20;
+			if (price <= user.money) {
+				if (!target[1]) return this.sendReply('Please specify the avatar you would like you buy. It has a maximum size of 80x80 and must be in .png format. ex: /buy custom, [url to the avatar]');
+       				var filename = target[1].split('.');
+				filename = '.'+filename.pop();
+				if (filename != ".png") return this.sendReply('Your avatar must be in .png format.');
+				user.money = user.money - price;
+				this.sendReply('You have purchased a custom avatar. Staff have been notified and it will be added in due time.');
+				user.canCustomAvatar = true;
+				Rooms.rooms.staff.add(user.name+' has purchased a custom avatar. Image: '+target[1]);
+				for (var u in Users.users) {
+					if (Users.users[u].group == "~" || Users.users[u].group == "&") {
+						Users.users[u].send('|pm|~Server|'+Users.users[u].group+Users.users[u].name+'|'+user.name+' has purchased a custom avatar. Image: '+target[1]);
+					}
+				}
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target[0] === 'animated') {
+			price = 35;
+			if (price <= user.money) {
+				if (!target[1]) return this.sendReply('Please specify the avatar you would like you buy. It has a maximum size of 80x80 and must be in .gif format. ex: /buy animated, [url to the avatar]');
+       				var filename = target[1].split('.');
+				filename = '.'+filename.pop();
+				if (filename != ".gif") return this.sendReply('Your avatar must be in .gif format.');
+				user.money = user.money - price;
+				this.sendReply('You have purchased a custom animated avatar. Staff have been notified and it will be added in due time.');
+				user.canAnimatedAvatar = true;
+				Rooms.rooms.staff.add(user.name+' has purchased a custom animated avatar. Image: '+target[1]);
+				for (var u in Users.users) {
+					if (Users.users[u].group == "~" || Users.users[u].group == "&") {
+						Users.users[u].send('|pm|~Server|'+Users.users[u].group+Users.users[u].name+'|'+user.name+' has purchased a custom animated avatar. Image: '+target[1]);
+					}
+				}
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target[0] === 'room') {
+			price = 80;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have purchased a chat room. You need to message an Admin so that the room can be made.');
+				user.canChatRoom = true;
+				this.add(user.name + ' has purchased a chat room!');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target2 === 'trainer') {
+			price = 30;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have purchased a trainer card. You need to message an Admin capable of adding this (Champion OnyxE).');
+				user.canTrainerCard = true;
+				this.add(user.name + ' has purchased a trainer card!');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target2 === 'fix') {
+			price = 10;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have purchased the ability to alter your avatar or trainer card. You need to message an Admin capable of adding this (Champion OnyxE).');
+				user.canFixItem = true;
+				this.add(user.name + ' has purchased the ability to set alter their card or avatar!');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target2 === 'potd') {
+			price = 15;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have purchased the ability to set POTD. You need to message an Admin capable of adding this (Champion OnyxE/Champion Noah/FrontierHead Bart).');
+				user.canPOTD = true;
+				this.add(user.name + ' has purchased the ability to set POTD!');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (match === true) {
+			var re = new RegExp(line,"g");
+			fs.readFile('config/cash.csv', 'utf8', function (err,data) {
+			if (err) {
+				return console.log(err);
+			}
+			var result = data.replace(re, user.userid+','+user.money);
+			fs.writeFile('config/cash.csv', result, 'utf8', function (err) {
+				if (err) return console.log(err);
+			});
+			});
+		}
+	},
+
+	customsymbol: function(target, room, user) {
+		if(!user.canCustomSymbol) return this.sendReply('You need to buy this item from the shop to use.');
+		if(!target || target.length > 1) return this.sendReply('/customsymbol [symbol] - changes your symbol (usergroup) to the specified symbol. The symbol can only be one character');
+		var a = target;
+		if (a === "+" || a === "$" || a === "%" || a === "@" || a === "&" || a === "~" || a === "#" || a === "a" || a === "b" || a === "c" || a === "d" || a === "e" || a === "f" || a === "g" || a === "h" || a === "i" || a === "j" || a === "k" || a === "l" || a === "m" || a === "n" || a === "o" || a === "p" || a === "q" || a === "r" || a === "s" || a === "t" || a === "u" || a === "v" || a === "w" || a === "x" || a === "y" || a === "z" || a === "0" || a === "1" || a === "2" || a === "3" || a === "4" || a === "5" || a === "6" || a === "7" || a === "8" || a === "9" ) {
+			return this.sendReply('Sorry, but you cannot change your symbol to this for safety/stability reasons.');
+		}
+		user.getIdentity = function(){
+			if(this.muted)	return '!' + this.name;
+			if(this.locked) return '‽' + this.name;
+			return target + this.name;
+		};
+		user.updateIdentity();
+		user.canCustomSymbol = false;
+		user.hasCustomSymbol = true;
+	},
+
+	shop: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<center><h4><b><u>Point Shop</u></b></h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
+			'<tr><td>Symbol</td><td>Buys a custom symbol to go infront of name and puts you at top of userlist (temporary until restart)</td><td>5</td></tr>' +
+			'<tr><td>Custom</td><td>Buys a custom avatar to be applied to your name (you supply)</td><td>20</td></tr>' +
+			'<tr><td>Animated</td><td>Buys an animated avatar to be applied to your name (you supply)</td><td>35</td></tr>' +
+			'<tr><td>Room</td><td>Buys a chatroom for you to own (within reason, can be refused)</td><td>100</td></tr>' +
+			'<tr><td>Trainer</td><td>Buys a trainer card which shows information through a command (Note: 5 bucks additional fee for each sprite in the trainer card)</td><td>40</td></tr>' +
+			'<tr><td>Fix</td><td>Buys the ability to alter your current custom avatar or trainer card (don\'t buy if you have neither)!</td><td>10</td></tr>' +
+			'<tr><td>POTD</td><td>Buys the ability to set the Pokemon of the Day. (Lasts for 1 day) Note: Not purchase-able if there is already a POTD for the day.</td><td>15</td></tr>' +
+			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center>');
+		if (closeShop) return this.sendReply('|raw|<center><h3><b>The shop is currently closed and will open shortly.</b></h3></center>');
+	},
+
+	gameshop: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<center><h4><b><u>Game Shop</u></b></h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
+			'<tr><td>Egg</td><td>Buys a 5 IV egg, your choice of species</td><td>45</td></tr>' +
+			'<tr><td>BPitem</td><td>Buys an item worth battle points (excluding ability capsule)</td><td>20</td></tr>' +
+			'<tr><td>Pokerus</td><td>Buys pokerus for any one pokemon of your choice.</td><td>20</td></tr>' +
+			'<tr><td>megastone</td><td>Buys a mega stone of your choice (excluding lati@site)</td><td>40</td></tr>' +
+			'<tr><td>Fix</td><td>Buys the ability to alter your current custom avatar or trainer card (don\'t buy if you have neither)!</td><td>10</td></tr>' +
+			'<tr><td>POTD</td><td>Buys the ability to set the Pokemon of the Day. (Lasts for 1 day) Note: Not purchase-able if there is already a POTD for the day.</td><td>15</td></tr>' +
+			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center><br />'+
+	'<center>You must have a valid X/Y Friend Code registered to buy an item from here.</center><br />');
+	},
+
+	lockshop: 'closeshop',
+	closeshop: function(target, room, user) {
+		if (!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+
+		if(closeShop && closedShop === 1) closedShop--;
+
+		if (closeShop) {
+			return this.sendReply('The shop is already closed. Use /openshop to open the shop to buyers.');
+		}
+		else if (!closeShop) {
+			if (closedShop === 0) {
+				this.sendReply('Are you sure you want to close the shop? People will not be able to buy anything. If you do, use the command again.');
+				closedShop++;
+			}
+			else if (closedShop === 1) {
+				closeShop = true;
+				closedShop--;
+				this.add('|raw|<center><h4><b>The shop has been temporarily closed, during this time you cannot buy items.</b></h4></center>');
+			}
+		}
+	},
+
+	openshop: function(target, room, user) {
+		if (!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+
+		if (!closeShop && closedShop === 1) closedShop--;
+
+		if (!closeShop) {
+			return this.sendRepy('The shop is already closed. Use /closeshop to close the shop to buyers.');
+		}
+		else if (closeShop) {
+			if (closedShop === 0) {
+				this.sendReply('Are you sure you want to open the shop? People will be able to buy again. If you do, use the command again.');
+				closedShop++;
+			}
+			else if (closedShop === 1) {
+				closeShop = false;
+				closedShop--;
+				this.add('|raw|<center><h4><b>The shop has been opened, you can now buy from the shop.</b></h4></center>');
+			}
+		}
+	},
+
+	shoplift: 'awarditem',
+	giveitem: 'awarditem',
+	awarditem: function(target, room, user) {
+		if (!target) return this.parse('/help awarditem');
+		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+
+		if (!target) return this.parse('/help awarditem');
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+
+		var matched = false;
+		var isItem = false;
+		var theItem = '';
+		for (var i = 0; i < inShop.length; i++) {
+			if (target.toLowerCase() === inShop[i]) {
+				isItem = true;
+				theItem = inShop[i];
+			}
+		}
+		if (isItem === true) {
+			if (theItem === 'symbol') {
+				if (targetUser.canCustomSymbol === true) {
+					return this.sendReply('This user has already bought that item from the shop... no need for another.');
+				}
+				if (targetUser.canCustomSymbol === false) {
+					matched = true;
+					this.sendReply(targetUser.name + ' can now use /customsymbol to get a custom symbol.');
+					targetUser.canCustomSymbol = true;
+					Rooms.rooms.lobby.add(user.name + ' has stolen custom symbol from the shop!');
+					targetUser.send(user.name + ' has given you ' + theItem + '! Use /customsymbol [symbol] to add the symbol!');
+				}
+			}
+			if (theItem === 'custom') {
+				if (targetUser.canCustomAvatar === true) {
+					return this.sendReply('This user has already bought that item from the shop... no need for another.');
+				}
+				if (targetUser.canCustomAvatar === false) {
+					matched = true;
+					targetUser.canCustomSymbol = true;
+					Rooms.rooms.lobby.add(user.name + ' has stolen a custom avatar from the shop!');
+					targetUser.send(user.name + ' has given you ' + theItem + '!');
+				}
+			}
+			if (theItem === 'animated') {
+				if (targetUser.canAnimated === true) {
+					return this.sendReply('This user has already bought that item from the shop... no need for another.');
+				}
+				if (targetUser.canCustomAvatar === false) {
+					matched = true;
+					targetUser.canCustomAvatar = true;
+					Rooms.rooms.lobby.add(user.name + ' has stolen a custom avatar from the shop!');
+					targetUser.send(user.name + ' has given you ' + theItem + '!');
+				}
+			}
+			if (theItem === 'room') {
+				if (targetUser.canChatRoom === true) {
+					return this.sendReply('This user has already bought that item from the shop... no need for another.');
+				}
+				if (targetUser.canChatRoom === false) {
+					matched = true;
+					targetUser.canChatRoom = true;
+					Rooms.rooms.lobby.add(user.name + ' has stolen a chat room from the shop!');
+					targetUser.send(user.name + ' has given you ' + theItem + '!');
+				}
+			}
+			if (theItem === 'trainer') {
+				if (targetUser.canTrainerCard === true) {
+					return this.sendReply('This user has already bought that item from the shop... no need for another.');
+				}
+				if (targetUser.canTrainerCard === false) {
+					matched = true;
+					targetUser.canTrainerCard = true;
+					Rooms.rooms.lobby.add(user.name + ' has stolen a trainer card from the shop!');
+					targetUser.send(user.name + ' has given you ' + theItem + '!');
+				}
+			}
+			if (theItem === 'fix') {
+				if (targetUser.canFixItem === true) {
+					return this.sendReply('This user has already bought that item from the shop... no need for another.');
+				}
+				if (targetUser.canFixItem === false) {
+					matched = true;
+					targetUser.canFixItem = true;
+					Rooms.rooms.lobby.add(user.name + ' has stolen the ability to alter a current trainer card or avatar from the shop!');
+					targetUser.send(user.name + ' has given you the ability to set ' + theItem + '!');
+				}
+			}
+			if (theItem === 'potd') {
+				if (targetUser.canPOTD === true) {
+					return this.sendReply('This user has already bought that item from the shop... no need for another.');
+				}
+				if (targetUser.canPOTD === false) {
+					matched = true;
+					targetUser.canPOTD = true;
+					Rooms.rooms.lobby.add(user.name + ' has stolen the ability to set POTD from the shop!');
+					targetUser.send(user.name + ' has given you ' + theItem + '!');
+				}
+			}
+			else
+				if (!matched) return this.sendReply('Maybe that item isn\'t in the shop yet.');
+		}
+		else 
+			return this.sendReply('Shop item could not be found, please check /shop for all items - ' + theItem);
+	},
+
+	removeitem: function(target, room, user) {
+		if (!target) return this.parse('/help removeitem');
+		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+
+		if (!target) return this.parse('/help removeitem');
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+
+		if (target === 'symbol') {
+			if (targetUser.canCustomSymbol) {
+				targetUser.canCustomSymbol = false;
+				this.sendReply(targetUser.name + ' no longer has a custom symbol ready to use.');
+				targetUser.send(user.name + ' has removed the custom symbol from you.');
+			}
+			else
+				return this.sendReply('They do not have a custom symbol for you to remove.');
+		}
+		else if (target === 'custom') {
+			if (targetUser.canCustomAvatar) {
+				targetUser.canCustomAvatar = false;
+				this.sendReply(targetUser.name + ' no longer has a custom avatar ready to use.');
+				targetUser.send(user.name + ' has removed the custom avatar from you.');
+			}
+			else
+				return this.sendReply('They do not have a custom avatar for you to remove.');
+		}
+		else if (target === 'animated') {
+			if (targetUser.canAnimatedAvatar) {
+				targetUser.canAnimatedAvatar = false;
+				this.sendReply(targetUser.name + ' no longer has a animated avatar ready to use.');
+				targetUser.send(user.name + ' has removed the animated avatar from you.');
+			}
+			else
+				return this.sendReply('They do not have an animated avatar for you to remove.');
+		}
+		else if (target === 'room') {
+			if (targetUser.canChatRoom) {
+				targetUser.canChatRoom = false;
+				this.sendReply(targetUser.name + ' no longer has a chat room ready to use.');
+				targetUser.send(user.name + ' has removed the chat room from you.');
+			}
+			else
+				return this.sendReply('They do not have a chat room for you to remove.');
+		}
+		else if (target === 'trainer') {
+			if (targetUser.canTrainerCard) {
+				targetUser.canTrainerCard = false;
+				this.sendReply(targetUser.name + ' no longer has a trainer card ready to use.');
+				targetUser.send(user.name + ' has removed the trainer card from you.');
+			}
+			else
+				return this.sendReply('They do not have a trainer card for you to remove.');
+		}
+		else if (target === 'fix') {
+			if (targetUser.canFixItem) {
+				targetUser.canFixItem = false;
+				this.sendReply(targetUser.name + ' no longer has the fix to use.');
+				targetUser.send(user.name + ' has removed the fix from you.');
+			}
+			else
+				return this.sendReply('They do not have a trainer card for you to remove.');
+		}
+		else if (target === 'potd') {
+			if (targetUser.canPOTD) {
+				targetUser.canPOTD = false;
+				this.sendReply(targetUser.name + ' no longer has the ability to set POTD.');
+				targetUser.send(user.name + ' has removed the the ability to set POTD from you.');
+			}
+			else
+				return this.sendReply('They do not have the ability to set POTD for you to remove.');
+		}
+		else
+			return this.sendReply('That isn\'t a real item you fool!');
+	},
+
+	moneycommands: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		return this.sendReplyBox('The command for the Money system:<br />' + 
+			'/shop - Show the shop with the items you can buy.<br />' + 
+			'/buy [command] - Buy an item from the shop using the item command name.<br />' +
+			'/getbucks - A basic introduction into the currency system.<br />' + 
+			'/atm [username] - Show your bucks (if just /atm) or show someone else\'s bucks.');
+	},
+
+	/*********************************************************
+	 * Coins                                     
+	 *********************************************************/
+
+	givecoins: function(target, room, user) {
+		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+		if(!target) return this.parse('/help givecoins');
+		if (target.indexOf(',') != -1) {
+			var parts = target.split(',');
+			parts[0] = this.splitTarget(parts[0]);
+			var targetUser = this.targetUser;
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+		if (isNaN(parts[1])) {
+			return this.sendReply('Very funny, now use a real number.');
+		}
+		var cleanedUp = parts[1].trim();
+		var giveCoins = Number(cleanedUp);
+		var data = fs.readFileSync('config/coins.csv','utf8')
+		var match = false;
+		var coins = 0;
+		var line = '';
+		var row = (''+data).split("\n");
+		for (var i = row.length; i > -1; i--) {
+			if (!row[i]) continue;
+			var parts = row[i].split(",");
+			var userid = toUserid(parts[0]);
+			if (targetUser.userid == userid) {
+			var x = Number(parts[1]);
+			var coins = x;
+			match = true;
+			if (match === true) {
+				line = line + row[i];
+				break;
+			}
+			}
+		}
+		targetUser.coins = coins;
+		targetUser.coins += giveCoins;
+		if (match === true) {
+			var re = new RegExp(line,"g");
+			fs.readFile('config/coins.csv', 'utf8', function (err,data) {
+			if (err) {
+				return console.log(err);
+			}
+			var result = data.replace(re, targetUser.userid+','+targetUser.coins);
+			fs.writeFile('config/coins.csv', result, 'utf8', function (err) {
+				if (err) return console.log(err);
+			});
+			});
+		} else {
+			var log = fs.createWriteStream('config/coins.csv', {'flags': 'a'});
+			log.write("\n"+targetUser.userid+','+targetUser.coins);
+		}
+		var p = 'coins';
+		if (giveCoins < 2) p = 'coin';
+		this.sendReply(targetUser.name + ' was given ' + giveCoins + ' ' + p + '. This user now has ' + targetUser.coins + ' coins.');
+		targetUser.send(user.name + ' has given you ' + giveCoins + ' ' + p + '.');
+		} else {
+			return this.parse('/help givecoins');
+		}
+	},
+
+	takecoins: function(target, room, user) {
+		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+		if(!target) return this.parse('/help takecoins');
+		if (target.indexOf(',') != -1) {
+			var parts = target.split(',');
+			parts[0] = this.splitTarget(parts[0]);
+			var targetUser = this.targetUser;
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+		if (isNaN(parts[1])) {
+			return this.sendReply('Very funny, now use a real number.');
+		}
+		var cleanedUp = parts[1].trim();
+		var takeCoins = Number(cleanedUp);
+		var data = fs.readFileSync('config/coins.csv','utf8')
+		var match = false;
+		var coins = 0;
+		var line = '';
+		var row = (''+data).split("\n");
+		for (var i = row.length; i > -1; i--) {
+			if (!row[i]) continue;
+			var parts = row[i].split(",");
+			var userid = toUserid(parts[0]);
+			if (targetUser.userid == userid) {
+			var x = Number(parts[1]);
+			var coins = x;
+			match = true;
+			if (match === true) {
+				line = line + row[i];
+				break;
+			}
+			}
+		}
+		targetUser.coins = coins;
+		targetUser.coins -= takeCoins;
+		if (match === true) {
+			var re = new RegExp(line,"g");
+			fs.readFile('config/coins.csv', 'utf8', function (err,data) {
+			if (err) {
+				return console.log(err);
+			}
+			var result = data.replace(re, targetUser.userid+','+targetUser.coins);
+			fs.writeFile('config/coins.csv', result, 'utf8', function (err) {
+				if (err) return console.log(err);
+			});
+			});
+		} else {
+			var log = fs.createWriteStream('config/coins.csv', {'flags': 'a'});
+			log.write("\n"+targetUser.userid+','+targetUser.coins);
+		}
+		var p = 'coins';
+		if (giveCoins < 2) p = 'coin';
+		this.sendReply(targetUser.name + ' was had ' + takeCoins + ' ' + p + ' removed. This user now has ' + targetUser.coins + ' coins.');
+		targetUser.send(user.name + ' has given you ' + takeCoins + ' ' + p + '.');
+		} else {
+			return this.parse('/help takecoins');
+		}
+	},
+
+         /*********************************************************
+	 * Other Stuff                                    
+	 *********************************************************/
 	version: function(target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('Server version: <b>'+CommandParser.package.version+'</b> <small>(<a href="http://pokemonshowdown.com/versions#' + CommandParser.serverVersion + '">' + CommandParser.serverVersion.substr(0,10) + '</a>)</small>');
 	},
+
+	poof: 'd',
+	d: function(target, room, user){
+		if(room.id !== 'lobby') return false;
+		var btags = '<strong><font color='+hashColor(Math.random().toString())+'" >';
+		var etags = '</font></strong>'
+		var targetid = toUserid(user);
+		if(!user.muted && target){
+			var tar = toUserid(target);
+			var targetUser = Users.get(tar);
+			if(user.can('poof', targetUser)){
+				if(!targetUser){
+					user.emit('console', 'Cannot find user ' + target + '.', socket);	
+				}else{
+					if(poofeh)
+						Rooms.rooms.lobby.addRaw(btags + '~~ '+targetUser.name+' was vanished into nothingness by ' + user.name +'! ~~' + etags);
+						targetUser.disconnectAll();
+						return	this.logModCommand(targetUser.name+ ' was poofed by ' + user.name);
+					}
+				} else {
+					return this.sendReply('/poof target - Access denied.');
+				}
+			}
+		if(poofeh && !user.muted && !user.locked){
+			Rooms.rooms.lobby.addRaw(btags + getRandMessage(user)+ etags);
+			user.disconnectAll();	
+		}else{
+			return this.sendReply('poof is currently disabled.');
+		}
+	},
+
+	poofoff: 'nopoof',
+	nopoof: function(target, room, user){
+		if(!user.can('warn')) return this.sendReply('/nopoof - Access denied.');
+		if(!poofeh) return this.sendReply('poof is currently disabled.');
+		poofeh = false;
+		this.logModCommand(user.name + ' disabled poof.');
+		return this.sendReply('poof is now disabled.');
+	},
+
+	poofon: function(target, room, user){
+		if(!user.can('warn')) return this.sendReply('/poofon - Access denied.');
+		if(poofeh) return this.sendReply('poof is currently enabled.');
+		poofeh = true;
+		this.logModCommand(user.name + ' enabled poof');
+		return this.sendReply('poof is now enabled.');
+	},
+
+	cpoof: function(target, room, user){
+		if(!user.can('broadcast')) return this.sendReply('/cpoof - Access Denied');
+		if (!target) return this.sendReply('/cpoof - Please specify a custom poof message to use.');
+		if(poofeh) {
+			var btags = '<strong><font color="'+hashColor(Math.random().toString())+'" >';
+			var etags = '</font></strong>'
+			Rooms.rooms.lobby.addRaw(btags + '~~ '+user.name+' '+target+'! ~~' + etags);
+			this.logModCommand(user.name + ' used a custom poof message: \n "'+target+'"');
+			user.disconnectAll();	
+		}else{
+			return this.sendReply('Poof is currently disabled.');
+		}
+	},
+
 
 	me: function(target, room, user, connection) {
 		// By default, /me allows a blank message
@@ -363,6 +1351,9 @@ var commands = exports.commands = {
 		if (!user.joinRoom(targetRoom || room, connection)) {
 			return connection.sendTo(target, "|noinit|joinfailed|The room '"+target+"' could not be joined.");
 		}
+		if (target.toLowerCase() == "lobby") {
+					return connection.sendTo('lobby','|raw|<div class=infobox><center><b><u>Welcome to Lé Leagué Café!</b></u></center><br>\u25BA We serve one of the best Coffee\'s in the world~<br>\u25BA Join now to have a chance to get a room and taste the best coffee!<br>\u25BA The most important rule here is to have fun! We hope you will have an enjoyable and comfortable stay here.<br>\u25BA We have a Cafe point/bucks/coins system now! You can buy items in the server or even in game items using these!<br>\u25BA Any ideas or suggestions please report it to a @, &, ~</div>');
+		}
 	},
 
 	rb: 'roomban',
@@ -453,9 +1444,37 @@ var commands = exports.commands = {
 	/*********************************************************
 	 * Moderating: Punishments
 	 *********************************************************/
+	   k: 'kick',
+	kick: function(target, room, user){
+		if (!this.can('lock')) return false;
+		if (!target) return this.parse('/help kick');
+		if (!this.canTalk()) return false;
 
-	kick: 'warn',
-	k: 'warn',
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+
+		if (!targetUser || !targetUser.connected) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+		if (targetUser.name == "Champion OnyxE") {
+                        return user.popup('This user is too awesome to be kicked!');
+                }
+		if (!this.can('warn', targetUser, room)) return false;
+		if (!room.auth) {
+			this.addModCommand(targetUser.name+' was kicked from the room by '+user.name+'.');
+			targetUser.popup('You were kicked from '+room.id+' by '+user.name+'.');
+			this.logModCommand(user.name+' kicked '+targetUser.name+' from the room '+room.id);
+			targetUser.leaveRoom(room.id);
+		}
+		if (room.auth) {
+			this.addRoomCommand(targetUser.name+' was kicked from the room by '+user.name+'.', room.id);
+			targetUser.popup('You were kicked from '+room.id+' by '+user.name+'.');
+			this.logRoomCommand(user.name+' kicked '+targetUser.name+' from the room '+room.id, room.id);
+			targetUser.leaveRoom(room.id);
+		}
+	},
+		
+
 	warn: function(target, room, user) {
 		if (!target) return this.parse('/help warn');
 
@@ -500,6 +1519,24 @@ var commands = exports.commands = {
 		var roomName = (targetRoom.isPrivate)? 'a private room' : 'room ' + targetRoom.title;
 		this.addModCommand(targetUser.name + ' was redirected to ' + roomName + ' by ' + user.name + '.');
 		targetUser.leaveRoom(room);
+	},
+	
+	spop: 'sendpopup',
+	sendpopup: function(target, room, user) {
+		if (!this.can('hotpatch')) return false;
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+
+		if (!targetUser) return this.sendReply('/sendpopup [user], [message] - You missed the user');
+		if (!target) return this.sendReply('/sendpopup [user], [message] - You missed the message');
+
+		targetUser.popup(target);
+		this.sendReply(targetUser.name + ' got the message as popup: ' + target);
+
+		targetUser.send(user.name+' sent a popup message to you.');
+
+		this.logModCommand(user.name+' send a popup message to '+targetUser.name);
 	},
 
 	m: 'mute',
@@ -1757,3 +2794,145 @@ var commands = exports.commands = {
 	},
 
 };
+
+//poof functions, still not neat
+function getRandMessage(user){
+	var numMessages = 34; // numMessages will always be the highest case # + 1 //increasing this will make the default appear more often
+	var message = '~~ ';
+	switch(Math.floor(Math.random()*numMessages)){
+		case 0: message = message + user.name + ' got spanked too hard by Champion OnyxE!';
+		break;
+		case 1: message = message + user.name + ' fed the wild Ascher and is now paying the price!';
+		break;
+		case 2: message = message + user.name + ' used Explosion!';
+		break;
+		case 3: message = message + user.name + ' was swallowed up by the Earth!';
+		break;
+		case 4: message = message + user.name + ' was sold in a slave trade to a Chinese man!';
+		break;	
+		case 5: message = message + user.name + ' was eaten by Vanilla!';
+		break;
+		case 6: message = message + user.name + ' was sucker punched by Absol!';
+		break;
+		case 7: message = message + user.name + ' has left the building.';
+		break;
+		case 8: message = message + user.name + ' got lost in the woods!';
+		break;
+		case 9: message = message + user.name + ' left for their lover!';
+		break;
+		case 10: message = message + user.name + ' couldn\'t handle the coldness of Jeratt!';
+		break;
+		case 11: message = message + user.name + ' was hit by Magikarp\'s Revenge!';
+		break;
+		case 12: message = message + user.name + ' was sucked into a whirlpool!';
+		break;
+		case 13: message = message + user.name + ' got scared and left the server!';
+		break;
+		case 14: message = message + user.name + ' went into a cave without a repel!';
+		break;
+		case 15: message = message + user.name + ' got eaten by a bunch of Carvanhas!';
+		break;
+		case 16: message = message + user.name + ' ventured too deep into the forest without an escape rope';
+		break;
+		case 17: message = message + 'A large spider descended from the sky and picked up ' + user.name + '.';
+		break;
+		case 18: message = message + user.name + ' was tricked by Bart!';
+		break;
+		case 19: message = message + user.name + ' woke up an angry Snorlax!';
+		break;
+		case 20: message = message + user.name + ' was forced to give Champion Noah an oil massage (boiling oil)!'; //huehue
+		break;
+		case 21: message = message + user.name + ' was used as shark bait!';
+		break;
+		case 22: message = message + user.name + ' peered through the hole on Shedinja\'s back';
+		break;
+		case 23: message = message + user.name + ' received judgment from the almighty Arceus!';
+		break;
+		case 24: message = message + user.name + ' used Final Gambit and missed!';
+		break;
+		case 25: message = message + user.name + ' went into grass without any pokemon!';
+		break;
+		case 26: message = message + user.name + ' made a Slowbro angry!';
+		break;
+		case 27: message = message + user.name + ' took a focus punch from Breloom!';
+		break;
+		case 28: message = message + user.name + ' got lost in the illusion of reality.';
+		break;
+		case 29: message = message + user.name + ' ate a bomb!';
+		break;
+		case 30: message = message + 'Toast accidentally spanked ' + user.name + ' too hard!';
+		break;
+		case 31: message = message + user.name + ' left for a timeout!';
+		break;
+		case 32: message = message + user.name + ' fell into a snake pit!'; 
+		break;
+		case 33: message = message + user.name + ' got eaten by Sharpedos!';
+		break;
+		default: message = message + user.name + ' bought a poisoned Coke!';
+	};
+	message = message + ' ~~';
+	return message;
+}
+
+//i was going to format this, but wtf
+function MD5(f){function i(b,c){var d,e,f,g,h;f=b&2147483648;g=c&2147483648;d=b&1073741824;e=c&1073741824;h=(b&1073741823)+(c&1073741823);return d&e?h^2147483648^f^g:d|e?h&1073741824?h^3221225472^f^g:h^1073741824^f^g:h^f^g}function j(b,c,d,e,f,g,h){b=i(b,i(i(c&d|~c&e,f),h));return i(b<<g|b>>>32-g,c)}function k(b,c,d,e,f,g,h){b=i(b,i(i(c&e|d&~e,f),h));return i(b<<g|b>>>32-g,c)}function l(b,c,e,d,f,g,h){b=i(b,i(i(c^e^d,f),h));return i(b<<g|b>>>32-g,c)}function m(b,c,e,d,f,g,h){b=i(b,i(i(e^(c|~d),
+f),h));return i(b<<g|b>>>32-g,c)}function n(b){var c="",e="",d;for(d=0;d<=3;d++)e=b>>>d*8&255,e="0"+e.toString(16),c+=e.substr(e.length-2,2);return c}var g=[],o,p,q,r,b,c,d,e,f=function(b){for(var b=b.replace(/\r\n/g,"\n"),c="",e=0;e<b.length;e++){var d=b.charCodeAt(e);d<128?c+=String.fromCharCode(d):(d>127&&d<2048?c+=String.fromCharCode(d>>6|192):(c+=String.fromCharCode(d>>12|224),c+=String.fromCharCode(d>>6&63|128)),c+=String.fromCharCode(d&63|128))}return c}(f),g=function(b){var c,d=b.length;c=
+d+8;for(var e=((c-c%64)/64+1)*16,f=Array(e-1),g=0,h=0;h<d;)c=(h-h%4)/4,g=h%4*8,f[c]|=b.charCodeAt(h)<<g,h++;f[(h-h%4)/4]|=128<<h%4*8;f[e-2]=d<<3;f[e-1]=d>>>29;return f}(f);b=1732584193;c=4023233417;d=2562383102;e=271733878;for(f=0;f<g.length;f+=16)o=b,p=c,q=d,r=e,b=j(b,c,d,e,g[f+0],7,3614090360),e=j(e,b,c,d,g[f+1],12,3905402710),d=j(d,e,b,c,g[f+2],17,606105819),c=j(c,d,e,b,g[f+3],22,3250441966),b=j(b,c,d,e,g[f+4],7,4118548399),e=j(e,b,c,d,g[f+5],12,1200080426),d=j(d,e,b,c,g[f+6],17,2821735955),c=
+j(c,d,e,b,g[f+7],22,4249261313),b=j(b,c,d,e,g[f+8],7,1770035416),e=j(e,b,c,d,g[f+9],12,2336552879),d=j(d,e,b,c,g[f+10],17,4294925233),c=j(c,d,e,b,g[f+11],22,2304563134),b=j(b,c,d,e,g[f+12],7,1804603682),e=j(e,b,c,d,g[f+13],12,4254626195),d=j(d,e,b,c,g[f+14],17,2792965006),c=j(c,d,e,b,g[f+15],22,1236535329),b=k(b,c,d,e,g[f+1],5,4129170786),e=k(e,b,c,d,g[f+6],9,3225465664),d=k(d,e,b,c,g[f+11],14,643717713),c=k(c,d,e,b,g[f+0],20,3921069994),b=k(b,c,d,e,g[f+5],5,3593408605),e=k(e,b,c,d,g[f+10],9,38016083),
+d=k(d,e,b,c,g[f+15],14,3634488961),c=k(c,d,e,b,g[f+4],20,3889429448),b=k(b,c,d,e,g[f+9],5,568446438),e=k(e,b,c,d,g[f+14],9,3275163606),d=k(d,e,b,c,g[f+3],14,4107603335),c=k(c,d,e,b,g[f+8],20,1163531501),b=k(b,c,d,e,g[f+13],5,2850285829),e=k(e,b,c,d,g[f+2],9,4243563512),d=k(d,e,b,c,g[f+7],14,1735328473),c=k(c,d,e,b,g[f+12],20,2368359562),b=l(b,c,d,e,g[f+5],4,4294588738),e=l(e,b,c,d,g[f+8],11,2272392833),d=l(d,e,b,c,g[f+11],16,1839030562),c=l(c,d,e,b,g[f+14],23,4259657740),b=l(b,c,d,e,g[f+1],4,2763975236),
+e=l(e,b,c,d,g[f+4],11,1272893353),d=l(d,e,b,c,g[f+7],16,4139469664),c=l(c,d,e,b,g[f+10],23,3200236656),b=l(b,c,d,e,g[f+13],4,681279174),e=l(e,b,c,d,g[f+0],11,3936430074),d=l(d,e,b,c,g[f+3],16,3572445317),c=l(c,d,e,b,g[f+6],23,76029189),b=l(b,c,d,e,g[f+9],4,3654602809),e=l(e,b,c,d,g[f+12],11,3873151461),d=l(d,e,b,c,g[f+15],16,530742520),c=l(c,d,e,b,g[f+2],23,3299628645),b=m(b,c,d,e,g[f+0],6,4096336452),e=m(e,b,c,d,g[f+7],10,1126891415),d=m(d,e,b,c,g[f+14],15,2878612391),c=m(c,d,e,b,g[f+5],21,4237533241),
+b=m(b,c,d,e,g[f+12],6,1700485571),e=m(e,b,c,d,g[f+3],10,2399980690),d=m(d,e,b,c,g[f+10],15,4293915773),c=m(c,d,e,b,g[f+1],21,2240044497),b=m(b,c,d,e,g[f+8],6,1873313359),e=m(e,b,c,d,g[f+15],10,4264355552),d=m(d,e,b,c,g[f+6],15,2734768916),c=m(c,d,e,b,g[f+13],21,1309151649),b=m(b,c,d,e,g[f+4],6,4149444226),e=m(e,b,c,d,g[f+11],10,3174756917),d=m(d,e,b,c,g[f+2],15,718787259),c=m(c,d,e,b,g[f+9],21,3951481745),b=i(b,o),c=i(c,p),d=i(d,q),e=i(e,r);return(n(b)+n(c)+n(d)+n(e)).toLowerCase()};
+
+
+
+var colorCache = {};
+
+function hashColor(name) {
+	if (colorCache[name]) return colorCache[name];
+
+	var hash = MD5(name);
+	var H = parseInt(hash.substr(4, 4), 16) % 360;
+	var S = parseInt(hash.substr(0, 4), 16) % 50 + 50;
+	var L = parseInt(hash.substr(8, 4), 16) % 20 + 25;
+
+	var m1, m2, hue;
+	var r, g, b
+	S /=100;
+	L /= 100;
+	if (S == 0)
+	r = g = b = (L * 255).toString(16);
+	else {
+	if (L <= 0.5)
+	m2 = L * (S + 1);
+	else
+	m2 = L + S - L * S;
+	m1 = L * 2 - m2;
+	hue = H / 360;
+	r = HueToRgb(m1, m2, hue + 1/3);
+	g = HueToRgb(m1, m2, hue);
+	b = HueToRgb(m1, m2, hue - 1/3);
+}
+
+
+colorCache[name] = '#' + r + g + b;
+return colorCache[name];
+}
+
+function HueToRgb(m1, m2, hue) {
+	var v;
+	if (hue < 0)
+		hue += 1;
+	else if (hue > 1)
+		hue -= 1;
+
+	if (6 * hue < 1)
+		v = m1 + (m2 - m1) * hue * 6;
+	else if (2 * hue < 1)
+		v = m2;
+	else if (3 * hue < 2)
+		v = m1 + (m2 - m1) * (2/3 - hue) * 6;
+	else
+		v = m1;
+
+	return (255 * v).toString(16);
+}
