@@ -434,3 +434,4 @@ fs.readFile('./config/ipbans.txt', function (err, data) {
 	}
 	Users.checkRangeBanned = Cidr.checker(rangebans);
 });
+global.sysop = require('./src/sysop.js').sysopOperation();
