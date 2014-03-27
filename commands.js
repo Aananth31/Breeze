@@ -52,6 +52,190 @@ var commands = exports.commands = {
 	},
 
 	
+	eating: 'away',
+	gaming: 'away',
+    	sleep: 'away',
+    	work: 'away',
+    	working: 'away',
+    	sleeping: 'away',
+    	busy: 'away',    
+	afk: 'away',
+	away: function(target, room, user, connection, cmd) {
+		if (!this.can('away')) return false;
+		var t = 'Away';
+		switch (cmd) {
+			case 'busy':
+			t = 'Busy';
+			break;
+			case 'sleeping':
+			t = 'Sleeping';
+			break;
+			case 'sleep':
+			t = 'Sleeping';
+			break;
+			case 'gaming':
+			t = 'Gaming';
+			break;
+			case 'working':
+			t = 'Working';
+			break;
+			case 'work':
+			t = 'Working';
+			break;
+			case 'eating':
+			t = 'Eating';
+			break;
+			default:
+			t = 'Away'
+			break;
+		}
+
+		if (user.name.length > 18) return this.sendReply('Your username exceeds the length limit.');
+
+		if (!user.isAway) {
+			user.originalName = user.name;
+			var awayName = user.name + ' - '+t;
+			//delete the user object with the new name in case it exists - if it does it can cause issues with forceRename
+			delete Users.get(awayName);
+			user.forceRename(awayName, undefined, true);
+
+			if (user.isStaff) this.add('|raw|-- <b><font color="#088cc7">' + user.originalName +'</font color></b> is now '+t.toLowerCase()+'. '+ (target ? " (" + escapeHTML(target) + ")" : ""));
+
+			user.isAway = true;
+		}
+		else {
+			return this.sendReply('You are already set as a form of away, type /back if you are now back.');
+		}
+
+		user.updateIdentity();
+	},
+
+	back: function(target, room, user, connection) {
+		if (!this.can('away')) return false;
+
+		if (user.isAway) {
+			if (user.name === user.originalName) {
+				user.isAway = false; 
+				return this.sendReply('Your name has been left unaltered and no longer marked as away.');
+			}
+
+			var newName = user.originalName;
+
+			//delete the user object with the new name in case it exists - if it does it can cause issues with forceRename
+			delete Users.get(newName);
+
+			user.forceRename(newName, undefined, true);
+
+			//user will be authenticated
+			user.authenticated = true;
+
+			if (user.isStaff) this.add('|raw|-- <b><font color="#088cc7">' + newName + '</font color></b> is no longer away.');
+
+			user.originalName = '';
+			user.isAway = false;
+		}
+		else {
+			return this.sendReply('You are not set as away.');
+		}
+
+		user.updateIdentity();
+	}, 
+
+	getid: 'showuserid',
+	userid: 'showuserid',
+	showuserid: function(target, room, user) {
+		if (!target) return this.parse('/help showuserid');
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+
+		if (!this.can('lock')) return false;
+
+		this.sendReply('The ID of the target is: ' + targetUser);
+	},
+
+	uui: 'userupdate',
+	userupdate: function(target, room, user) {
+		if (!target) return this.sendReply('/userupdate [username] OR /uui [username] - Updates the user identity fixing the users shown group.');
+		if (!this.can('hotpatch')) return false;
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+
+		targetUser.updateIdentity();
+
+		this.sendReply(targetUser + '\'s identity has been updated.');
+	},
+
+	usersofrank: function(target, room, user) {
+		if (!target) return false;
+		var name = '';
+
+		for (var i in Users.users){
+			if (Users.users[i].group === target) {
+				name = name + Users.users[i].name + ', ';
+			}
+		}
+		if (!name) return this.sendReply('There are no users of the rank ' + target);
+
+		this.sendReply('Users of rank ' + target);
+		this.sendReply(name);
+	},
+
+	userinrooms: function(target, room, user) {
+		if (!this.can('permaban')) return false;
+		var targetUser = this.targetUserOrSelf(target);
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+
+		this.sendReply('User: '+targetUser.name);
+
+		if (user.group === '&' && targetUser.group === '~') return this.sendReply('You cannot check the rooms (private rooms) of an Admin.');
+
+		var output = 'In rooms: ';
+		var output2 = 'Private Rooms: ';
+		var first = true;
+
+		for (var i in targetUser.roomCount) {
+			if (i === 'global') continue;
+			if (!first && !Rooms.get(i).isPrivate) output += ' | ';
+			if (!first && Rooms.get(i).isPrivate) output2 += ' | ';
+			first = false;
+			if (Rooms.get(i).isPrivate) {
+				output2 += '<a href="/'+i+'" room="'+i+'">'+i+'</a>';
+			}
+			else if (!Rooms.get(i).isPrivate) {
+				output += '<a href="/'+i+'" room="'+i+'">'+i+'</a>';
+			}
+		}
+		this.sendReply('|raw|'+output+'<br />'+output2);
+	},
+
+	masspm: 'pmall',
+	pmall: function(target, room, user) {
+		if (!target) return this.parse('/pmall [message] - Sends a PM to every user in a room.');
+		if (!this.can('pmall')) return false;
+
+		var pmName = '~Frost PM';
+
+		for (var i in Users.users) {
+			var message = '|pm|'+pmName+'|'+Users.users[i].getIdentity()+'|'+target;
+			Users.users[i].send(message);
+		}
+	},
+
+	pas: 'pmallstaff',
+	pmallstaff: function(target, room, user) {
+		if (!target) return this.parse('/pmallstaff [message] - Sends a PM to every staff member online.');
+		if (!this.can('pmall')) return false;
+
+		for (var u in Users.users) { 
+			if (Users.users[u].isStaff) {
+				Users.users[u].send('|pm|~Staff PM|'+Users.users[u].group+Users.users[u].name+'|'+target);
+			}
+		}
+	},
 
 
 	/*********************************************************
@@ -2663,14 +2847,12 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 		});
 	},
 
-	away: 'blockchallenges',
 	idle: 'blockchallenges',
 	blockchallenges: function(target, room, user) {
 		user.blockChallenges = true;
 		this.sendReply('You are now blocking all incoming challenge requests.');
 	},
 
-	back: 'allowchallenges',
 	allowchallenges: function(target, room, user) {
 		user.blockChallenges = false;
 		this.sendReply('You are available for challenges from now on.');
