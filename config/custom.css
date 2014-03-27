@@ -1,38 +1,8 @@
-#header{background:url(http://i.imgur.com/YEayad7.jpg?1)}
-
-body{background-image:url("http://i.imgur.com/FXuNSgP.jpg");background-repeat:no-repeat;background-position:center}
-
-.chat-log{font-size:10pt;background: url(http://imgur.com/iwq6Jhe) height=600;
-no-repeat scroll right bottom;
-background:#8080ff;
-color:#000;
-overflow:auto;
-}
-
-.menugroup .button{background:#737373}.menugroup
-
-.menugroup {
-background:#8080ff);
-text-align: center;
-}
-
-.button:hover{background:#373737}
-
-.userlist {
-border-left: 1px solid #D5DDE4;
-background: #d5d5d5;
-}
-
-.pm-log{
-  font-family: Geneva, Tahoma, Verdana, sans-serif;
-}
-
-
-.customsymbol {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #173aeb), color-stop(1, #1426e3) );
-	background:-moz-linear-gradient( center top, #173aeb 5%, #1426e3 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#173aeb', endColorstr='#1426e3');
-	background-color:#173aeb;
+.customcymbol {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #2232e3), color-stop(1, #290bd6) );
+	background:-moz-linear-gradient( center top, #2232e3 5%, #290bd6 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#2232e3', endColorstr='#290bd6');
+	background-color:#2232e3;
 	-webkit-border-top-left-radius:6px;
 	-moz-border-radius-topleft:6px;
 	border-top-left-radius:6px;
@@ -46,25 +16,25 @@ background: #d5d5d5;
 	-moz-border-radius-bottomleft:6px;
 	border-bottom-left-radius:6px;
 	text-indent:0;
-	border:3px solid #050305;
+	border:3px solid #000000;
 	display:inline-block;
-	color:#000000;
+	color:#0f070f;
 	font-family:Comic Sans MS;
 	font-size:15px;
 	font-weight:bold;
 	font-style:normal;
-	height:25px;
-	line-height:25px;
-	width:75px;
+	height:33px;
+	line-height:33px;
+	width:94px;
 	text-decoration:none;
 	text-align:center;
 }
-.customsymbol:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(#ff0000), color-stop(#ff0000) );
-	background:-moz-linear-gradient( center top, #1426e3 5%, #173aeb 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1426e3', endColorstr='#173aeb');
-	background-color:#1426e3;
-}.customsymbol:active {
+.customcymbol:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #290bd6), color-stop(1, #2232e3) );
+	background:-moz-linear-gradient( center top, #290bd6 5%, #2232e3 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#290bd6', endColorstr='#2232e3');
+	background-color:#290bd6;
+}.customcymbol:active {
 	position:relative;
 	top:1px;
 }
