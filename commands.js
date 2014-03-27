@@ -61,7 +61,7 @@ var commands = exports.commands = {
     	busy: 'away',    
 	afk: 'away',
 	away: function(target, room, user, connection, cmd) {
-		if (!this.can('away')) return false;
+		if (!this.can('lock')) return false;
 		var t = 'Away';
 		switch (cmd) {
 			case 'busy':
