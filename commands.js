@@ -2285,7 +2285,7 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 			if (error) {
 				if (error.code === 1) {
 					// The working directory or index have local changes.
-					cmd = 'git stash;' + cmd + ';git stash pop';
+					cmd = 'git stash && ' + cmd + ' && git stash pop';
 				} else {
 					// The most likely case here is that the user does not have
 					// `git` on the PATH (which would be error.code === 127).
