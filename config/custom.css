@@ -1,3 +1,32 @@
+#header{background:url(http://i.imgur.com/YEayad7.jpg?1)}
+
+body{background-image:url("http://i.imgur.com/FXuNSgP.jpg");background-repeat:no-repeat;background-position:center}
+
+.chat-log{font-size:10pt;background: url(http://imgur.com/iwq6Jhe) height=600;
+no-repeat scroll right bottom;
+background:#8080ff;
+color:#000;
+overflow:auto;
+}
+
+.menugroup .button{background:#737373}.menugroup
+
+.menugroup {
+background:#8080ff);
+text-align: center;
+}
+
+.button:hover{background:#373737}
+
+.userlist {
+border-left: 1px solid #D5DDE4;
+background: #d5d5d5;
+}
+
+.pm-log{
+  font-family: Geneva, Tahoma, Verdana, sans-serif;
+}
+
 .customcymbol {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #2232e3), color-stop(1, #290bd6) );
 	background:-moz-linear-gradient( center top, #2232e3 5%, #290bd6 100% );
