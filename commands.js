@@ -873,7 +873,7 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 	
 	drinks: function(target,room,user) {
 		if(this.canBroadcast()) return;
-		this.sendReplyBox('<center><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Drink</th><th>Price</th><th>Luck</th></tr><tr><td>Coffee</td><td>2 Bucks</td><td>20%</td></tr><tr><td>Cola</td><td>4 Bucks</td><td>40%</td></tr><tr><td>Coffee</td><td>5 Bucks</td><td>60%</td></tr></table></center>');
+		this.sendReply('|html|<center><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Drink</th><th>Price</th><th>Luck</th></tr><tr><td>Coffee</td><td>2 Bucks</td><td>20%</td></tr><tr><td>Cola</td><td>4 Bucks</td><td>40%</td></tr><tr><td>Coffee</td><td>5 Bucks</td><td>60%</td></tr></table></center>');
 	},
 
 	lockshop: 'closeshop',
