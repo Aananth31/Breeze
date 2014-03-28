@@ -51,6 +51,11 @@ var commands = exports.commands = {
 		});
 	},
 	
+	drinks: function(target,room,user) {
+		if(!this.canBroadcast()) return;
+		this.sendReplyBox('<table><tr><th>Drink</th><th>Price</th><th>Luck</th></tr><tr><td>Coffee</td><td>2 Bucks</td><td>20%</td></tr><tr><td>Juice</td><td>3 Bucks</td><td>40%</td></tr><tr><td>Cola</td><td>5 Bucks</td><td>60%</td></tr></table><center>/drink [drink] to drink</center>');
+	}
+	
 	stafflist: function(target, room, user, connection) {
         var buffer = [];
         var admins = [];
@@ -68,9 +73,6 @@ var commands = exports.commands = {
 			if (line[1] == '~') { 
                 admins2 = admins2 +line[0]+',';
             }
-            if (line[1] == '\u2745') { 
-                developers2 = developers2 +line[0]+',';
-            }
             if (line[1] == '&') { 
                 leaders2 = leaders2 +line[0]+',';
             }
@@ -85,16 +87,12 @@ var commands = exports.commands = {
              } 
         }
         admins2 = admins2.split(',');
-        developers2 = developers2.split(',');
         leaders2 = leaders2.split(',');
         mods2 = mods2.split(',');
         drivers2 = drivers2.split(',');
         voices2 = voices2.split(',');
         for (var u in admins2) {
             if (admins2[u] != '') admins.push(admins2[u]);
-        }
-        for (var u in developers2) {
-        	if (developers2[u] != '') developers.push(developers2[u]);
         }
         for (var u in leaders2) {
             if (leaders2[u] != '') leaders.push(leaders2[u]);
@@ -111,9 +109,6 @@ var commands = exports.commands = {
         if (admins.length > 0) {
             admins = admins.join(', ');
         }
-        if (developers.length > 0) {
-        	developers = developers.join(',');
-        }
         if (leaders.length > 0) {
             leaders = leaders.join(', ');
         }
@@ -126,7 +121,7 @@ var commands = exports.commands = {
         if (voices.length > 0) {
             voices = voices.join(', ');
         }
-        connection.popup('Administrators: \n'+admins+'\nDevelopers: \n'+developers+'\nLeaders: \n'+leaders+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
+        connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
     },
 	
 	frt: 'forcerenameto',
