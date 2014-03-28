@@ -905,7 +905,7 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
                         }
                 }
                 user.money = money;
-                if(user.money < price) return this.sendReplyBox('You dont have enough money');
+                if(money < price) return this.sendReplyBox('You dont have enough money');
                 var spin = Math.random();
                 if(spin > luck) payout = true;
                 if (payout) {
