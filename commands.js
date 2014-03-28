@@ -857,7 +857,7 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center>');
 		if (closeShop) return this.sendReply('|raw|<center><h3><b>The shop is currently closed and will open shortly.</b></h3></center>');
 	},
-
+	gamemenu: 'gameshop',
 	gameshop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('<center><h4><b><u>Game Shop</u></b></h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
@@ -870,6 +870,11 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center><br />'+
 	'<center>You must have a valid X/Y Friend Code registered to buy an item from here.</center><br />');
 	},
+	
+	drinks: function(target,room,user) {
+		if(this.canBroadcast()) return;
+		this.sendReplyBox('<center><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Drink</th><th>Price</th><th>Luck</th></tr><tr><td>Coffee</td><td>2 Bucks</td><td>20%</td></tr><tr><td>Cola</td><td>4 Bucks</td><td>40%</td></tr><tr><td>Coffee</td><td>5 Bucks</td><td>60%</td></tr></table></center>');
+	}
 
 	lockshop: 'closeshop',
 	closeshop: function(target, room, user) {
