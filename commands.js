@@ -871,9 +871,70 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 	'<center>You must have a valid X/Y Friend Code registered to buy an item from here.</center><br />');
 	},
 	
-	drinks: function(target,room,user) {
-		if(this.canBroadcast()) return;
-		this.sendReply('|html|<center><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Drink</th><th>Price</th><th>Luck</th></tr><tr><td>Coffee</td><td>2 Bucks</td><td>20%</td></tr><tr><td>Cola</td><td>4 Bucks</td><td>40%</td></tr><tr><td>Coffee</td><td>5 Bucks</td><td>60%</td></tr></table></center>');
+	drink: function(target,room,user) {
+		if(!target) return this.parse('/drinks');
+		var luck
+		var price
+		var payout
+		target = target.toLowerCase();
+		switch(target) {
+			case coffee:	
+				luck = .3;
+				price = 5
+			case juice:
+				luck = .8;
+				price = 2
+			case cola:
+				luck = .7;
+				price = 4
+		}
+		var data = fs.readFileSync('config/cash.csv','utf8');
+                var row = (''+data).split("\n");
+                for (var i = row.length; i > -1; i--) {
+                        if (!row[i]) continue;
+                        var parts = row[i].split(",");
+                        var userid = toUserid(parts[0]);
+                        if (user.userid == userid) {
+                        var x = Number(parts[1]);
+                        var money = x;
+                        mMatch = true;
+                        if (mMatch === true) {
+                                break;
+                        }
+                        }
+                }
+                user.money = money;
+                if(user.money < price) return this.sendReplyBox('You dont have enough money');
+                var spin = Math.random();
+                if(spin > luck) payout = true;
+                if (payout) {
+                	var temp = Math.random();
+                	switch(temp) {
+                		case(temp < .2):
+                			pay = 5
+                		case(temp < .4 && temp > .2):
+                			pay = 3
+                		case(temp < .6 && temp > .4):
+                			pay = 4
+                		case(temp < .8 && temp > .6):
+                			pay = 1
+                		case(temp > .8):
+                			pay = 2
+                	}
+		         user.money = user.money + pay;
+					var re = new RegExp(line,"g");
+					fs.readFile('config/money.csv', 'utf8', function (err,data) {
+					if (err) {
+						return console.log(err);
+					}
+					var result = data.replace(re, user.userid+','+user.money);
+					fs.writeFile('config/money.csv', result, 'utf8', function (err) {
+						if (err) return console.log(err);
+					});
+					});
+				
+                }
+                
 	},
 
 	lockshop: 'closeshop',
