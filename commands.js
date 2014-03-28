@@ -54,7 +54,7 @@ var commands = exports.commands = {
 	drinks: function(target,room,user) {
 		if(!this.canBroadcast()) return;
 		this.sendReplyBox('<table><tr><th>Drink</th><th>Price</th><th>Luck</th></tr><tr><td>Coffee</td><td>2 Bucks</td><td>20%</td></tr><tr><td>Juice</td><td>3 Bucks</td><td>40%</td></tr><tr><td>Cola</td><td>5 Bucks</td><td>60%</td></tr></table><center>/drink [drink] to drink</center>');
-	}
+	},
 	
 	stafflist: function(target, room, user, connection) {
         var buffer = [];
