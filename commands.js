@@ -922,7 +922,28 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
                 		case(temp > .8):
                 			pay = 2
                 	}
-		         user.money = user.money + pay;
+		         		var data = fs.readFileSync('config/money.csv','utf8')
+				var match = false;
+				var money = 0;
+				var row = (''+data).split("\n");
+				var line = '';
+				for (var i = row.length; i > -1; i--) {
+					if (!row[i]) continue;
+					var parts = row[i].split(",");
+					var userid = toUserid(parts[0]);
+					if (user.userid == userid) {
+						var x = Number(parts[1]);
+						var money = x;
+						match = true;
+						if (match === true) {
+							line = line + row[i];
+							break;
+						}
+					}
+				}
+				user.money = money;
+				user.money = user.money + tourMoney;
+				if (match === true) {
 					var re = new RegExp(line,"g");
 					fs.readFile('config/money.csv', 'utf8', function (err,data) {
 					if (err) {
@@ -933,6 +954,10 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 						if (err) return console.log(err);
 					});
 					});
+				} else {
+					var log = fs.createWriteStream('config/money.csv', {'flags': 'a'});
+					log.write("\n"+user.userid+','+user.money);
+				}
 				
                 }
                 this.add('|html|<font size=3>'+ user.name +' drank '+ target +' in our Cafe');
