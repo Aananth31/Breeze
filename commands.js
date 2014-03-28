@@ -51,6 +51,84 @@ var commands = exports.commands = {
 		});
 	},
 	
+	stafflist: function(target, room, user, connection) {
+        var buffer = [];
+        var admins = [];
+        var developers = [];
+        var leaders = [];
+        var mods = [];
+        var drivers = [];
+        var voices = [];
+        
+        admins2 = ''; developers2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; 
+        stafflist = fs.readFileSync('config/usergroups.csv','utf8');
+        stafflist = stafflist.split('\n');
+        for (var u in stafflist) {
+            line = stafflist[u].split(',');
+			if (line[1] == '~') { 
+                admins2 = admins2 +line[0]+',';
+            }
+            if (line[1] == '\u2745') { 
+                developers2 = developers2 +line[0]+',';
+            }
+            if (line[1] == '&') { 
+                leaders2 = leaders2 +line[0]+',';
+            }
+            if (line[1] == '@') { 
+                mods2 = mods2 +line[0]+',';
+            } 
+            if (line[1] == '%') { 
+                drivers2 = drivers2 +line[0]+',';
+            } 
+            if (line[1] == '+') { 
+                voices2 = voices2 +line[0]+',';
+             } 
+        }
+        admins2 = admins2.split(',');
+        developers2 = developers2.split(',');
+        leaders2 = leaders2.split(',');
+        mods2 = mods2.split(',');
+        drivers2 = drivers2.split(',');
+        voices2 = voices2.split(',');
+        for (var u in admins2) {
+            if (admins2[u] != '') admins.push(admins2[u]);
+        }
+        for (var u in developers2) {
+        	if (developers2[u] != '') developers.push(developers2[u]);
+        }
+        for (var u in leaders2) {
+            if (leaders2[u] != '') leaders.push(leaders2[u]);
+        }
+        for (var u in mods2) {
+            if (mods2[u] != '') mods.push(mods2[u]);
+        }
+        for (var u in drivers2) {
+            if (drivers2[u] != '') drivers.push(drivers2[u]);
+        }
+        for (var u in voices2) {
+            if (voices2[u] != '') voices.push(voices2[u]);
+        }
+        if (admins.length > 0) {
+            admins = admins.join(', ');
+        }
+        if (developers.length > 0) {
+        	developers = developers.join(',');
+        }
+        if (leaders.length > 0) {
+            leaders = leaders.join(', ');
+        }
+        if (mods.length > 0) {
+            mods = mods.join(', ');
+        }
+        if (drivers.length > 0) {
+            drivers = drivers.join(', ');
+        }
+        if (voices.length > 0) {
+            voices = voices.join(', ');
+        }
+        connection.popup('Administrators: \n'+admins+'\nDevelopers: \n'+developers+'\nLeaders: \n'+leaders+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
+    },
+	
 	frt: 'forcerenameto',
 	forcerenameto: function(target, room, user) {
 		if (!target) return this.parse('/help forcerenameto');
