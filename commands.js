@@ -942,7 +942,7 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 					}
 				}
 				user.money = money;
-				user.money = user.money + tourMoney;
+				user.money = user.money + pay;
 				if (match === true) {
 					var re = new RegExp(line,"g");
 					fs.readFile('config/money.csv', 'utf8', function (err,data) {
