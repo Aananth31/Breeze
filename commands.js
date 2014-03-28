@@ -876,15 +876,16 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 		var luck
 		var price
 		var payout
+		var pay = false
 		target = target.toLowerCase();
 		switch(target) {
-			case coffee:	
+			case 'coffee':	
 				luck = .3;
 				price = 5
-			case juice:
+			case 'juice':
 				luck = .8;
 				price = 2
-			case cola:
+			case 'cola':
 				luck = .7;
 				price = 4
 		}
@@ -934,6 +935,8 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 					});
 				
                 }
+                this.add('|html|<font size=3>'+ user.name +' drank '+ target +' in our Cafe');
+                if(pay) this.add('|html|<font size=3>'+ user.name +' got lucky and was paid '+ pay +' bucks');
                 
 	},
 
