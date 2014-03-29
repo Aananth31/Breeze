@@ -844,7 +844,7 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 		user.hasCustomSymbol = true;
 	},
 	eat: function(target, room, user) {
-		if (!target) return this.parse('You need to order something!');
+		if (!target) return this.sendReply('You need to order something!');
 		var target2 = target;
 		target = target.split(', ');
 		var avatar = '';
@@ -908,6 +908,9 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 				if (err) return console.log(err);
 			});
 			});
+		}
+		else if (match === false) {
+			this.sendReply('That\'s not an item on the menu.')
 		}
 	},
 
