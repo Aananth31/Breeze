@@ -1,4 +1,4 @@
-exports.cafecommands = function() {
+exports.cafecommands = {
   writeMoney: function(uid, amount) {
 			var data = fs.readFileSync('config/money.csv','utf8')
 			var match = false;
