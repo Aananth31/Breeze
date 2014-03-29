@@ -3,7 +3,7 @@
  * Pokemon Showdown - http://pokemonshowdown.com/
  *
  * These are system commands - commands required for Pokemon Showdown
- * to run. A lot of these are sent by the client.
+ * to run. A lot of these are sent by the cllaient.
  *
  * If you'd like to modify commands, please go to config/commands.js,
  * which also teaches you how to use commands.
@@ -1749,7 +1749,7 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 			return connection.sendTo(target, "|noinit|joinfailed|The room '"+target+"' could not be joined.");
 		}
 		if (target.toLowerCase() == "lobby") {
-					return connection.sendTo('lobby','|raw|<div class=infobox><center><b><u>Welcome to LÃ© LeaguÃ© CafÃ©!</b></u></center><br>\u25BA We serve one of the best Coffee\'s in the world~<br>\u25BA Join now to have a chance to get a room and taste the best coffee!<br>\u25BA The most important rule here is to have fun! We hope you will have an enjoyable and comfortable stay here.<br>\u25BA We have a Cafe point/bucks/coins system now! You can buy items in the server or even in game items using these!<br>\u25BA Any ideas or suggestions please report it to a @, &, ~<br>\u25BA Our ranks recently got reset so ask an ~ or & to get it back :D<br><center><a href="http://cafepsim.weebly.com"><img src=http://www.ozmega.com.au/images/meals/cupofhotyumminess2.png height=30></a></center></div>');
+					return connection.sendTo('lobby','|raw|<div class=infobox><center><b><u>Welcome to Lé Café!</b></u></center><br>\u25BA We serve one of the best Coffee\'s in the world~<br>\u25BA Join now to have a chance to get a room and taste the best coffee!<br>\u25BA The most important rule here is to have fun! We hope you will have an enjoyable and comfortable stay here.<br>\u25BA We have a Cafe point/bucks/coins system now! You can buy items in the server or even in game items using these!<br>\u25BA Any ideas or suggestions please report it to a @, &, ~<br>\u25BA Our ranks recently got reset so ask an ~ or & to get it back :D<br><center><a href="http://cafepsim.weebly.com"><img src=http://www.ozmega.com.au/images/meals/cupofhotyumminess2.png height=30></a></center></div>');
 		}
 	},
 
