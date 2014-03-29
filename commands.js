@@ -857,6 +857,14 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center>');
 		if (closeShop) return this.sendReply('|raw|<center><h3><b>The shop is currently closed and will open shortly.</b></h3></center>');
 	},
+	
+	menu: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<center><h4><b><u>Café Shop</u></b></h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
+			'<tr><td>Coffee</td><td>Some hot, delicious coffee for you to enjoy</td><td>5</td></tr>' +
+			'<tr><td>Pie</td><td>Some delicious pie for you to enjoy</td><td>20</td></tr>' +
+		'</table><br />To buy an item from the shop, use /eat [item].</center><br />');
+	},
 	gamemenu: 'gameshop',
 	gameshop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
