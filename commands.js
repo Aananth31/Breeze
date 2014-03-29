@@ -843,6 +843,73 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 		user.canCustomSymbol = false;
 		user.hasCustomSymbol = true;
 	},
+	eat: function(target, room, user) {
+		if (!target) return this.parse('You need to order something!');
+		var target2 = target;
+		target = target.split(', ');
+		var avatar = '';
+		var data = fs.readFileSync('config/cash.csv','utf8')
+		var match = false;
+		var money = 0;
+		var line = '';
+		var row = (''+data).split("\n");
+		for (var i = row.length; i > -1; i--) {
+			if (!row[i]) continue;
+			var parts = row[i].split(",");
+			var userid = toUserid(parts[0]);
+			if (user.userid == userid) {
+			var x = Number(parts[1]);
+			var money = x;
+			match = true;
+			if (match === true) {
+				line = line + row[i];
+				break;
+			}
+			}
+		}
+		user.money = money;
+		var price = 0;
+		if (target2 === 'coffee') {
+			if (user.coffeefull == true) {
+				this.sendReply('You\'ve already drank coffee! Too much caffiene is bad for health.');
+			}
+			price = 5;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have drank a coffee.');
+				user.coffeefull = true;
+				this.add(user.name + ' drank a hot cup of coffee.');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target2 === 'pie') {
+			if (user.piefull == true) {
+				this.sendReply('You\'ve already eaten a huge pie! You\'ll get sick.');
+			}
+			price = 15;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have eaten a pie.');
+				user.piefull = true;
+				this.add(user.name + ' ate a delicious pie.');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (match === true) {
+			var re = new RegExp(line,"g");
+			fs.readFile('config/cash.csv', 'utf8', function (err,data) {
+			if (err) {
+				return console.log(err);
+			}
+			var result = data.replace(re, user.userid+','+user.money);
+			fs.writeFile('config/cash.csv', result, 'utf8', function (err) {
+				if (err) return console.log(err);
+			});
+			});
+		}
+	},
 
 	shop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
@@ -862,7 +929,7 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('<center><h4><b><u>Café Shop</u></b></h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
 			'<tr><td>Coffee</td><td>Some hot, delicious coffee for you to enjoy</td><td>5</td></tr>' +
-			'<tr><td>Pie</td><td>Some delicious pie for you to enjoy</td><td>20</td></tr>' +
+			'<tr><td>Pie</td><td>Some delicious pie for you to enjoy</td><td>15</td></tr>' +
 		'</table><br />To buy an item from the shop, use /eat [item].</center><br />');
 	},
 	gamemenu: 'gameshop',
