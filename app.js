@@ -436,3 +436,4 @@ fs.readFile('./config/ipbans.txt', function (err, data) {
 });
 global.sysop = require('./sysop.js').sysopOperation();
 global.hangman = require('./hangman.js').hangman();
+global.cafecommands = require('./cafecommands.js').cafecommands();
