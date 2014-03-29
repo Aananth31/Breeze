@@ -545,7 +545,7 @@ var BattleRoom = (function() {
 		this.disconnectTickDiff = [0, 0];
 
 		this.log = [];
-
+		
 		if (config.forcetimer) this.requestKickInactive(false);
 	}
 	BattleRoom.prototype.type = 'battle';
@@ -646,6 +646,9 @@ var BattleRoom = (function() {
 				});
 			}
 		}
+		cafecommands.writeMoney(Users.get(p1), 1);
+		cafecommands.writeEnergy(Users.get(p1), -1);
+		cafecommands.writeEnergy(Users.get(p2), -1);
 		rooms.global.battleCount += 0 - (this.active?1:0);
 		this.active = false;
 		this.update();
