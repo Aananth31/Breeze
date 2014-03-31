@@ -645,9 +645,6 @@ var BattleRoom = (function() {
 				});
 			}
 		}
-		cafecommands.writeEnergy(Users.getExact(rated.p2),-1);
-		cafecommands.writeEnergy(Users.getExact(rated.p1),-1);
-		cafecommands.writeMoney(winnerid,1);
 		rooms.global.battleCount += 0 - (this.active?1:0);
 		this.active = false;
 		this.update();
