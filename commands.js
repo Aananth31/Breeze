@@ -690,6 +690,37 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
  targetUser.fc = fc;
 },
 
+requestroom: 'request',
+		room: 'request',
+        request: function(target, room, user) {
+                if (!target) return this.sendReply('The proper syntax is /request [room name], [reason]');
+				if (user.requested == true) {
+				return this.sendReply('You have already requested a room to be created. Please wait till an admin sees the request');
+				}
+		        if (target.indexOf(',') == -1) return this.sendReply('The proper syntax is /request [room name], [reason]');
+                var targets = target.split(',');
+			target = targets[1];
+				target1 = targets[0];
+                if (!target) {
+                        return this.sendReply('You need to specify the reason you want the room.');
+                }
+                if (!target1) {
+                        return this.sendReply('You need to specify the name of the room you want.');
+                }
+				
+				if (Users.get('Siiilver')) {
+				this.send('|pm|~Cafe Bot|~Siiilver|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				}
+				if (Users.get('Judgement v2')) {
+				this.send('|pm|~Cafe Bot|~Judgement v2|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				}
+				if (Users.get('Pokerkid')) {
+				this.send('|pm|~Cafe Bot|~Pokerkid|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				}
+				else Rooms.get('staff').send(user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				user.requested = true;
+				},
+
 	buy: function(target, room, user) {
 		if (!target) return this.parse('/help buy');
 		if (closeShop) return this.sendReply('The shop is currently closed and will open shortly.');
