@@ -545,8 +545,6 @@ var BattleRoom = (function() {
 		this.disconnectTickDiff = [0, 0];
 
 		this.log = [];
-		cafecommands.writeEnergy(Users.get(p1), -1);
-		cafecommands.writeEnergy(Users.get(p2), -1);
 		
 		if (config.forcetimer) this.requestKickInactive(false);
 	}
@@ -571,7 +569,6 @@ var BattleRoom = (function() {
 			var rated = this.rated;
 			this.rated = false;
 			var p1score = 0.5;
-			cafecommands.writeMoney(winnerid, 1);
 			if (winnerid === rated.p1) {
 				p1score = 1;
 			} else if (winnerid === rated.p2) {
@@ -648,6 +645,9 @@ var BattleRoom = (function() {
 				});
 			}
 		}
+		cafecommands.writeEnergy(Users.getExact(rated.p2),-1);
+		cafecommands.writeEnergy(Users.getExact(rated.p1),-1);
+		cafecommands.writeMoney(winnerid,1);
 		rooms.global.battleCount += 0 - (this.active?1:0);
 		this.active = false;
 		this.update();
