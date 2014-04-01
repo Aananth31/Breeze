@@ -138,7 +138,7 @@ var cmds = {
                                 hangman[room.id].underscores.push('_');
                                 hangman[room.id].clue[0] = targets[1];
                         }
-                        return this.add('|html|<div class = "infobox"><center><font size = 2><b>' + user.name + '</b> started a game of hangman! The word has ' + targets[0].length + ' letters.<br>' + hangman[room.id].undercsores.join(" ") + '<br>The category: ' + hangman[room.id].clue[0] + '</font></center></div>');
+                        return this.add('|html|<div class = "infobox"><center><font size = 2><b>' + user.name + '</b> started a game of hangman! The word has ' + targets[0].length + ' letters.<br>' + hangman[room.id].underscores.join(" ") + '<br>The category: ' + hangman[room.id].clue[0] + '</font></center></div>');
                 }
         },
 
