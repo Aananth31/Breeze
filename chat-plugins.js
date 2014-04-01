@@ -228,5 +228,5 @@ var plugins = exports.plugins = {
 			},
 			
 		}
-	}
+	},
 };
