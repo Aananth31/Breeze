@@ -17,7 +17,7 @@ exports.hangman = function(h) {
                 },
                 
                 
-                guess: function(target) {
+                guess: function(target,room,user) {
                 lettertarget = target.toLowerCase();
                 for(var y = 0; y < 27; y++) {
                         if(lettertarget === hangman[room.id].guessedletters[y]) {
@@ -52,7 +52,7 @@ exports.hangman = function(h) {
                 },
                 
                 
-                guessword: function(target) {
+                guessword: function(target,room,user) {
                         if (target.length > 10) return this.sendReply('This guess is too long; it cannot exceed 10 characters.');
                 var targetword = target.toLowerCase();
                 if(targetword === hangman[room.id].word[0]) {
