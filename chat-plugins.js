@@ -173,10 +173,13 @@ var plugins = exports.plugins = {
 		letters: new Array(),
 		commands: {
 			hangman: function(target,room,user) {
+				this.parse('/join hangman')
+			},
+			starthangman: function(target,room,user) {
 				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
-				if (!target) return this.sendReply('The correct syntax for this command is /hangman [word], [topic]');
+				if (!target) return this.sendReply('The correct syntax for this command is /starthangman [word], [topic]');
 				if (hangman.status === 'off') {
 					var targets = target.split(',');
 					if(!targets[1]) return this.sendReply('Make sure you include a hint.');
