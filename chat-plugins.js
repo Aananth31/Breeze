@@ -171,7 +171,7 @@ var plugins = exports.plugins = {
 		host: '',
 		show: new Array(),
 		letters: new Array(),
-		resethangman: funcion() {
+		resethangman: function() {
 			plugins.hangman.status: 'off';
 			plugins.hangman.hint: '';
 			plugins.hangman.word: '';
