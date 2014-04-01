@@ -195,7 +195,7 @@ var plugins = exports.plugins = {
 					if(!targets[1]) return this.sendReply('Make sure you include a hint.');
 					if(targets[0].length > 10) return this.sendReply('As there are only 8 given guesses, don\'t make the word too long.');
 					if(targets[0].indexOf(' ') != -1) return this.sendReply('Please don\'t put spaces in the word.');
-					word: targets[0].toLowerCase();
+					var word = targets[0].toLowerCase();
 					plugins.hangman.status = 'on';
 					plugins.hangman.hint = targets[1];
 					plugins.hangman.word = word;
