@@ -161,5 +161,39 @@ var plugins = exports.plugins = {
 				);
 			}
 		}
+	},
+	hangman: {
+		status: 'off',
+		hint: '',
+		word: '',
+		guessedletters: new Array(),
+		correctletters: new Array(),
+		host: '',
+		show: new Array(),
+		letters: new Array(),
+		commands: {
+			hangman: function(target,room,user) {
+				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
+				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
+				if (!target) return this.sendReply('The correct syntax for this command is /hangman [word], [topic]');
+				if (hangman.status === 'off') {
+					var targets = target.split(',');
+					if(!targets[1]) return this.sendReply('Make sure you include a hint.');
+					if(targets[0].length > 10) return this.sendReply('As there are only 8 given guesses, don\'t make the word too long.');
+					if(targets[0].indexOf(' ') != -1) return this.sendReply('Please don\'t put spaces in the word.');
+					word: targets[0].toLowerCase();
+					hangman.status = 'on';
+					hangman.hint = targets[1];
+					hangman.word = word;
+					hangman.host = user.userid;
+					for (var s = 0; s < word.length + 1; s++) {
+						hangman.letters.push(word[s]);
+						hangman.show.push('_');
+					}
+					return this.add('|html|<div class=infobox><div class=broadcast-red><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ hangman.show +'</font><br><b>Hint:</b> '+ hangman.hint +'</div></div>');
+				},
+			
+		}
 	}
 };
