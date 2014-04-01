@@ -197,7 +197,7 @@ var cmds = {
                 if(target.length > 1) {
                         return this.sendReply('Please specify a single letter to guess. To guess the word, use /word.');
                 }
-                hangman.guess(target);
+                hangman.guess(target,room,user);
         },
 
         guessword: function(target, room, user) {
@@ -213,7 +213,7 @@ var cmds = {
                 if(user.userid === hangman[room.id].hangmaner[0]) {
                         return this.sendReply('You cannot guess the word because you are running hangman!');
                 }
-                hangman.guessword(target);
+                hangman.guessword(target,room,user);
         },
 
         endhangman: function(target, room, user) {
