@@ -197,6 +197,9 @@ var plugins = exports.plugins = {
 			vh: 'viewhangman',
 			viewhangman: function(target,room,user) {
 				if (!this.canBroadcast()) return false;
+				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
+				if (hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				this.sendReplyBox('<div class=infobox>'+ hangman.show +'<br><b>Hint:</b> '+ hangman.hint +'</div>');
 			},
 			
