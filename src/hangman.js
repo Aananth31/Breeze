@@ -37,16 +37,16 @@ exports.hangman = function(h) {
                         hangman[room.id].guesses = hangman[room.id].guesses - 1;
                                 if(hangman[room.id].guesses === 0) {
                                         hangman.reset(room.id);
-                                        return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
+                                        return room.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
                                 }
-                        this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word.');
+                        room.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word.');
                 }
                 else {
-                        this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
+                        room.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
                 }
                 hangman[room.id].guessedletters.push(lettertarget);
                 if(hangman[room.id].correctletters.length === hangman[room.id].word[0].length) {
-                        this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + hangman[room.id].word[0] + '\'.');
+                        room.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + hangman[room.id].word[0] + '\'.');
                         hangman.reset(room.id)
                 }
                 },
@@ -56,7 +56,7 @@ exports.hangman = function(h) {
                         if (target.length > 10) return this.sendReply('This guess is too long; it cannot exceed 10 characters.');
                 var targetword = target.toLowerCase();
                 if(targetword === hangman[room.id].word[0]) {
-                        this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + hangman[room.id].word[0] + '\'.');
+                        room.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + hangman[room.id].word[0] + '\'.');
                         hangman.reset(room.id)
                 }
                 else {
@@ -67,9 +67,9 @@ exports.hangman = function(h) {
                         hangman[room.id].guessedwords.push(target);
                         if(hangman[room.id].guesses === 0) {
                                 hangman.reset(room.id)
-                                return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word. You have failed to guess the word, so the man has been hanged.');
+                                return room.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word. You have failed to guess the word, so the man has been hanged.');
                         }
-                        this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word.');
+                        room.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word.');
                 }
                 },
         };
@@ -138,7 +138,7 @@ var cmds = {
                                 hangman[room.id].underscores.push('_');
                                 hangman[room.id].clue[0] = targets[1];
                         }
-                        return this.add('|html|<div class = "infobox"><center><font size = 2><b>' + user.name + '</b> started a game of hangman! The word has ' + targets[0].length + ' letters.<br>' + hangman[room.id].underscores.join(" ") + '<br>The category: ' + hangman[room.id].clue[0] + '</font></center></div>');
+                        return room.add('|html|<div class = "infobox"><center><font size = 2><b>' + user.name + '</b> started a game of hangman! The word has ' + targets[0].length + ' letters.<br>' + hangman[room.id].underscores.join(" ") + '<br>The category: ' + hangman[room.id].clue[0] + '</font></center></div>');
                 }
         },
 
@@ -227,7 +227,7 @@ var cmds = {
                         return this.sendReply('There is no game going on.');
                 }
                 if(hangman[room.id].hangman === true) {
-                        this.add('|html|<b>' + user.name + '</b> ended the game of hangman.');
+                        room.add('|html|<b>' + user.name + '</b> ended the game of hangman.');
                         hangman.reset(room.id);
                 }
         }
