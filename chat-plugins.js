@@ -171,6 +171,16 @@ var plugins = exports.plugins = {
 		host: '',
 		show: new Array(),
 		letters: new Array(),
+		resethangman: funcion() {
+			plugins.hangman.status: 'off';
+			plugins.hangman.hint: '';
+			plugins.hangman.word: '';
+			plugins.hangman.guessedletters: new Array();
+			plugins.hangman.correctletters: new Array();
+			plugins.hangman.host: '';
+			plugins.hangman.show: new Array();
+			plugins.hangman.letters: new Array();	
+		},
 		commands: {
 			hangman: function(target,room,user) {
 				this.parse('/join hangman')
@@ -180,21 +190,21 @@ var plugins = exports.plugins = {
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (!target) return this.sendReply('The correct syntax for this command is /starthangman [word], [topic]');
-				if (hangman.status === 'off') {
+				if (plugins.hangman.status === 'off') {
 					var targets = target.split(',');
 					if(!targets[1]) return this.sendReply('Make sure you include a hint.');
 					if(targets[0].length > 10) return this.sendReply('As there are only 8 given guesses, don\'t make the word too long.');
 					if(targets[0].indexOf(' ') != -1) return this.sendReply('Please don\'t put spaces in the word.');
 					word: targets[0].toLowerCase();
-					hangman.status = 'on';
-					hangman.hint = targets[1];
-					hangman.word = word;
-					hangman.host = user.userid;
+					plugins.hangman.status = 'on';
+					plugins.hangman.hint = targets[1];
+					plugins.hangman.word = word;
+					plugins.hangman.host = user.userid;
 					for (var s = 0; s < word.length + 1; s++) {
-						hangman.letters.push(word[s]);
-						hangman.show.push('_');
+						plugins.hangman.letters.push(word[s]);
+						plugins.hangman.show.push('_');
 					}
-					return this.add('|html|<div class=infobox><div class=broadcast-red><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ hangman.show +'</font><br><b>Hint:</b> '+ hangman.hint +'</div></div>');
+					return this.add('|html|<div class=infobox><div class=broadcast-red><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'</div></div>');
 				}
 			},
 			vh: 'viewhangman',
@@ -202,18 +212,19 @@ var plugins = exports.plugins = {
 				if (!this.canBroadcast()) return false;
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
-				if (hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				this.sendReplyBox('<div class=infobox>'+ hangman.show +'<br><b>Hint:</b> '+ hangman.hint +'</div>');
+				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
+				this.sendReply('|html|<div class=infobox>'+ plugins.hangman.show +'<br><b>Hint:</b> '+ plugins.hangman.hint +'</div>');
 			},
 			changehint: 'edithint',
 			edithint: function(target,room,user) {
 				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
+				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReply('The correct syntax for this command is /hangman [topic]');
-				hangman.hint = target;
-				this.sendReplyBox('You changed the hint to '+ hangman.hint);
-				this.parse('!vh');
+				plugins.hangman.hint = target;
+				this.sendReplyBox('You changed the hint to '+ plugins.hangman.hint);
+				this.add('|html|The current hangman\'s hint has been changed<br><div class=infobox>'+ plugins.hangman.show +'<br><b>Hint:</b> '+ plugins.hangman.hint +'</div>');
 			},
 			
 		}
