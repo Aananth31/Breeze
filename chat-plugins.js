@@ -192,7 +192,13 @@ var plugins = exports.plugins = {
 						hangman.show.push('_');
 					}
 					return this.add('|html|<div class=infobox><div class=broadcast-red><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ hangman.show +'</font><br><b>Hint:</b> '+ hangman.hint +'</div></div>');
-				},
+				}
+			},
+			vh: 'viewhangman',
+			viewhangman: function(target,room,user) {
+				if (!this.canBroadcast()) return false;
+				this.sendReplyBox('<div class=infobox>'+ hangman.show +'<br><b>Hint:</b> '+ hangman.hint +'</div>');
+			},
 			
 		}
 	}
