@@ -13,8 +13,65 @@ exports.hangman = function(h) {
                                 correctletters: new Array(),
                                 underscores: new Array(),
                                 clue: new Array(),
-                        };
+                        }
+                },
+                
+                
+                guess: function(target) {
+                lettertarget = target.toLowerCase();
+                for(var y = 0; y < 27; y++) {
+                        if(lettertarget === hangman[room.id].guessedletters[y]) {
+                                return this.sendReply('Someone has already guessed the letter \'' + lettertarget + '\'.');
+                        }
                 }
+                var letterright = new Array();
+                for(var a = 0; a < hangman[room.id].word[0].length; a++) {
+                        if(lettertarget === hangman[room.id].guessletters[a]) {
+                                var c = a + 1;
+                                letterright.push(c);
+                                hangman[room.id].correctletters.push(c);
+                                hangman[room.id].underscores[a] = lettertarget;
+                        }
+                }
+                if(letterright[0] === undefined) {
+                        hangman[room.id].guesses = hangman[room.id].guesses - 1;
+                                if(hangman[room.id].guesses === 0) {
+                                        hangman.reset(room.id);
+                                        return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
+                                }
+                        this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word.');
+                }
+                else {
+                        this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
+                }
+                hangman[room.id].guessedletters.push(lettertarget);
+                if(hangman[room.id].correctletters.length === hangman[room.id].word[0].length) {
+                        this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + hangman[room.id].word[0] + '\'.');
+                        hangman.reset(room.id)
+                }
+                },
+                
+                
+                guessword: function(target) {
+                        if (target.length > 10) return this.sendReply('This guess is too long; it cannot exceed 10 characters.');
+                var targetword = target.toLowerCase();
+                if(targetword === hangman[room.id].word[0]) {
+                        this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + hangman[room.id].word[0] + '\'.');
+                        hangman.reset(room.id)
+                }
+                else {
+                        if (hangman[room.id].guessedwords.indexOf(target) != -1) {
+                                return this.sendReply('Someone has already guessed this word.')
+                        }
+                        hangman[room.id].guesses = hangman[room.id].guesses - 1;
+                        hangman[room.id].guessedwords.push(target);
+                        if(hangman[room.id].guesses === 0) {
+                                hangman.reset(room.id)
+                                return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word. You have failed to guess the word, so the man has been hanged.');
+                        }
+                        this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word.');
+                }
+                },
         };
         for (var i in hangmanstuff) {
                 hangman[i] = hangmanstuff[i];
@@ -140,40 +197,10 @@ var cmds = {
                 if(target.length > 1) {
                         return this.sendReply('Please specify a single letter to guess. To guess the word, use /word.');
                 }
-                lettertarget = target.toLowerCase();
-                for(var y = 0; y < 27; y++) {
-                        if(lettertarget === hangman[room.id].guessedletters[y]) {
-                                return this.sendReply('Someone has already guessed the letter \'' + lettertarget + '\'.');
-                        }
-                }
-                var letterright = new Array();
-                for(var a = 0; a < hangman[room.id].word[0].length; a++) {
-                        if(lettertarget === hangman[room.id].guessletters[a]) {
-                                var c = a + 1;
-                                letterright.push(c);
-                                hangman[room.id].correctletters.push(c);
-                                hangman[room.id].underscores[a] = lettertarget;
-                        }
-                }
-                if(letterright[0] === undefined) {
-                        hangman[room.id].guesses = hangman[room.id].guesses - 1;
-                                if(hangman[room.id].guesses === 0) {
-                                        hangman.reset(room.id);
-                                        return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
-                                }
-                        this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word.');
-                }
-                else {
-                        this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
-                }
-                hangman[room.id].guessedletters.push(lettertarget);
-                if(hangman[room.id].correctletters.length === hangman[room.id].word[0].length) {
-                        this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + hangman[room.id].word[0] + '\'.');
-                        hangman.reset(room.id)
-                }
+                hangman.guess(target);
         },
 
-        word: function(target, room, user) {
+        guessword: function(target, room, user) {
                 if(room.id !== 'hangman') {
                                 return this.sendReply('Only in hangman room :D');
                 }
@@ -186,24 +213,7 @@ var cmds = {
                 if(user.userid === hangman[room.id].hangmaner[0]) {
                         return this.sendReply('You cannot guess the word because you are running hangman!');
                 }
-                if (target.length > 10) return this.sendReply('This guess is too long; it cannot exceed 10 characters.');
-                var targetword = target.toLowerCase();
-                if(targetword === hangman[room.id].word[0]) {
-                        this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + hangman[room.id].word[0] + '\'.');
-                        hangman.reset(room.id)
-                }
-                else {
-                        if (hangman[room.id].guessedwords.indexOf(target) != -1) {
-                                return this.sendReply('Someone has already guessed this word.')
-                        }
-                        hangman[room.id].guesses = hangman[room.id].guesses - 1;
-                        hangman[room.id].guessedwords.push(target);
-                        if(hangman[room.id].guesses === 0) {
-                                hangman.reset(room.id)
-                                return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word. You have failed to guess the word, so the man has been hanged.');
-                        }
-                        this.add('|html|<b>' + user.name + '</b> guessed the word \'' + targetword + '\', but it was not the word.');
-                }
+                hangman.guessword(target);
         },
 
         endhangman: function(target, room, user) {
