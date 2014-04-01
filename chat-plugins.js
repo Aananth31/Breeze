@@ -172,14 +172,14 @@ var plugins = exports.plugins = {
 		show: new Array(),
 		letters: new Array(),
 		resethangman: function() {
-			plugins.hangman.status: 'off';
-			plugins.hangman.hint: '';
-			plugins.hangman.word: '';
-			plugins.hangman.guessedletters: new Array();
-			plugins.hangman.correctletters: new Array();
-			plugins.hangman.host: '';
-			plugins.hangman.show: new Array();
-			plugins.hangman.letters: new Array();	
+			plugins.hangman.status = 'off';
+			plugins.hangman.hint = '';
+			plugins.hangman.word = '';
+			plugins.hangman.guessedletters = new Array();
+			plugins.hangman.correctletters = new Array();
+			plugins.hangman.host = '';
+			plugins.hangman.show = new Array();
+			plugins.hangman.letters = new Array();	
 		},
 		commands: {
 			hangman: function(target,room,user) {
