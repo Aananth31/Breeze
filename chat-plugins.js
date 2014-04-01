@@ -202,6 +202,16 @@ var plugins = exports.plugins = {
 				if (hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				this.sendReplyBox('<div class=infobox>'+ hangman.show +'<br><b>Hint:</b> '+ hangman.hint +'</div>');
 			},
+			changehint: 'edithint',
+			edithint: function(target,room,user) {
+				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
+				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
+				if (!target) return this.sendReply('The correct syntax for this command is /hangman [topic]');
+				hangman.hint = target;
+				this.sendReplyBox('You changed the hint to '+ hangman.hint);
+				this.parse('!vh');
+			},
 			
 		}
 	}
