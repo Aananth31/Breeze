@@ -230,42 +230,45 @@ var plugins = exports.plugins = {
 			},
 			guess: function(target,room,user) {
 				if (!this.canTalk()) return false;
-				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReply('The correct syntax for this command is /guess [letter]');
 				if (target.length > 1) return this.sendReplyBox('You can only guess one letter, do /guessword [word] to guess a word ;)');
-				var match = false;
-				var tlc = target.toLowerCase();
-				for(var y = 0; y < 27; y++) {
-					if(tlc === plugins.hangman.guessedletters[y]) return this.sendReply('Someone has already guessed the letter \'' + tlc + '\'.');
-				}
-				var position = new Array();
-				for (var i = 1; i < plugins.hangman.letters.length + 1;i++) {
-					if (tlc = plugins.hangman.letters.length[i]) {
-						plugins.hangman.correctletters[i] = tlc;
-						plugins.hangman.show[i] = tlc;
-						position.push[i];
-						match = true;
-					}
-				}
-				plugins.hangman.guessesleft -= 1
-				if (match = true) {
-					this.add('|html|<b>'+ user.name +' guessed the letter "<b>'+ tlc +'</b>" but it was not a part of the word');
-				} else {
-					this.add('|html|<b>'+ user.name +' guessed the letter "<b>'+ tlc +'</b>" and it was '+ position.toString() +' the word');
-				}
-				if (plugins.hangman.guessesleft < 1) {
-					if (plugins.hangman.correctletters === plugins.hangman.letters) {
-						this.add('|html|The word '+ plugins.hangman.word +' has been guessed. Congrats to all who participated.');
-					} else {
-						this.add('|html|The word '+ plugins.hangman.word +' wasn\'t guessed. The man has been hanged :(');
-					}
-					plugins.hangman.resethangman();
-				}	
+					lettertarget = target.toLowerCase();
+		for(var y = 0; y < 27; y++) {
+			if(lettertarget === plugins.hangman.guessedletters[y]) {
+				return this.sendReply('Someone has already guessed the letter \'' + lettertarget + '\'.');
 			}
-			},
-			
 		}
+		var letterright = new Array();
+		for(var a = 0; a < plugins.hangman.word[0].length; a++) {
+			if(lettertarget === plugins.hangman.guessletters[a]) {
+				var c = a + 1;
+				letterright.push(c);
+				plugins.hangman.correctletters.push(c);
+				plugins.hangman.show[a] = lettertarget;
+			}
+		}
+		if(letterright[0] === undefined) {
+			plugins.hangman.givenguesses = plugins.hangman.givenguesses - 1;
+				if(plugins.hangman.givenguesses === 0) {
+					plugins.hangman.resethangman();
+					return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
+				}
+			this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', but it was not in the word.');
+		}
+		else {
+			this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
+		}
+		plugins.hangman.guessedletters.push(lettertarget);
+		if(plugins.hangman.correctletters.length === plugins.hangman.word[0].length) {
+			this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + plugins.hangman.word[0] + '\'.');
+			plugins.hangman.resethangman();
+		}	
+			}
+		},
+			
+	}
 };
 
