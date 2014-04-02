@@ -288,7 +288,6 @@ var plugins = exports.plugins = {
 				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
-				if (!target) return this.sendReply('The correct syntax for this command is /starthangman [word], [topic]');
 				if (plugins.hangman.status === 'off') return this.sendReplyBox('No Hangman is going on');
 				plugins.hangman.resethangman();
 				this.add('|html|<font size=2><b>'+ user.name +'</b> has ended the hangman.');
