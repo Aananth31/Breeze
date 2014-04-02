@@ -235,6 +235,7 @@ var plugins = exports.plugins = {
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReply('The correct syntax for this command is /guess [letter]');
 				if (target.length > 1) return this.sendReplyBox('You can only guess one letter, do /guessword [word] to guess a word ;)');
+				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess cause you are the one hosting hangman :P');
 					tlc = target.toLowerCase();
 		for(var y = 0; y < 27; y++) {
 			if(tlc === plugins.hangman.guessedletters[y]) {
@@ -275,6 +276,7 @@ var plugins = exports.plugins = {
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReply('The correct syntax for this command is /guess [letter]');
 				if (target.length > 10) return this.sendReplyBox('Hmm I dont think the word is more than 10 charecters long, dont waste your guesses ;)');
+				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess cause you are the one hosting hangman :P');
 				var tlc = target.toLowerCase();
 				if (tlc === plugins.hangman.word) {
 					this.add('|html|<b>'+ user.name +' has guessed the word <b>'+ tlc +'</b>. Congrats to him/her');
@@ -284,7 +286,18 @@ var plugins = exports.plugins = {
 					plugins.hangman.guessesleft -= 1;
 				}
 		},
+		endhangman: function(target,room,user) {
+				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
+				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
+				if (!target) return this.sendReply('The correct syntax for this command is /starthangman [word], [topic]');
+				if (plugins.hangman.status === 'off') return this.sendReplyBox('No Hangman is going on');
+				plugins.hangman.resethangman();
+				this.add('|html|<font size=2><b>'+ user.name +'</b> has ended the hangman.');
+		},
+	}
 			
 	}
+	
 };
 
