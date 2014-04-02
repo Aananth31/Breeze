@@ -277,7 +277,7 @@ var plugins = exports.plugins = {
 				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess cause you are the one hosting hangman :P');
 				var tlc = target.toLowerCase();
 				if (tlc === plugins.hangman.word) {
-					this.add('|html|<b>'+ user.name +' has guessed the word <b>'+ tlc +'</b>. Congrats to him/her');
+					this.add('|html|<b>'+ user.name +'</b> has guessed the word <b>'+ tlc +'</b>. Congrats!');
 					plugins.hangman.resethangman();
 				} else {
 					this.add('|html|<b>'+ user.name +' has guessed the word <b>'+ tlc +'</b>, But it was not the word :(');
