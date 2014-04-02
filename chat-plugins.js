@@ -253,7 +253,7 @@ var plugins = exports.plugins = {
 				if (match = true) {
 					this.add('|html|<b>'+ user.name +' guessed the letter "<b>'+ tlc +'</b>" but it was not a part of the word');
 				} else {
-					this.add('|html|<b>'+ user.name +' guessed the letter "<b>'+ tlc +'</b>" and it was '+ position.toString() +' the word');)
+					this.add('|html|<b>'+ user.name +' guessed the letter "<b>'+ tlc +'</b>" and it was '+ position.toString() +' the word');
 				}
 				if (plugins.hangman.guessesleft < 1) {
 					if (plugins.hangman.correctletters === plugins.hangman.letters) {
