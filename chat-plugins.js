@@ -262,8 +262,8 @@ var plugins = exports.plugins = {
 			this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + lettertarget + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
 		}
 		plugins.hangman.guessedletters.push(lettertarget);
-		if(plugins.hangman.correctletters.length === plugins.hangman.word[0].length) {
-			this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + plugins.hangman.word[0] + '\'.');
+		if(plugins.hangman.correctletters.length === plugins.hangman.word.length) {
+			this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + plugins.hangman.word + '\'.');
 			plugins.hangman.resethangman();
 		}	
 			}
