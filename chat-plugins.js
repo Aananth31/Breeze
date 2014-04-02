@@ -242,7 +242,7 @@ var plugins = exports.plugins = {
 			}
 		}
 		var letterright = new Array();
-		for(var a = 0; a < plugins.hangman.word[0].length; a++) {
+		for(var a = 0; a < plugins.hangman.word.length; a++) {
 			if(lettertarget === plugins.hangman.letters[a]) {
 				var c = a + 1;
 				letterright.push(c);
