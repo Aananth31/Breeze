@@ -171,6 +171,7 @@ var plugins = exports.plugins = {
 		host: '',
 		show: new Array(),
 		letters: new Array(),
+		guessesleft: 8;
 		resethangman: function() {
 			plugins.hangman.status = 'off';
 			plugins.hangman.hint = '';
@@ -179,7 +180,8 @@ var plugins = exports.plugins = {
 			plugins.hangman.correctletters = new Array();
 			plugins.hangman.host = '';
 			plugins.hangman.show = new Array();
-			plugins.hangman.letters = new Array();	
+			plugins.hangman.letters = new Array();
+			plugins.hangman.guessesleft = 8;
 		},
 		commands: {
 			hangman: function(target,room,user) {
@@ -213,7 +215,7 @@ var plugins = exports.plugins = {
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				this.sendReply('|html|<div class=infobox>'+ plugins.hangman.show +'<br><b>Hint:</b> '+ plugins.hangman.hint +'</div>');
+				this.sendReply('|html|<div class=infobox>'+ plugins.hangman.show +'<br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div>');
 			},
 			changehint: 'edithint',
 			edithint: function(target,room,user) {
