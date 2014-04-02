@@ -223,10 +223,34 @@ var plugins = exports.plugins = {
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				if (!target) return this.sendReply('The correct syntax for this command is /hangman [topic]');
+				if (!target) return this.sendReply('The correct syntax for this command is /edithint [hint]');
 				plugins.hangman.hint = target;
 				this.sendReplyBox('You changed the hint to '+ plugins.hangman.hint);
 				this.add('|html|The current hangman\'s hint has been changed<br><div class=infobox>'+ plugins.hangman.show +'<br><b>Hint:</b> '+ plugins.hangman.hint +'</div>');
+			},
+			guess: function(target,room,user) {
+				if (!this.canTalk()) return false;
+				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
+				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
+				if (!target) return this.sendReply('The correct syntax for this command is /guess [letter]');
+				if (target.length > 1) return this.sendReplyBox('You can only guess one letter, do /guessword [word] to guess a word ;)');
+				var match = false;
+				var tlc = target.toLowerCase(); //tlc stands for target to lowercase :P
+				for (var t = 1; t < plugins.hangman.letters.length;t++) {
+					if (plugins.hangman.letters[t] = (tlc)) {
+						plugins.hangman.correctletters[t] = tlc;
+						plugins.hangman.show[t] = tlc;
+						match = true;
+					}
+				}
+				plugins.hangman.guessesleft -= 1;
+				if (match = true) this.add('|html|<b>'+ user.name +'</b> guessed the letter "'+ tlc +'" which was a part of the word!');
+				if (match = false) this.add('|html|<b>'+ user.name +'</b> guessed the letter "'+ tlc +'" which was not a part of the word!');
+				if (plugins.hangman.correctletters === plugins.hangman.letters) {
+					this.add('|html|The hangman has been completed!. Congrats to all who participated :D');
+					plugins.hangman.reset();
+				}
 			},
 			
 		}
