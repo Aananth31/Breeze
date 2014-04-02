@@ -267,5 +267,5 @@ var plugins = exports.plugins = {
 			},
 			
 		}
-	},
 };
+
