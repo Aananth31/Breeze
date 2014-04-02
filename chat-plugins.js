@@ -206,7 +206,8 @@ var plugins = exports.plugins = {
 						plugins.hangman.letters.push(word[s]);
 						plugins.hangman.show.push('_');
 					}
-					return this.add('|html|<div class=infobox><div class="hangman"><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'</div></div>');
+					var nocomma = plugins.hangman.show.replace('_',' ');
+					return this.add('|html|<div class=infobox><div class="hangman"><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ nocomma +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'</div></div>');
 				}
 			},
 			vh: 'viewhangman',
@@ -215,7 +216,8 @@ var plugins = exports.plugins = {
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				this.sendReply('|html|<div class=infobox>'+ plugins.hangman.show +'<br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div>');
+				var nocomma = plugins.hangman.show.replace('_',' ');
+				this.sendReply('|html|<div class=infobox>'+ nocomma +'<br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div>');
 			},
 			changehint: 'edithint',
 			edithint: function(target,room,user) {
