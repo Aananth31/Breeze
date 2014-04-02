@@ -236,7 +236,7 @@ var plugins = exports.plugins = {
 				if (!target) return this.sendReply('The correct syntax for this command is /guess [letter]');
 				if (target.length > 1) return this.sendReplyBox('You can only guess one letter, do /guessword [word] to guess a word ;)');
 				var match = false;
-				tlc = target.toLowerCase();
+				var tlc = target.toLowerCase();
 				for(var y = 0; y < 27; y++) {
 					if(tlc === plugins.hangman.guessedletters[y]) return this.sendReply('Someone has already guessed the letter \'' + tlc + '\'.');
 				}
