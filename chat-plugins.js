@@ -297,7 +297,7 @@ var plugins = exports.plugins = {
 		},
 	}
 			
-	}
-	
 };
+	
+
 
