@@ -206,7 +206,7 @@ var plugins = exports.plugins = {
 						plugins.hangman.letters.push(word[s]);
 						plugins.hangman.show.push('_');
 					}
-					return this.add('|html|<div class=infobox><div class=broadcast-red><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'</div></div>');
+					return this.add('|html|<div class=infobox><div class="broadcast-green" border="2px solid"><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'</div></div>');
 				}
 			},
 			vh: 'viewhangman',
