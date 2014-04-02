@@ -171,7 +171,7 @@ var plugins = exports.plugins = {
 		host: '',
 		show: new Array(),
 		letters: new Array(),
-		guessesleft: 8;
+		guessesleft: 8,
 		resethangman: function() {
 			plugins.hangman.status = 'off';
 			plugins.hangman.hint = '';
