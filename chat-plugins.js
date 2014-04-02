@@ -240,30 +240,30 @@ var plugins = exports.plugins = {
 				for(var y = 0; y < 27; y++) {
 					if(tlc === plugins.hangman.guessedletters[y]) return this.sendReply('Someone has already guessed the letter \'' + tlc + '\'.');
 				}
-				var letterright = new Array();
-				for(var a = 0; a < plugins.hangman.word[0].length; a++) {
-					if(tlc === plugins.hangman.letters[a]) {
-					var c = a + 1;
-					letterright.push(c);
-					plugins.hangman.correctletters.push(c);
-					plugins.hangman.show[a] = tlc;
+				var position = new Array();
+				for (var i = 1; i < plugins.hangman.letters.length + 1;i++) {
+					if (tlc = plugins.hangman.letters.length[i]) {
+						plugins.hangman.correctletters[i] = tlc;
+						plugins.hangman.show[i] = tlc;
+						position.push[i];
+						match = true;
 					}
 				}
-				if(letterright[0] === undefined) {
-					plugins.hangman.guessesleft = plugins.hangman.guessesleft - 1;
-					if(plugins.hangman.guessesleft === 0) {
-						plugins.hangman.reset();
-						return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
-					}
-				this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', but it was not in the word.');
+				plugins.hangman.guessesleft -= 1
+				if (match = true) {
+					this.add('|html|<b>'+ user.name +' guessed the letter "<b>'+ tlc +'</b>" but it was not a part of the word');
 				} else {
-				this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
+					this.add('|html|<b>'+ user.name +' guessed the letter "<b>'+ tlc +'</b>" and it was '+ position.toString() +' the word');)
 				}
-				plugins.hangman.guessedletters.push(tlc);
-				if(plugins.hangman.correctletters.length === plugins.hangman.word[0].length) {
-					this.add('|html|Congratulations! <b>' + user.name + '</b> has guessed the word, which was: \'' + plugins.hangman.word[0] + '\'.');
-					plugins.hangman.reset()
-				}
+				if (plugins.hangman.guessesleft < 1) {
+					if (plugins.hangman.correctletters === plugins.hangman.letters) {
+						this.add('|html|The word '+ plugins.hangman.word +' has been guessed. Congrats to all who participated.');
+					} else {
+						this.add('|html|The word '+ plugins.hangman.word +' wasn\'t guessed. The man has been hanged :(');
+					}
+					plugins.hangman.resethangman();
+				}	
+			}
 			},
 			
 		}
