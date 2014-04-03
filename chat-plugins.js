@@ -298,12 +298,14 @@ var plugins = exports.plugins = {
 			},
 			hangmanhelp: function(target,room,user) {
 				if (!this.canBroadcast()) return;
-				this.sendReplyBox('<b>/hangman</b> - Takes you to the hangman room<br>' +
-						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. Requires: +<br>' +
+				this.sendReplyBox('<b>Player Help</b><br>' +
+						  '<b>/hangman</b> - Takes you to the hangman room<br>' +
 						  '<b>/viewhangman</b> - Shows the current state of hangman in the room.<br>' +
 						  '<b>/guess [letter]</b> - Lets you guess a letter<br>' +
 						  '<b>/guessword [word]</b> - Lets you guess a word<br>' +
-						  '<b>/endhangman</b> - Ends the current game of hangman<br>' +
+						  '<b>Admin Help</b>' +
+						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. Requires: +<br>' +
+						  '<b>/endhangman</b> - Ends the current game of hangman. Requires +<br>' +
 						  '<b>/changehint</b> - Changes the hint of the current hangman. Requires you to be the host (the one who started the game)');
 			},
 		},
