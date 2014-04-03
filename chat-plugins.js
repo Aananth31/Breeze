@@ -219,7 +219,7 @@ var plugins = exports.plugins = {
 			},
 			changehint: 'edithint',
 			edithint: function(target,room,user) {
-				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
+				if (user.userid !== plugins.hangman.host) return this.sendReply('You do not have enough authority to do this.');
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
@@ -283,6 +283,10 @@ var plugins = exports.plugins = {
 					this.add('|html|<b>'+ user.name +' has guessed the word <b>'+ tlc +'</b>, But it was not the word :(');
 					plugins.hangman.guessesleft -= 1;
 				}
+				if(plugins.hangman.givenguesses === 0) {
+						plugins.hangman.resethangman();
+						return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + tlc + '\', but it was not the word. You have failed to guess the word, so the man has been hanged.');
+				}
 			},
 			endhangman: function(target,room,user) {
 				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
@@ -291,6 +295,16 @@ var plugins = exports.plugins = {
 				if (plugins.hangman.status === 'off') return this.sendReplyBox('No Hangman is going on');
 				plugins.hangman.resethangman();
 				this.add('|html|<font size=2><b>'+ user.name +'</b> has ended the hangman.');
+			},
+			hangmanhelp: function(target,room,user) {
+				if (this.canBroadcast()) return;
+				this.sendReplyBox('<b>/hangman</b> - Takes you to the hangman room<br>' +
+						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. Requires: +<br>' +
+						  '<b>/viewhangman</b> - Shows the current state of hangman in the room.<br>' +
+						  '<b>/guess [letter]</b> - Lets you guess a letter<br>' +
+						  '<b>/guessword [word]</b> - Lets you guess a word<br>' +
+						  '<b>/endhangman</b> - Ends the current game of hangman<br>' +
+						  '<b>/changehint</b> - Changes the hint of the current hangman. Requires you to be the host (the one who started the game)');
 			},
 		},
 	}
