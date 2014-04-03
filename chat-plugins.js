@@ -297,7 +297,7 @@ var plugins = exports.plugins = {
 				this.add('|html|<font size=2><b>'+ user.name +'</b> has ended the hangman.');
 			},
 			hangmanhelp: function(target,room,user) {
-				if (this.canBroadcast()) return;
+				if (!this.canBroadcast()) return;
 				this.sendReplyBox('<b>/hangman</b> - Takes you to the hangman room<br>' +
 						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. Requires: +<br>' +
 						  '<b>/viewhangman</b> - Shows the current state of hangman in the room.<br>' +
