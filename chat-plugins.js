@@ -263,7 +263,7 @@ var plugins = exports.plugins = {
 			}
 			plugins.hangman.guessedletters.push(tlc);
 			if(plugins.hangman.correctletters.length === plugins.hangman.word.length) {
-				this.add('|html|Congratulations! You has guessed the word, which was: \'' + plugins.hangman.word + '\'. Congrats to all C:');
+				this.add('|html|Congratulations! '+ user.name +' has guessed the word, which was: \'' + plugins.hangman.word + '\'. Congrats to all C:');
 				plugins.hangman.resethangman();
 			}	
 			},
