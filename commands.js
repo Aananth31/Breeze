@@ -711,13 +711,13 @@ requestroom: 'request',
 				if (Users.get('Siiilver')) {
 				this.send('|pm|~Cafe Bot|~Siiilver|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
-				if (Users.get('Judgement v2')) {
+				else if (Users.get('Judgement v2')) {
 				this.send('|pm|~Cafe Bot|~Judgement v2|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
-				if (Users.get('Pokerkid')) {
+				else if (Users.get('Pokerkid')) {
 				this.send('|pm|~Cafe Bot|~Pokerkid|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
-				else Rooms.get('staff').send(user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				Rooms.get('staff').send(user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				user.requested = true;
 				},
 
