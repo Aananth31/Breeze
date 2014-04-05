@@ -1848,35 +1848,22 @@ requestroom: 'request',
 	/*********************************************************
 	 * Moderating: Punishments
 	 *********************************************************/
-	   k: 'kick',
-	kick: function(target, room, user){
-		if (!this.can('lock')) return false;
-		if (!target) return this.parse('/help kick');
-		if (!this.canTalk()) return false;
-
-		target = this.splitTarget(target);
-		var targetUser = this.targetUser;
-
-		if (!targetUser || !targetUser.connected) {
-			return this.sendReply('User '+this.targetUsername+' not found.');
+	   kick: function(target, room, user){
+		if (!this.can('lock')) return this.sendReply('/kick - Access Denied');
+		if (!target) return this.sendReply('|raw|/kick <em>username</em> - kicks the user from the room.');
+		var targetUser = Users.get(target);
+		if (!targetUser) return this.sendReply('User '+target+' not found.');
+		if (targetUser.group === '~') {
+			return this.sendReply('Administrators can\'t be room kicked.');
 		}
-		if (targetUser.name == "Champion OnyxE") {
-                        return user.popup('This user is too awesome to be kicked!');
-                }
-		if (!this.can('warn', targetUser, room)) return false;
-		if (!room.auth) {
-			this.addModCommand(targetUser.name+' was kicked from the room by '+user.name+'.');
-			targetUser.popup('You were kicked from '+room.id+' by '+user.name+'.');
-			this.logModCommand(user.name+' kicked '+targetUser.name+' from the room '+room.id);
-			targetUser.leaveRoom(room.id);
-		}
-		if (room.auth) {
-			this.addRoomCommand(targetUser.name+' was kicked from the room by '+user.name+'.', room.id);
-			targetUser.popup('You were kicked from '+room.id+' by '+user.name+'.');
-			this.logRoomCommand(user.name+' kicked '+targetUser.name+' from the room '+room.id, room.id);
-			targetUser.leaveRoom(room.id);
-		}
+		
+		if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target+' is not in this room.');
+		targetUser.popup('You have been kicked from room '+ room.title +' by '+user.name+'.');
+		targetUser.leaveRoom(room);
+		room.add('|raw|'+ targetUser.name + ' has been kicked from room by '+ user.name + '.');
+		this.logModCommand(user.name+' kicked '+targetUser.name+' from ' +room.id);
 	},
+
 		
 
 	warn: function(target, room, user) {
