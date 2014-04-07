@@ -32,11 +32,11 @@ var plugins = exports.plugins = {
 		commands: {
 			scavengerstarthunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
-				if (room.id !== 'scavengers') return this.sendReply('You can only start scavenger hunts on Scavengers room.');
-				if (plugins.scavenger.status === 'on') return this.sendReply('There is already an active scavenger hunt.');
+				if (room.id !== 'scavengers') return this.sendReplyBox('You can only start scavenger hunts on Scavengers room.');
+				if (plugins.scavenger.status === 'on') return this.sendReplyBox('There is already an active scavenger hunt.');
 				var targets = target.split(',');
 				if (!targets[0] || !targets[1] || !targets[2] || !targets[3] || !targets[4] || !targets[5])
-					return this.sendReply('You need to add three rooms and three hints in a [room, hint,] format.');
+					return this.sendReplyBox('You need to add three rooms and three hints in a [room, hint,] format.');
 				plugins.scavenger.status = 'on';
 				plugins.scavenger.roomOne = toId(targets[0]);
 				plugins.scavenger.firstHint = targets[1].trim();
@@ -48,12 +48,12 @@ var plugins = exports.plugins = {
 					'|raw|<div class="broadcast-blue"><strong>A new Scavenger Hunt has been started!' 
 					+ ' The first hint is: ' + plugins.scavenger.firstHint + '</strong></div>'
 				);
-				return this.sendReply('Scavenger hunt started.');
+				return this.sendReplyBox('Scavenger hunt started.');
 			},
 			scavengerendhunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
-				if (room.id !== 'scavengers') return this.sendReply('You can only end scavenger hunts on Scavengers room.');
-				if (plugins.scavenger.status !== 'on') return this.sendReply('There is no active scavenger hunt.');
+				if (room.id !== 'scavengers') return this.sendReplyBox('You can only end scavenger hunts on Scavengers room.');
+				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt.');
 				var result = '';
 				var winner = plugins.scavenger.finished[0];
 				var second = plugins.scavenger.finished[1];
@@ -67,11 +67,11 @@ var plugins = exports.plugins = {
 				+ plugins.scavenger.roomTwo + ', ' + plugins.scavenger.roomThree + '.';
 				if (Rooms.rooms.scavengers) Rooms.rooms.scavengers.add('|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>');
 				this.parse('/scavengerresethunt');
-				return this.sendReply('Scavenger hunt finished.');
+				return this.sendReplyBox('Scavenger hunt finished.');
 			},
 			scavengerresethunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
-				if (room.id !== 'scavengers') return this.sendReply('You can only reset scavenger hunts on Scavengers room.');
+				if (room.id !== 'scavengers') return this.sendReplyBox('You can only reset scavenger hunts on Scavengers room.');
 				plugins.scavenger.status = 'off';
 				plugins.scavenger.roomOne = '';
 				plugins.scavenger.roomTwo = '';
@@ -81,26 +81,26 @@ var plugins = exports.plugins = {
 				plugins.scavenger.thirdHint = '';
 				plugins.scavenger.participants = {};
 				plugins.scavenger.finished = [];
-				return this.sendReply('Scavenger hunt reset.');
+				return this.sendReplyBox('Scavenger hunt reset.');
 			},
 			scavenger: 'scavengers',
 			scavengers: function(target, room, user) {
 				return this.parse('/join scavengers');
 			},
 			scavengerhint: function(target, room, user) {
-				if (plugins.scavenger.status !== 'on') return this.sendReply('There is no active scavenger hunt right now.');
-				if (!plugins.scavenger.participants[user.userid]) return this.sendReply('You are not participating in the current scavenger hunt.');
-				if (plugins.scavenger.participants[user.userid].room >= 3) return this.sendReply('You have already finished!');
-				return this.sendReply(
+				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt right now.');
+				if (!plugins.scavenger.participants[user.userid]) return this.sendReplyBox('You are not participating in the current scavenger hunt.');
+				if (plugins.scavenger.participants[user.userid].room >= 3) return this.sendReplyBox('You have already finished!');
+				return this.sendReplyBox(
 					'Your current hint: ' 
 					+ plugins.scavenger[{0:'firstHint', 1:'secondHint', 2:'thirdHint'}[plugins.scavenger.participants[user.userid].room]]
 					+ '. Type /scavenge [solution] to find out if you are right.'
 				);
 			},
 			scavenge: function(target, room, user) {
-				if (plugins.scavenger.status !== 'on') return this.sendReply('There is no active scavenger hunt right now.');
-				if (!plugins.scavenger.participants[user.userid]) return this.sendReply('You are not participating in the current scavenger hunt.');
-				if (plugins.scavenger.participants[user.userid].room >= 3) return this.sendReply('You have already finished!');
+				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt right now.');
+				if (!plugins.scavenger.participants[user.userid]) return this.sendReplyBox('You are not participating in the current scavenger hunt.');
+				if (plugins.scavenger.participants[user.userid].room >= 3) return this.sendReplyBox('You have already finished!');
 				target = toId(target);
 				var room = plugins.scavenger.participants[user.userid].room;
 				if (plugins.scavenger[{0:'roomOne', 1:'roomTwo', 2:'roomThree'}[room]] === target) {
@@ -108,7 +108,7 @@ var plugins = exports.plugins = {
 					room++;
 					if (room < 3) {
 						var currentHint = {1:'secondHint', 2:'thirdHint'};
-						return this.sendReply(
+						return this.sendReplyBox(
 							'Well done! You have advanced to the next room! The next hint is: '
 							+ plugins.scavenger[currentHint[room]]
 						);
@@ -124,21 +124,21 @@ var plugins = exports.plugins = {
 						);
 					}
 				} else {
-					return this.sendReply('Fat luck - that is not the next room!');
+					return this.sendReplyBox('Fat luck - that is not the next room!');
 				}
 			},
 			joinhunt: function(target, room, user) {
-				if (plugins.scavenger.status !== 'on') return this.sendReply('There is no active scavenger hunt right now.');
-				if (plugins.scavenger.participants[user.userid]) return this.sendReply('You are already participating in the current scavenger hunt.');
+				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt right now.');
+				if (plugins.scavenger.participants[user.userid]) return this.sendReplyBox('You are already participating in the current scavenger hunt.');
 				plugins.scavenger.participants[user.userid] = {id: user.userid, room: 0};
-				return this.sendReply('You joined the scavenger hunt! Type /scavenge name to try to find the room and /scavengerhint to read your current hint.');
+				return this.sendReplyBox('You joined the scavenger hunt! Type /scavenge name to try to find the room and /scavengerhint to read your current hint.');
 			},
 			scavengerstatus: function(target, room, user) {
-				if (plugins.scavenger.status !== 'on') return this.sendReply('There is no active scavenger hunt right now.');
-				if (!plugins.scavenger.participants[user.userid]) return this.sendReply('You are not participating in the current scavenger hunt.');
+				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt right now.');
+				if (!plugins.scavenger.participants[user.userid]) return this.sendReplyBox('You are not participating in the current scavenger hunt.');
 				var currentHint = {0:'firstHint', 1:'secondHint', 2:'thirdHint'};
 				var room = plugins.scavenger.participants[user.userid].room;
-				return this.sendReply(
+				return this.sendReplyBox(
 					'Your current hunt status: You are in the room #' + room + ((room < 3)? '. Your current hint is '
 					+ plugins.scavenger[currentHint[room]] : '. You have finished') + '.'
 				);
@@ -188,15 +188,15 @@ var plugins = exports.plugins = {
 				this.parse('/join hangman')
 			},
 			starthangman: function(target,room,user) {
-				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
+				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
-				if (!target) return this.sendReply('The correct syntax for this command is /starthangman [word], [topic]');
+				if (!target) return this.sendReplyBox('The correct syntax for this command is /starthangman [word], [topic]');
 				if (plugins.hangman.status === 'off') {
 					var targets = target.split(',');
-					if(!targets[1]) return this.sendReply('Make sure you include a hint.');
-					if(targets[0].length > 10) return this.sendReply('As there are only 8 given guesses, don\'t make the word too long.');
-					if(targets[0].indexOf(' ') != -1) return this.sendReply('Please don\'t put spaces in the word.');
+					if(!targets[1]) return this.sendReplyBox('Make sure you include a hint.');
+					if(targets[0].length > 10) return this.sendReplyBox('As there are only 8 given guesses, don\'t make the word longer than 10 letters.');
+					if(targets[0].indexOf(' ') != -1) return this.sendReplyBox('Please don\'t put spaces in the word.');
 					var word = targets[0].toLowerCase();
 					plugins.hangman.status = 'on';
 					plugins.hangman.hint = targets[1];
@@ -215,15 +215,15 @@ var plugins = exports.plugins = {
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				this.sendReply('|html|<div class=infobox><div class=hangman><font size=2>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div></div>');
+				this.sendReplyBox('|html|<div class=infobox><div class=hangman><font size=2>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div></div>');
 			},
 			changehint: 'edithint',
 			edithint: function(target,room,user) {
-				if (user.userid !== plugins.hangman.host) return this.sendReply('You do not have enough authority to do this.');
+				if (user.userid !== plugins.hangman.host) return this.sendReplyBox('You do not have enough authority to do this.');
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				if (!target) return this.sendReply('The correct syntax for this command is /edithint [hint]');
+				if (!target) return this.sendReplyBox('The correct syntax for this command is /edithint [hint]');
 				plugins.hangman.hint = target;
 				this.sendReplyBox('You changed the hint to '+ plugins.hangman.hint);
 				this.add('|html|The current hangman\'s hint has been changed<br><div class=infobox>'+ plugins.hangman.show +'<br><b>Hint:</b> '+ plugins.hangman.hint +'</div>');
@@ -232,55 +232,55 @@ var plugins = exports.plugins = {
 				if (!this.canTalk()) return false;
 				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
-				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				if (!target) return this.sendReply('The correct syntax for this command is /guess [letter]');
+				if (plugins.hangman.status !== 'on') return this.sendReplyBox('There is no hangman going on ;)');
+				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
 				if (target.length > 1) return this.sendReplyBox('You can only guess one letter, do /guessword [word] to guess a word ;)');
 				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess cause you are the one hosting hangman :P');
 					tlc = target.toLowerCase();
-			for(var y = 0; y < 27; y++) {
-				if(tlc === plugins.hangman.guessedletters[y]) {
-					return this.sendReply('Someone has already guessed the letter \'' + tlc + '\'.');
-				}
-			}
-			var letterright = new Array();
-			for(var a = 0; a < plugins.hangman.word.length; a++) {
-				if(tlc === plugins.hangman.letters[a]) {
-					var c = a + 1;
-					letterright.push(c);
-					plugins.hangman.correctletters.push(c);
-					plugins.hangman.show[a] = tlc;
-				}
-			}
-			if(letterright[0] === undefined) {
-				plugins.hangman.givenguesses = plugins.hangman.givenguesses - 1;
-					if(plugins.hangman.givenguesses === 0) {
-						plugins.hangman.resethangman();
-						return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
+				for(var l = 0; l < 26;l++) {
+					if(tlc === plugins.hangman.guessedletters[l]) {
+						return this.sendReplyBox('Someone has already guessed the letter \'' + tlc + '\'.');
 					}
-				this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', but it was not in the word.');
-			} else {
-				this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', which was letter(s) ' + letterright.toString() + ' of the word.');
-			}
-			plugins.hangman.guessedletters.push(tlc);
-			if(plugins.hangman.correctletters.length === plugins.hangman.word.length) {
-				this.add('|html|Congratulations! '+ user.name +' has guessed the word, which was: \'' + plugins.hangman.word + '\'. Congrats to all C:');
-				plugins.hangman.resethangman();
-			}	
+				}
+				var sl = new Array();
+				for(var a = 0; a < plugins.hangman.word.length; a++) {
+					if(tlc === plugins.hangman.letters[a]) {
+						var c = a + 1;
+						sl.push(c);
+						plugins.hangman.correctletters.push(c);
+						plugins.hangman.show[a] = tlc;
+					}
+				}
+				if(sl[0] === undefined) {
+					plugins.hangman.givenguesses = plugins.hangman.givenguesses - 1;
+						if(plugins.hangman.givenguesses === 0) {
+							plugins.hangman.resethangman();
+							return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
+						}
+					this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', but it was not in the word.');
+				} else {
+					this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', which was ' + sl.toString() + ' letter(s) of the word.');
+				}
+				plugins.hangman.guessedletters.push(tlc);
+				if(plugins.hangman.correctletters.length === plugins.hangman.word.length) {
+					this.add('|html|The word was guesses, which was: \'' + plugins.hangman.word + '\'. Congrats to all!');
+					plugins.hangman.resethangman();
+				}	
 			},
 			guessword: function(target,room,user) {
 				if (!this.canTalk()) return false;
 				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				if (!target) return this.sendReply('The correct syntax for this command is /guess [letter]');
-				if (target.length > 10) return this.sendReplyBox('Hmm I dont think the word is more than 10 charecters long, dont waste your guesses ;)');
+				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
+				if (target.length > 10) return this.sendReplyBox('Try a shorter guess, that one is too long');
 				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess cause you are the one hosting hangman :P');
 				var tlc = target.toLowerCase();
 				if (tlc === plugins.hangman.word) {
 					this.add('|html|<b>'+ user.name +'</b> has guessed the word <b>'+ tlc +'</b>. Congrats!');
 					plugins.hangman.resethangman();
 				} else {
-					this.add('|html|<b>'+ user.name +' has guessed the word <b>'+ tlc +'</b>, But it was not the word :(');
+					this.add('|html|<b>'+ user.name +'</b> has guessed the word <b>'+ tlc +'</b>, But it was not the word :(');
 					plugins.hangman.guessesleft -= 1;
 				}
 				if(plugins.hangman.givenguesses === 0) {
@@ -289,7 +289,7 @@ var plugins = exports.plugins = {
 				}
 			},
 			endhangman: function(target,room,user) {
-				if (!user.can('broadcast', null, room)) return this.sendReply('You do not have enough authority to do this.');
+				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
 				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status === 'off') return this.sendReplyBox('No Hangman is going on');
@@ -304,14 +304,11 @@ var plugins = exports.plugins = {
 						  '<b>/guess [letter]</b> - Lets you guess a letter<br>' +
 						  '<b>/guessword [word]</b> - Lets you guess a word<br>' +
 						  '<b>Admin Help</b>' +
-						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. Requires: +<br>' +
+						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. (Word has to be less than 10 charecters long) Requires: +<br>' +
 						  '<b>/endhangman</b> - Ends the current game of hangman. Requires +<br>' +
 						  '<b>/changehint</b> - Changes the hint of the current hangman. Requires you to be the host (the one who started the game)');
-			},
-		},
+			}
+		}
 	}
 			
 };
-	
-
-
