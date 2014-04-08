@@ -2531,6 +2531,8 @@ requestroom: 'request',
 	kill: function(target, room, user) {
 		if (!this.can('lockdown')) return false;
 
+		return this.sendReply("If you need to restart the server, please ask kota or pika.");
+
 		if (!Rooms.global.lockdown) {
 			return this.sendReply("For safety reasons, /kill can only be used during lockdown.");
 		}
