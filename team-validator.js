@@ -34,7 +34,7 @@ if (!process.send) {
 		ValidatorProcess.prototype.active = true;
 		ValidatorProcess.processes = [];
 		ValidatorProcess.spawn = function() {
-			var num = config.validatorprocesses || 1;
+			var num = config.validatorProcesses || 1;
 			for (var i = 0; i < num; ++i) {
 				this.processes.push(new ValidatorProcess());
 			}
@@ -101,11 +101,9 @@ if (!process.send) {
 	global.fs = require('fs');
 	global.config = require('./config/config.js');
 
-	if (config.crashguard) {
-		process.on('uncaughtException', function (err) {
-			require('./crashlogger.js')(err, 'A team validator process');
-		});
-	}
+	process.on('uncaughtException', function (err) {
+		require('./crashlogger.js')(err, 'A team validator process');
+	});
 
 	/**
 	 * Converts anything to an ID. An ID must have only lowercase alphanumeric
@@ -134,8 +132,8 @@ if (!process.send) {
 			name = name.substr(1);
 		}
 		if (name.length > 18) name = name.substr(0,18);
-		if (config.namefilter) {
-			name = config.namefilter(name);
+		if (config.nameFilter) {
+			name = config.nameFilter(name);
 		}
 		return name.trim();
 	};
@@ -534,7 +532,10 @@ var Validator = (function() {
 			problems = problems.concat(format.validateSet.call(tools, set, format)||[]);
 		}
 
-		if (!problems.length) return false;
+		if (!problems.length) {
+			if (set.forcedLevel) set.level = set.forcedLevel;
+			return false;
+		}
 		return problems;
 	};
 
