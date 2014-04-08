@@ -166,22 +166,24 @@ var plugins = exports.plugins = {
 		status: 'off',
 		hint: '',
 		word: '',
-		guessedletters: new Array(),
-		correctletters: new Array(),
+		guessedletters: [],
+		correctletters: [],
 		host: '',
-		show: new Array(),
-		letters: new Array(),
+		show: [],
+		letters: [],
 		guessesleft: 8,
+		guessers: [],
 		resethangman: function() {
 			plugins.hangman.status = 'off';
 			plugins.hangman.hint = '';
 			plugins.hangman.word = '';
-			plugins.hangman.guessedletters = new Array();
-			plugins.hangman.correctletters = new Array();
+			plugins.hangman.guessedletters = [];
+			plugins.hangman.correctletters = [];
 			plugins.hangman.host = '';
-			plugins.hangman.show = new Array();
-			plugins.hangman.letters = new Array();
+			plugins.hangman.show = [];
+			plugins.hangman.letters = [];
 			plugins.hangman.guessesleft = 8;
+			plugins.hangman.guessers = [];
 		},
 		commands: {
 			hangman: function(target,room,user) {
@@ -212,15 +214,15 @@ var plugins = exports.plugins = {
 			vh: 'viewhangman',
 			viewhangman: function(target,room,user) {
 				if (!this.canBroadcast()) return false;
-				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
-				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
-				this.sendReplyBox('|html|<div class=infobox><div class=hangman><font size=2>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div></div>');
+				if (plugins.hangman.status !== 'on') return this.sendReplyBox('There is no hangman going on ;)');
+				this.sendReplyBox('|<div class=infobox><div class=hangman><font size=2>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div></div>');
 			},
 			changehint: 'edithint',
 			edithint: function(target,room,user) {
 				if (user.userid !== plugins.hangman.host) return this.sendReplyBox('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /edithint [hint]');
@@ -235,20 +237,27 @@ var plugins = exports.plugins = {
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('There is no hangman going on ;)');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
 				if (target.length > 1) return this.sendReplyBox('You can only guess one letter, do /guessword [word] to guess a word ;)');
-				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess cause you are the one hosting hangman :P');
+				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess because you are the one hosting hangman :P');
+				var t = 0;
+				for (var i=0;i<plugins.hangman.guessers.length;i++) {
+				if (plugins.hangman.guessers[i] === user.userid){
+					t += 1;
+				}
+				}
+				if (t === 2) return this.sendReplyBox('You have aldready made 2 wrong guesses so aren\'t allowed to guess in this game');
 					tlc = target.toLowerCase();
 				for(var l = 0; l < 26;l++) {
 					if(tlc === plugins.hangman.guessedletters[l]) {
 						return this.sendReplyBox('Someone has already guessed the letter \'' + tlc + '\'.');
 					}
 				}
-				var sl = new Array();
-				for(var a = 0; a < plugins.hangman.word.length; a++) {
+				var sl = [];
+				for(var i = 0;i < plugins.hangman.word.length;i++) {
 					if(tlc === plugins.hangman.letters[a]) {
-						var c = a + 1;
-						sl.push(c);
-						plugins.hangman.correctletters.push(c);
-						plugins.hangman.show[a] = tlc;
+						var temp = i + 1;
+						sl.push(temp);
+						plugins.hangman.correctletters.push(temp);
+						plugins.hangman.show[i] = tlc;
 					}
 				}
 				if(sl[0] === undefined) {
@@ -258,12 +267,13 @@ var plugins = exports.plugins = {
 							return this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', but it was not in the word. You have failed to guess the word, so the man has been hanged.');
 						}
 					this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', but it was not in the word.');
+					plugins.hangman.guessers.push(user.userid);
 				} else {
 					this.add('|html|<b>' + user.name + '</b> guessed the letter \'' + tlc + '\', which was ' + sl.toString() + ' letter(s) of the word.');
 				}
 				plugins.hangman.guessedletters.push(tlc);
 				if(plugins.hangman.correctletters.length === plugins.hangman.word.length) {
-					this.add('|html|The word was guesses, which was: \'' + plugins.hangman.word + '\'. Congrats to all!');
+					this.add('|html|The word was guessed, which was: \'' + plugins.hangman.word + '\'. Congrats to all!');
 					plugins.hangman.resethangman();
 				}	
 			},
@@ -275,6 +285,13 @@ var plugins = exports.plugins = {
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
 				if (target.length > 10) return this.sendReplyBox('Try a shorter guess, that one is too long');
 				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess cause you are the one hosting hangman :P');
+				var t = 0;
+				for (var i=0;i<plugins.hangman.guessers.length;i++) {
+				if (plugins.hangman.guessers[i] === user.userid){
+					t += 1;
+				}
+				}
+				if (t === 2) return this.sendReplyBox('You have aldready made 2 wrong guesses so aren\'t allowed to guess in this game');
 				var tlc = target.toLowerCase();
 				if (tlc === plugins.hangman.word) {
 					this.add('|html|<b>'+ user.name +'</b> has guessed the word <b>'+ tlc +'</b>. Congrats!');
@@ -282,19 +299,20 @@ var plugins = exports.plugins = {
 				} else {
 					this.add('|html|<b>'+ user.name +'</b> has guessed the word <b>'+ tlc +'</b>, But it was not the word :(');
 					plugins.hangman.guessesleft -= 1;
+					plugins.hangman.guessers.push(user.userid);
 				}
 				if(plugins.hangman.givenguesses === 0) {
 						plugins.hangman.resethangman();
-						return this.add('|html|<b>' + user.name + '</b> guessed the word \'' + tlc + '\', but it was not the word. You have failed to guess the word, so the man has been hanged.');
+						return this.add('|html|<b>'+ user.name +'</b> guessed the word \'' + tlc + '\', but it was not the word. You have failed to guess the word, so the man has been hanged.');
 				}
 			},
 			endhangman: function(target,room,user) {
 				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sndReplyBox('Only in the hangman room');
+				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status === 'off') return this.sendReplyBox('No Hangman is going on');
 				plugins.hangman.resethangman();
-				this.add('|html|<font size=2><b>'+ user.name +'</b> has ended the hangman.');
+				this.add('|html|<font size=2><b>'+ user.name +'</b> has forcibily ended the hangman.');
 			},
 			hangmanhelp: function(target,room,user) {
 				if (!this.canBroadcast()) return;
@@ -302,8 +320,8 @@ var plugins = exports.plugins = {
 						  '<b>/hangman</b> - Takes you to the hangman room<br>' +
 						  '<b>/viewhangman</b> - Shows the current state of hangman in the room.<br>' +
 						  '<b>/guess [letter]</b> - Lets you guess a letter<br>' +
-						  '<b>/guessword [word]</b> - Lets you guess a word<br>' +
-						  '<b>Admin Help</b>' +
+						  '<b>/guessword [word]</b> - Lets you guess a word<br><br>' +
+						  '<b>Admin Help</b><br>' +
 						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. (Word has to be less than 10 charecters long) Requires: +<br>' +
 						  '<b>/endhangman</b> - Ends the current game of hangman. Requires +<br>' +
 						  '<b>/changehint</b> - Changes the hint of the current hangman. Requires you to be the host (the one who started the game)');
