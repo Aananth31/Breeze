@@ -900,30 +900,58 @@ requestroom: 'request',
 		}
 		user.money = money;
 		var price = 0;
-		if (target2 === 'coffee') {
-			if (user.coffeefull == true) {
-				this.sendReply('You\'ve already drank coffee! Too much caffiene is bad for health.');
+		if (target2 === 'espresso') {
+			if (user.espressofull == true) {
+				this.sendReply('You\'ve already drank espresso! Too much caffiene is bad for health.');
 			}
 			price = 5;
 			if (price <= user.money) {
 				user.money = user.money - price;
-				this.sendReply('You have drank a coffee.');
+				this.sendReply('You have drank a hot cup of Espresso.');
 				user.coffeefull = true;
-				this.add(user.name + ' drank a hot cup of coffee.');
+				this.add(user.name + ' drank hot cup of dark body warming coffee made by dark-roast aromatic coffee beans at high pressure in an espresso machine with the best crema in the world.');
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
 		}
-		if (target2 === 'pie') {
-			if (user.piefull == true) {
-				this.sendReply('You\'ve already eaten a huge pie! You\'ll get sick.');
+		if (target2 === 'cappuccino') {
+			if (user.cappuccinofull == true) {
+				this.sendReply('You\'ve already drank a hot mug of Cappuccino! You\'ll get sick.');
+			}
+			price = 5;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have drank a mug of Cappuccino.');
+				user.piefull = true;
+				this.add(user.name + ' drank a mug of hugely popular drink in the Cafe. The kind of cappuccino we serve is the best and a combination of equal parts espresso, steamed milk and milk froth.');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target3 === 'cafaulait') {
+			if (user.cafaulaitfull == true) {
+				this.sendReply('You\'ve already drank a hot cup of milky Caf au Lait! You\'ll get the milk disease.');
+			}
+			price = 10;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have drank a cup of milky Caf au Lait.');
+				user.piefull = true;
+				this.add(user.name + ' drank a traditional French drink is made with brewed coffee. Additionally, those brewed coffee collected are the best from world and it is called Caf au lait.');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
+		if (target3 === 'icedamericano') {
+			if (user.cafaulaitfull == true) {
+				this.sendReply('You\'ve already drank a freezing cup of Iced Americano! You\'ll freeze to death.');
 			}
 			price = 15;
 			if (price <= user.money) {
 				user.money = user.money - price;
-				this.sendReply('You have eaten a pie.');
+				this.sendReply('You have drank an icy cold cup of Iced Americano.');
 				user.piefull = true;
-				this.add(user.name + ' ate a delicious pie.');
+				this.add(user.name + ' drank an iced version of Americano made by single shot of espresso added to a cup of hot water. The name is thought to have originated as a bit of an insult to Americans, who had to dilute their espresso when it first gained popularity on this side of the pond. Many Cafes have perfected it, however, it is the best in our cafe, since we make the best espresso with cubed ice.');
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
