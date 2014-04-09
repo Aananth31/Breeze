@@ -992,8 +992,8 @@ requestroom: 'request',
 		this.sendReplyBox('<center><h4><b><u>Café Shop</u></b></h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
 			'<tr><td>Espresso</td><td>A hot cup of dark body warming coffee made by dark-roast aromatic coffee beans at high pressure in an espresso machine with the best crema in the world.</td><td>5</td></tr>' +
 			'<tr><td>Cappuccino</td><td>A mug of hugely popular drink in the Cafe. The kind of cappuccino we serve is the best and a combination of equal parts espresso, steamed milk and milk froth.</td><td>5</td></tr>' +
-			'<tr><td>Caf au Lait</td><td>This is a traditional French drink is made with brewed coffee. Additionally, those brewed coffee collected are the best from world, so please enjoy it slowly!</td><td>10</td></tr>' +
-			'<tr><td>Iced Americano</td><td>An iced version of Americano made by single shot of espresso added to a cup of hot water. The name is thought to have originated as a bit of an insult to Americans, who had to dilute their espresso when it first gained popularity on this side of the pond. Many Cafes have perfected it, however, it is the best in our cafe, since we make the best espresso with cubed ice.</td><td>15</td></tr>' +
+			'<tr><td>CafauLait</td><td>This is a traditional French drink is made with brewed coffee. Additionally, those brewed coffee collected are the best from world, so please enjoy it slowly!</td><td>10</td></tr>' +
+			'<tr><td>IcedAmericano</td><td>An iced version of Americano made by single shot of espresso added to a cup of hot water. The name is thought to have originated as a bit of an insult to Americans, who had to dilute their espresso when it first gained popularity on this side of the pond. Many Cafes have perfected it, however, it is the best in our cafe, since we make the best espresso with cubed ice.</td><td>15</td></tr>' +
 		'</table><br />To buy an item from the shop, use /eat [item].</center><br />');
 	},
 	gamemenu: 'gameshop',
