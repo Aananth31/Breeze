@@ -33,7 +33,7 @@ var plugins = exports.plugins = {
 			scavengerstarthunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
 				if (room.id !== 'tourneysandgames') return this.sendReplyBox('You can only start scavenger hunts on Scavengers room.');
-				if (plugins.scavenger.status === 'off') return this.sendReplyBox('There is already an active scavenger hunt.');
+				if (plugins.scavenger.status === 'on') return this.sendReplyBox('There is already an active scavenger hunt.');
 				var targets = target.split(',');
 				if (!targets[0] || !targets[1] || !targets[2] || !targets[3] || !targets[4] || !targets[5])
 					return this.sendReplyBox('You need to add three rooms and three hints in a [room, hint,] format.');
@@ -53,7 +53,7 @@ var plugins = exports.plugins = {
 			scavengerendhunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
 				if (room.id !== 'tourneysandgames') return this.sendReplyBox('You can only end scavenger hunts on Scavengers room.');
-				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt.');
+				if (plugins.scavenger.status !== 'off') return this.sendReplyBox('There is no active scavenger hunt.');
 				var result = '';
 				var winner = plugins.scavenger.finished[0];
 				var second = plugins.scavenger.finished[1];
@@ -98,7 +98,7 @@ var plugins = exports.plugins = {
 				);
 			},
 			scavenge: function(target, room, user) {
-				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt right now.');
+				if (plugins.scavenger.status !== 'off') return this.sendReplyBox('There is no active scavenger hunt right now.');
 				if (!plugins.scavenger.participants[user.userid]) return this.sendReplyBox('You are not participating in the current scavenger hunt.');
 				if (plugins.scavenger.participants[user.userid].room >= 3) return this.sendReplyBox('You have already finished!');
 				target = toId(target);
