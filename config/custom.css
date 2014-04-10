@@ -69,10 +69,7 @@ background: #d5d5d5;
 	position:relative;
 	top:1px;
 }
-.tg  {border-collapse:collapse;border-spacing:0;border-color:#999;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#444;background-color:#F7FDFA;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#fff;background-color:#26ADE4;}
-.tg .tg-vn4c{background-color:#D2E4FC}
-.tg .tg-e3zv{font-weight:bold}
-.tg .tg-vv7f{background-color:#D2E4FC;font-weight:bold}
-
+.hangman{
+  background: url(http://fc09.deviantart.net/fs71/f/2012/275/7/7/black_and_grey_stripe_pattern_by_wiizkiid-d5gm6uv.png) center;
+  color: #eff;
+}
