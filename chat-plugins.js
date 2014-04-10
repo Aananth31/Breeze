@@ -253,7 +253,7 @@ var plugins = exports.plugins = {
 				}
 				var sl = [];
 				for(var i = 0;i < plugins.hangman.word.length;i++) {
-					if(tlc === plugins.hangman.letters[a]) {
+					if(tlc === plugins.hangman.letters[i]) {
 						var temp = i + 1;
 						sl.push(temp);
 						plugins.hangman.correctletters.push(temp);
