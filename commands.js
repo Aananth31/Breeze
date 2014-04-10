@@ -928,7 +928,7 @@ requestroom: 'request',
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
 		}
-		if (target3 === 'cafaulait') {
+		if (target2 === 'cafaulait') {
 			if (user.cafaulaitfull == true) {
 				this.sendReply('You\'ve already drank a hot cup of milky Caf au Lait! You\'ll get the milk disease.');
 			}
@@ -942,7 +942,7 @@ requestroom: 'request',
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
 		}
-		if (target4 === 'icedamericano') {
+		if (target2 === 'icedamericano') {
 			if (user.cafaulaitfull == true) {
 				this.sendReply('You\'ve already drank a freezing cup of Iced Americano! You\'ll freeze to death.');
 			}
