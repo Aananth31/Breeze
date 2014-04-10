@@ -191,7 +191,7 @@ var plugins = exports.plugins = {
 			},
 			starthangman: function(target,room,user) {
 				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /starthangman [word], [topic]');
 				if (plugins.hangman.status === 'off') {
@@ -214,7 +214,7 @@ var plugins = exports.plugins = {
 			vh: 'viewhangman',
 			viewhangman: function(target,room,user) {
 				if (!this.canBroadcast()) return false;
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('There is no hangman going on ;)');
 				this.sendReplyBox('|<div class=infobox><div class=hangman><font size=2>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div></div>');
@@ -222,7 +222,7 @@ var plugins = exports.plugins = {
 			changehint: 'edithint',
 			edithint: function(target,room,user) {
 				if (user.userid !== plugins.hangman.host) return this.sendReplyBox('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /edithint [hint]');
@@ -232,7 +232,7 @@ var plugins = exports.plugins = {
 			},
 			guess: function(target,room,user) {
 				if (!this.canTalk()) return false;
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('There is no hangman going on ;)');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
@@ -279,7 +279,7 @@ var plugins = exports.plugins = {
 			},
 			guessword: function(target,room,user) {
 				if (!this.canTalk()) return false;
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
@@ -308,7 +308,7 @@ var plugins = exports.plugins = {
 			},
 			endhangman: function(target,room,user) {
 				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status === 'off') return this.sendReplyBox('No Hangman is going on');
 				plugins.hangman.resethangman();
