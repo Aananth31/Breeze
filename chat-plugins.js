@@ -17,7 +17,7 @@ var plugins = exports.plugins = {
 	 * This game is meant to show a first hint. Players will find the name of a room with that hint.
 	 * When you find a room, it gives you a hint for the next room.
 	 * You finish upon reaching the third room.
-	 * This plugin requires the server to have a room with the id 'scavengers'.
+	 * This plugin requires the server to have a room with the id 'tourneysandgames'.
 	 */
 	scavenger: {
 		status: 'off',
@@ -32,7 +32,7 @@ var plugins = exports.plugins = {
 		commands: {
 			scavengerstarthunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
-				if (room.id !== 'scavengers') return this.sendReplyBox('You can only start scavenger hunts on Scavengers room.');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('You can only start scavenger hunts on Scavengers room.');
 				if (plugins.scavenger.status === 'on') return this.sendReplyBox('There is already an active scavenger hunt.');
 				var targets = target.split(',');
 				if (!targets[0] || !targets[1] || !targets[2] || !targets[3] || !targets[4] || !targets[5])
@@ -52,7 +52,7 @@ var plugins = exports.plugins = {
 			},
 			scavengerendhunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
-				if (room.id !== 'scavengers') return this.sendReplyBox('You can only end scavenger hunts on Scavengers room.');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('You can only end scavenger hunts on Scavengers room.');
 				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt.');
 				var result = '';
 				var winner = plugins.scavenger.finished[0];
@@ -71,7 +71,7 @@ var plugins = exports.plugins = {
 			},
 			scavengerresethunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
-				if (room.id !== 'scavengers') return this.sendReplyBox('You can only reset scavenger hunts on Scavengers room.');
+				if (room.id !== 'tourneysandgames') return this.sendReplyBox('You can only reset scavenger hunts on Scavengers room.');
 				plugins.scavenger.status = 'off';
 				plugins.scavenger.roomOne = '';
 				plugins.scavenger.roomTwo = '';
@@ -144,7 +144,7 @@ var plugins = exports.plugins = {
 				);
 			},
 			scavengerhelp: function(target, room, user) {
-				if (room.id !== 'scavengers') return;
+				if (room.id !== 'tourneysandgames') return;
 				if (!this.canBroadcast()) return;
 				this.sendReplyBox(
 					'<strong>Player commands:</strong><br />' +
