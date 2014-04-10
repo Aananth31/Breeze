@@ -20,7 +20,7 @@ var plugins = exports.plugins = {
 	 * This plugin requires the server to have a room with the id 'tourneysandgames'.
 	 */
 	scavenger: {
-		status: 'on',
+		status: 'off',
 		firstHint: '',
 		roomOne: '',
 		secondHint: '',
@@ -33,7 +33,7 @@ var plugins = exports.plugins = {
 			scavengerstarthunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
 				if (room.id !== 'tourneysandgames') return this.sendReplyBox('You can only start scavenger hunts on Scavengers room.');
-				if (plugins.scavenger.status === 'on') return this.sendReplyBox('There is already an active scavenger hunt.');
+				if (plugins.scavenger.status === 'off') return this.sendReplyBox('There is already an active scavenger hunt.');
 				var targets = target.split(',');
 				if (!targets[0] || !targets[1] || !targets[2] || !targets[3] || !targets[4] || !targets[5])
 					return this.sendReplyBox('You need to add three rooms and three hints in a [room, hint,] format.');
@@ -44,7 +44,7 @@ var plugins = exports.plugins = {
 				plugins.scavenger.secondHint = targets[3].trim();
 				plugins.scavenger.roomThree = toId(targets[4]);
 				plugins.scavenger.thirdHint = targets[5].trim();
-				if (Rooms.rooms.scavengers) Rooms.rooms.scavengers.add(
+				if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add(
 					'|raw|<div class="broadcast-blue"><strong>A new Scavenger Hunt has been started!' 
 					+ ' The first hint is: ' + plugins.scavenger.firstHint + '</strong></div>'
 				);
@@ -65,7 +65,7 @@ var plugins = exports.plugins = {
 				result += ' Consolation prize to: ' + ((consolation.length > 0)? consolation.join(', ') : 'no one') + '.';
 				result += '<br />Solution: ' + plugins.scavenger.roomOne + ', ' 
 				+ plugins.scavenger.roomTwo + ', ' + plugins.scavenger.roomThree + '.';
-				if (Rooms.rooms.scavengers) Rooms.rooms.scavengers.add('|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>');
+				if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>');
 				this.parse('/scavengerresethunt');
 				return this.sendReplyBox('Scavenger hunt finished.');
 			},
@@ -119,7 +119,7 @@ var plugins = exports.plugins = {
 						var position = plugins.scavenger.finished.length;
 						var result = 'The user ' + user.name + ' has finished the hunt! (S)he is the '
 						+ ((winningPositions[position])? winningPositions[position] : position + 'th') + '!';
-						if (Rooms.rooms.scavengers) Rooms.rooms.scavengers.add(
+						if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add(
 							'|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>'
 						);
 					}
@@ -163,7 +163,7 @@ var plugins = exports.plugins = {
 		}
 	},
 	hangman: {
-		status: 'on',
+		status: 'off',
 		hint: '',
 		word: '',
 		guessedletters: [],
@@ -174,7 +174,7 @@ var plugins = exports.plugins = {
 		guessesleft: 8,
 		guessers: [],
 		resethangman: function() {
-			plugins.hangman.status = 'on';
+			plugins.hangman.status = 'off';
 			plugins.hangman.hint = '';
 			plugins.hangman.word = '';
 			plugins.hangman.guessedletters = [];
