@@ -20,7 +20,7 @@ var plugins = exports.plugins = {
 	 * This plugin requires the server to have a room with the id 'tourneysandgames'.
 	 */
 	scavenger: {
-		status: 'off',
+		status: 'on',
 		firstHint: '',
 		roomOne: '',
 		secondHint: '',
@@ -163,7 +163,7 @@ var plugins = exports.plugins = {
 		}
 	},
 	hangman: {
-		status: 'off',
+		status: 'on',
 		hint: '',
 		word: '',
 		guessedletters: [],
@@ -174,7 +174,7 @@ var plugins = exports.plugins = {
 		guessesleft: 8,
 		guessers: [],
 		resethangman: function() {
-			plugins.hangman.status = 'off';
+			plugins.hangman.status = 'on';
 			plugins.hangman.hint = '';
 			plugins.hangman.word = '';
 			plugins.hangman.guessedletters = [];
