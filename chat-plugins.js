@@ -98,7 +98,7 @@ var plugins = exports.plugins = {
 				);
 			},
 			scavenge: function(target, room, user) {
-				if (plugins.scavenger.status !== 'off') return this.sendReplyBox('There is no active scavenger hunt right now.');
+				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt right now.');
 				if (!plugins.scavenger.participants[user.userid]) return this.sendReplyBox('You are not participating in the current scavenger hunt.');
 				if (plugins.scavenger.participants[user.userid].room >= 3) return this.sendReplyBox('You have already finished!');
 				target = toId(target);
