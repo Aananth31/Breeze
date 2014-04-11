@@ -53,7 +53,7 @@ var plugins = exports.plugins = {
 			scavengerendhunt: function(target, room, user) {
 				if (!this.can('ban', null, room)) return false;
 				if (room.id !== 'tourneysandgames') return this.sendReplyBox('You can only end scavenger hunts on Scavengers room.');
-				if (plugins.scavenger.status !== 'on') return this.sendReplyBox('There is no active scavenger hunt.');
+				if (plugins.scavenger.status !== 'off') return this.sendReplyBox('There is no active scavenger hunt.');
 				var result = '';
 				var winner = plugins.scavenger.finished[0];
 				var second = plugins.scavenger.finished[1];
