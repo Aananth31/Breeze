@@ -148,7 +148,6 @@ var plugins = exports.plugins = {
 				if (!this.canBroadcast()) return;
 				this.sendReplyBox(
 					'<strong>Player commands:</strong><br />' +
-					'- /scavengers: Join the scavengers room<br />' +
 					'- /joinhunt: Join the current hunt<br />' +
 					'- /scavengerhint: Get your current hint<br />' +
 					'- /scavengerstatus: Get your current game status<br />' +
@@ -317,7 +316,6 @@ var plugins = exports.plugins = {
 			hangmanhelp: function(target,room,user) {
 				if (!this.canBroadcast()) return;
 				this.sendReplyBox('<b>Player Help</b><br>' +
-						  '<b>/hangman</b> - Takes you to the hangman room<br>' +
 						  '<b>/viewhangman</b> - Shows the current state of hangman in the room.<br>' +
 						  '<b>/guess [letter]</b> - Lets you guess a letter<br>' +
 						  '<b>/guessword [word]</b> - Lets you guess a word<br><br>' +
