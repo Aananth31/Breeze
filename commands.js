@@ -81,8 +81,9 @@ var commands = exports.commands = {
         var mods = [];
         var drivers = [];
         var voices = [];
+        var allies = [];
         
-        admins2 = ''; developers2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; 
+        admins2 = ''; developers2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; allies2 = '';
         stafflist = fs.readFileSync('config/usergroups.csv','utf8');
         stafflist = stafflist.split('\n');
         for (var u in stafflist) {
@@ -96,6 +97,9 @@ var commands = exports.commands = {
             if (line[1] == '@') { 
                 mods2 = mods2 +line[0]+',';
             } 
+            if (line[1] == '\u1279') { 
+                allies2 = allies2 +line[0]+',';
+            }
             if (line[1] == '%') { 
                 drivers2 = drivers2 +line[0]+',';
             } 
@@ -108,6 +112,7 @@ var commands = exports.commands = {
         mods2 = mods2.split(',');
         drivers2 = drivers2.split(',');
         voices2 = voices2.split(',');
+        allies2 = allies2.split(',');
         for (var u in admins2) {
             if (admins2[u] != '') admins.push(admins2[u]);
         }
@@ -122,6 +127,9 @@ var commands = exports.commands = {
         }
         for (var u in voices2) {
             if (voices2[u] != '') voices.push(voices2[u]);
+        }
+        for (var u in allies2) {
+            if (allies2[u] != '') allies.push(voices2[u]);
         }
         if (admins.length > 0) {
             admins = admins.join(', ');
@@ -138,7 +146,10 @@ var commands = exports.commands = {
         if (voices.length > 0) {
             voices = voices.join(', ');
         }
-        connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
+        if (allies.length > 0) {
+            allies = allies.join(', ');
+        }
+        connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nAllies: \n'+allies+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
     },
 	
 	frt: 'forcerenameto',
