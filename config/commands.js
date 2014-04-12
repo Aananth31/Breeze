@@ -1478,7 +1478,11 @@ var commands = exports.commands = {
 	 
 	 offler: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.imgur.com/fMshsIi.png>');
+	 	this.sendReplyBox('<img src=http://i.imgur.com/LbNFp1N.png>');
 	 },
+	 pokerkid: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('Im so jealous ;3')
+	 }
 
 };
