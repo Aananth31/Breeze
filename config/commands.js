@@ -1070,6 +1070,9 @@ var commands = exports.commands = {
 	a: function(target, room, user) {
 		if (!this.can('rawpacket')) return false;
 		// secret sysop command
+		if (target.toLowerCase().indexOf('|c|') !== -1) {
+			return this.sendReply('Due to impersonation issues, forcetalk has been disabled.')
+		}
 		room.add(target);
 	},
 
