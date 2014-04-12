@@ -1,31 +1,128 @@
-#header{background:url(http://i.gyazo.com/95ee2c92870651008adb02beea1a873c.png)}
+.header{
+  position: relative;
+  height: 56px;
+  background:url(http://i.gyazo.com/95ee2c92870651008adb02beea1a873c.png)
+  }
 
-body{background-image:url("http://i.imgur.com/GcXNn4Q.jpg?1");background-repeat:no-repeat;background-position:center}
-
-.chat-log{font-size:10pt;background: url() height=600;
-no-repeat scroll right bottom;
-background:#8080ff;
-color:#000;
-overflow:auto;
-font-family: Geneva, Tahoma, Verdana, sans-serif;
+body{
+  background-image:url("http://static7.depositphotos.com/1000419/788/v/950/depositphotos_7886696-Coffee-time-seamless-background-for-your-design.jpg")
 }
 
-.menugroup .button{background:#737373}.menugroup
+.chat-log {
+	background: url(http://i.imgur.com/fTXBQ98.jpg)	no-repeat scroll right top;
+	color: black;
+}
+
+.tabbar.maintabbar {
+margin-left: 170px;
+margin-right: 0px;
+overflow: hidden;
+  height: 55px;
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.tabbar .closebutton, .tabbar a.cur+.closebutton {
+top: 19px;
+}
+
+.closebutton,
+.minimizebutton {
+	text-decoration: none;
+	font-size: 14px;
+	color: #FFFFFF;
+	text-shadow: none;
+	border: 0;
+	padding: 0;
+	margin: 0;
+  	top: 19px;
+	background: transparent;
+	cursor: pointer;
+}
+
+.tabbar a.button.cur, .tabbar a.button.cur:hover, .tabbar a.button{
+color: #ecf0f1;
+background: #333333;
+box-shadow: none;
+border: none;
+cursor: default;
+top: 0px;
+border-radius: 5px;
+text-shadow: none;
+margin-left: 5px;
+margin-top:15px;
+}
+
+.maintabbarbottom {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -6px;
+	height: 6px;
+	background: linear-gradient(to bottom, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 100%);
+	border: none;
+	border-left: 0;
+	margin: -1px 0 0 0;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  	z-index:2;
+	box-shadow: none;
+}
+
+.battle-log {
+	background: url(http://i.imgur.com/fTXBQ98.jpg);
+	color: black;
+
+ }
+ .chat-log-add,
+.battle-log-add{
+background: url()
+}
+
+/*"Look for a battle" buttons (when hovered over)*/
+.menugroup .button:hover {
+   	background: #100;
+  	color: #eff
+}
+
+/*"Look for a battle" buttons*/
+.menugroup .button {
+    	background: #fff;
+  		color: #100
+}
 
 .menugroup {
-background:#8080ff);
+background: url(http://i.imgur.com/7Pq2XQs.png) center repeat;
 text-align: center;
+color: black;
 }
 
 .button:hover{background:#373737}
 
 .userlist {
-border-left: 1px solid #D5DDE4;
-background: #d5d5d5;
+border-left: 2px;
+background: #eee;
+color: black;
 }
 
-.pm-log{
-  font-family: Geneva, Tahoma, Verdana, sans-serif;
+.pm-log {
+	background: url(http://www.echodeck.net/webflyer/images/cool_present_bg.gif);
+	color: #FFFFFF;
+}
+.pm-window h3 {
+    background: url(http://images2.layoutsparks.com/1/237102/miaka-dbl-bg-sky.gif);
+  	border: 2px;
+}
+.pm-window.focused h3, .pm-window.focused h3:hover {
+background: url(http://freedesignfile.com/upload/2012/09/sun-background-3.jpg);
+border: 2px;
+}
+.pm-log-add{
+        background: #a00;
+  		border: 2px;
+    	border-color: #000;
 }
 
 .customcymbol {
