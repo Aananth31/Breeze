@@ -1471,5 +1471,14 @@ var commands = exports.commands = {
 			this.sendReply("The command '" + target + "' was not found. Try /help for general help");
 		}
 	},
+	
+	/******************************************************
+	 * Trainer Cards
+	 *****************************************************/
+	 
+	 offler: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.imgur.com/LbNFp1N.png>');
+	 },
 
 };
