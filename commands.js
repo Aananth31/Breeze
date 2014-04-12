@@ -35,7 +35,7 @@ var commands = exports.commands = {
 			}
 		});
 	},
-	
+
 	roomlist: function(target, room, user, connection) {
 		if (!user.can('makeroom')) return false;
 			for (var u in Rooms.rooms) {
@@ -70,9 +70,9 @@ var commands = exports.commands = {
 			}
 		});
 	},
-	
 
-	
+
+
 	stafflist: function(target, room, user, connection) {
         var buffer = [];
         var admins = [];
@@ -82,27 +82,27 @@ var commands = exports.commands = {
         var drivers = [];
         var voices = [];
         var allies = [];
-        
+
         admins2 = ''; developers2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; allies2 = '';
         stafflist = fs.readFileSync('config/usergroups.csv','utf8');
         stafflist = stafflist.split('\n');
         for (var u in stafflist) {
             line = stafflist[u].split(',');
-			if (line[1] == '~') { 
+			if (line[1] == '~') {
                 admins2 = admins2 +line[0]+',';
             }
-            if (line[1] == '&') { 
+            if (line[1] == '&') {
                 leaders2 = leaders2 +line[0]+',';
             }
-            if (line[1] == '@') { 
+            if (line[1] == '@') {
                 mods2 = mods2 +line[0]+',';
             }
-            if (line[1] == '%') { 
+            if (line[1] == '%') {
                 drivers2 = drivers2 +line[0]+',';
-            } 
-            if (line[1] == '+') { 
+            }
+            if (line[1] == '+') {
                 voices2 = voices2 +line[0]+',';
-             } 
+             }
         }
         admins2 = admins2.split(',');
         leaders2 = leaders2.split(',');
@@ -141,33 +141,11 @@ var commands = exports.commands = {
         }
         connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
     },
-	
-	frt: 'forcerenameto',
-	forcerenameto: function(target, room, user) {
-		if (!target) return this.parse('/help forcerenameto');
-		target = this.splitTarget(target);
-		var targetUser = this.targetUser;
-		if (!targetUser) {
-			return this.sendReply('User '+this.targetUsername+' not found.');
-		}
-		if (!target) {
-			return this.sendReply('No new name was specified.');
-		}
-		if (!this.can('forcerenameto', targetUser)) return false;
-
-		if (targetUser.userid === toUserid(this.targetUser)) {
-			var entry = ''+targetUser.name+' was forcibly renamed to '+target+' by '+user.name+'.';
-			this.privateModCommand('(' + entry + ')');
-			targetUser.forceRename(target, undefined, true);
-		} else {
-			this.sendReply("User "+targetUser.name+" is no longer using that name.");
-		}
-	},
 
 	restart: function(target, room, user) {
 		if (!this.can('lockdown')) return false;
 		try {
-			var forever = require('forever'); 
+			var forever = require('forever');
 		} catch(e) {
 			return this.sendReply('/restart requires the "forever" module.');
 		}
@@ -183,14 +161,14 @@ var commands = exports.commands = {
 		Rooms.global.send('|refresh|');
 		forever.restart('app.js');
 	},
-	
+
 	eating: 'away',
 	gaming: 'away',
     	sleep: 'away',
     	work: 'away',
     	working: 'away',
     	sleeping: 'away',
-    	busy: 'away',    
+    	busy: 'away',
 	afk: 'away',
 	away: function(target, room, user, connection, cmd) {
 		if (!this.can('lock')) return false;
@@ -247,7 +225,7 @@ var commands = exports.commands = {
 
 		if (user.isAway) {
 			if (user.name === user.originalName) {
-				user.isAway = false; 
+				user.isAway = false;
 				return this.sendReply('Your name has been left unaltered and no longer marked as away.');
 			}
 
@@ -271,7 +249,7 @@ var commands = exports.commands = {
 		}
 
 		user.updateIdentity();
-	}, 
+	},
 
 	getid: 'showuserid',
 	userid: 'showuserid',
@@ -362,7 +340,7 @@ var commands = exports.commands = {
 		if (!target) return this.parse('/pmallstaff [message] - Sends a PM to every staff member online.');
 		if (!this.can('pmall')) return false;
 
-		for (var u in Users.users) { 
+		for (var u in Users.users) {
 			if (Users.users[u].isStaff) {
 				Users.users[u].send('|pm|~Staff PM|'+Users.users[u].group+Users.users[u].name+'|'+target);
 			}
@@ -371,7 +349,7 @@ var commands = exports.commands = {
 
 
 	/*********************************************************
-	 * Money                                     
+	 * Money
 	 *********************************************************/
 
 	bp: 'atm',
@@ -387,7 +365,7 @@ var commands = exports.commands = {
         var money = 0;
         var coins = 0;
         var total = '';
-        if (!target) {		
+        if (!target) {
         var data = fs.readFileSync('config/cash.csv','utf8')
                 var row = (''+data).split("\n");
                 for (var i = row.length; i > -1; i--) {
@@ -462,7 +440,7 @@ var commands = exports.commands = {
                         var p = 'bucks';
                         if (money < 2) p = 'buck';
                         total += targetUser.name + ' has ' + money + ' ' + p + '.<br />';
-                } 
+                }
                 if (mMatch === false) {
                         total += targetUser.name + ' has no bucks.<br />';
                 }
@@ -487,7 +465,7 @@ var commands = exports.commands = {
                         var p = 'coins';
                         if (coins < 2) p = 'coin';
                         total += targetUser.name + ' has ' + coins + ' ' + p + '.<br />';
-                } 
+                }
                 if (cMatch === false) {
                         total += targetUser.name + ' has no coins.<br />';
                 }
@@ -557,7 +535,7 @@ var commands = exports.commands = {
                         return this.parse('/help givebucks');
                 }
 				},
-        
+
 
 		rfc: 'registerfriendcode',
         registerfc: 'registerfriendcode',
@@ -605,7 +583,7 @@ var commands = exports.commands = {
                         log.write("\n"+user.userid+','+user.fc);
                 }
                 user.send('You have successfully registered the friend code '+target+'!');
-                
+
         },
 
 	takebucks: 'removebucks',
@@ -704,7 +682,7 @@ if (!this.canBroadcast()) return;
 						 if (fc.length < 12) s = 'invalid';
 						 this.sendReplyBox(targetUser.name+'\'s X/Y Friend Code is '+s+'.');
 						 }
-               
+
 if (aMatch === false) {
 return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 }
@@ -728,7 +706,7 @@ requestroom: 'request',
                 if (!target1) {
                         return this.sendReply('You need to specify the name of the room you want.');
                 }
-				
+
 				if (Users.get('Siiilver')) {
 				this.send('|pm|~Cafe Bot|~Siiilver|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
@@ -1006,7 +984,7 @@ requestroom: 'request',
 			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center>');
 		if (closeShop) return this.sendReply('|raw|<center><h3><b>The shop is currently closed and will open shortly.</b></h3></center>');
 	},
-	
+
 	menu: function(target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('<center><h4><b><u>Café Shop</u></b></h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
@@ -1029,7 +1007,7 @@ requestroom: 'request',
 			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center><br />'+
 	'<center>You must have a valid X/Y Friend Code registered to buy an item from here.</center><br />');
 	},
-	
+
 	lockshop: 'closeshop',
 	closeshop: function(target, room, user) {
 		if (!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
@@ -1178,7 +1156,7 @@ requestroom: 'request',
 			else
 				if (!matched) return this.sendReply('Maybe that item isn\'t in the shop yet.');
 		}
-		else 
+		else
 			return this.sendReply('Shop item could not be found, please check /shop for all items - ' + theItem);
 	},
 
@@ -1263,15 +1241,15 @@ requestroom: 'request',
 
 	moneycommands: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		return this.sendReplyBox('The command for the Money system:<br />' + 
-			'/shop - Show the shop with the items you can buy.<br />' + 
+		return this.sendReplyBox('The command for the Money system:<br />' +
+			'/shop - Show the shop with the items you can buy.<br />' +
 			'/buy [command] - Buy an item from the shop using the item command name.<br />' +
-			'/getbucks - A basic introduction into the currency system.<br />' + 
+			'/getbucks - A basic introduction into the currency system.<br />' +
 			'/atm [username] - Show your bucks (if just /atm) or show someone else\'s bucks.');
 	},
 
 	/*********************************************************
-	 * Coins                                     
+	 * Coins
 	 *********************************************************/
 
 	givecoins: function(target, room, user) {
@@ -1395,7 +1373,7 @@ requestroom: 'request',
 	},
 
          /*********************************************************
-	 * Other Stuff                                    
+	 * Other Stuff
 	 *********************************************************/
 	version: function(target, room, user) {
 		if (!this.canBroadcast()) return;
@@ -1413,7 +1391,7 @@ requestroom: 'request',
 			var targetUser = Users.get(tar);
 			if(user.can('poof', targetUser)){
 				if(!targetUser){
-					user.emit('console', 'Cannot find user ' + target + '.', socket);	
+					user.emit('console', 'Cannot find user ' + target + '.', socket);
 				}else{
 					if(poofeh)
 						Rooms.rooms.lobby.addRaw(btags + '~~ '+targetUser.name+' was vanished into nothingness by ' + user.name +'! ~~' + etags);
@@ -1426,7 +1404,7 @@ requestroom: 'request',
 			}
 		if(poofeh && !user.muted && !user.locked){
 			Rooms.rooms.lobby.addRaw(btags + getRandMessage(user)+ etags);
-			user.disconnectAll();	
+			user.disconnectAll();
 		}else{
 			return this.sendReply('poof is currently disabled.');
 		}
@@ -1457,7 +1435,7 @@ requestroom: 'request',
 			var etags = '</font></strong>'
 			Rooms.rooms.lobby.addRaw(btags + '~~ '+user.name+' '+target+'! ~~' + etags);
 			this.logModCommand(user.name + ' used a custom poof message: \n "'+target+'"');
-			user.disconnectAll();	
+			user.disconnectAll();
 		}else{
 			return this.sendReply('Poof is currently disabled.');
 		}
@@ -1885,7 +1863,7 @@ requestroom: 'request',
 		if (targetUser.group === '~') {
 			return this.sendReply('Administrators can\'t be room kicked.');
 		}
-		
+
 		if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target+' is not in this room.');
 		targetUser.popup('You have been kicked from room '+ room.title +' by '+user.name+'.');
 		targetUser.leaveRoom(room);
@@ -1893,7 +1871,7 @@ requestroom: 'request',
 		this.logModCommand(user.name+' kicked '+targetUser.name+' from ' +room.id);
 	},
 
-		
+
 
 	warn: function(target, room, user) {
 		if (!target) return this.parse('/help warn');
@@ -1940,7 +1918,7 @@ requestroom: 'request',
 		this.addModCommand(targetUser.name + " was redirected to " + roomName + " by " + user.name + ".");
 		targetUser.leaveRoom(room);
 	},
-	
+
 	spop: 'sendpopup',
 	sendpopup: function(target, room, user) {
 		if (!this.can('hotpatch')) return false;
@@ -3208,7 +3186,7 @@ function getRandMessage(user){
 		case 3: message = message + user.name + ' was swallowed up by the Earth!';
 		break;
 		case 4: message = message + user.name + ' was sold in a slave trade to a Chinese man!';
-		break;	
+		break;
 		case 5: message = message + user.name + ' was eaten by Vanilla!';
 		break;
 		case 6: message = message + user.name + ' was sucker punched by Absol!';
@@ -3263,7 +3241,7 @@ function getRandMessage(user){
 		break;
 		case 31: message = message + user.name + ' left for a timeout!';
 		break;
-		case 32: message = message + user.name + ' fell into a snake pit!'; 
+		case 32: message = message + user.name + ' fell into a snake pit!';
 		break;
 		case 33: message = message + user.name + ' got eaten by Sharpedos!';
 		break;
