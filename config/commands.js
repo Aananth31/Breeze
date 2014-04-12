@@ -1478,7 +1478,7 @@ var commands = exports.commands = {
 	 
 	 offler: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.imgur.com/LbNFp1N.png>');
+	 	this.sendReplyBox('<img src=http://i.imgur.com/fMshsIi.png>');
 	 },
 
 };
