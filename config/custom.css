@@ -13,64 +13,6 @@ body{
 	color: black;
 }
 
-.tabbar.maintabbar {
-margin-left: 170px;
-margin-right: 0px;
-overflow: hidden;
-  height: 55px;
-  background-position: right;
-  background-repeat: no-repeat;
-}
-
-.tabbar .closebutton, .tabbar a.cur+.closebutton {
-top: 19px;
-}
-
-.closebutton,
-.minimizebutton {
-	text-decoration: none;
-	font-size: 14px;
-	color: #FFFFFF;
-	text-shadow: none;
-	border: 0;
-	padding: 0;
-	margin: 0;
-  	top: 19px;
-	background: transparent;
-	cursor: pointer;
-}
-
-.tabbar a.button.cur, .tabbar a.button.cur:hover, .tabbar a.button{
-color: #ecf0f1;
-background: #333333;
-box-shadow: none;
-border: none;
-cursor: default;
-top: 0px;
-border-radius: 5px;
-text-shadow: none;
-margin-left: 5px;
-margin-top:15px;
-}
-
-.maintabbarbottom {
-	content: "";
-	display: block;
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: -6px;
-	height: 6px;
-	background: linear-gradient(to bottom, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 100%);
-	border: none;
-	border-left: 0;
-	margin: -1px 0 0 0;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-  	z-index:2;
-	box-shadow: none;
-}
-
 .battle-log {
 	background: url(http://i.imgur.com/fTXBQ98.jpg);
 	color: black;
