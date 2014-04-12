@@ -1,5 +1,5 @@
 /**
- * System commands
+ * System commandso
  * Pokemon Showdown - http://pokemonshowdown.com/
  *
  * These are system commands - commands required for Pokemon Showdown
@@ -27,7 +27,7 @@ var commands = exports.commands = {
 			if(exists){
 			return connection.sendTo(room, 'Since this file already exists, you cannot do this.');
 			} else {
-				fs.writeFile('config/cash.csv', 'championonyxe,10000', function (err) {
+				fs.writeFile('config/cash.csv', function (err) {
 					if (err) throw err;
 					console.log('config/cash.csv created.');
 					connection.sendTo(room, 'config/cash.csv created.');
@@ -62,7 +62,7 @@ var commands = exports.commands = {
 			if (exists) {
 				return connection.sendTo(room, 'This file already exists so you do not need to create it again.')
 			} else {
-				fs.writeFile('config/coins.csv', 'championonyxe,10000', function (err) {
+				fs.writeFile('config/coins.csv', function (err) {
 					if (err) throw err;
 					console.log('config/coins.csv created.');
 					connection.sendTo(room, 'config/coins.csv created,');
@@ -836,7 +836,7 @@ requestroom: 'request',
 			price = 30;
 			if (price <= user.money) {
 				user.money = user.money - price;
-				this.sendReply('You have purchased a trainer card. You need to message an Admin capable of adding this (Champion OnyxE).');
+				this.sendReply('You have purchased a trainer card. You need to message an Admin capable of adding this.');
 				user.canTrainerCard = true;
 				this.add(user.name + ' has purchased a trainer card!');
 			} else {
@@ -847,8 +847,7 @@ requestroom: 'request',
 			price = 10;
 			if (price <= user.money) {
 				user.money = user.money - price;
-				this.sendReply('You have purchased the ability to alter your avatar or trainer card. You need to message an Admin capable of adding this (Champion OnyxE).');
-				user.canFixItem = true;
+				this.sendReply('You have purchased the ability to alter your avatar or trainer card. PM an admin.');
 				this.add(user.name + ' has purchased the ability to set alter their card or avatar!');
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
@@ -858,7 +857,7 @@ requestroom: 'request',
 			price = 15;
 			if (price <= user.money) {
 				user.money = user.money - price;
-				this.sendReply('You have purchased the ability to set POTD. You need to message an Admin capable of adding this (Champion OnyxE/Champion Noah/FrontierHead Bart).');
+				this.sendReply('You have purchased the ability to set POTD. You need to message an Admin capable of adding this.');
 				user.canPOTD = true;
 				this.add(user.name + ' has purchased the ability to set POTD!');
 			} else {
