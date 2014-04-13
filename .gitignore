@@ -1,5 +1,6 @@
 /config/*
 /logs/*
+/static/*
 /node_modules
 npm-debug.log
 /config/bannedwords.txt
