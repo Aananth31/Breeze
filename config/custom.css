@@ -1,68 +1,31 @@
-.header{
-  background:url(http://i.gyazo.com/95ee2c92870651008adb02beea1a873c.png)
-  }
+#header{background:url(http://i.gyazo.com/95ee2c92870651008adb02beea1a873c.png)}
 
-body{
-  background-image:url("http://static7.depositphotos.com/1000419/788/v/950/depositphotos_7886696-Coffee-time-seamless-background-for-your-design.jpg")
+body{background-image:url("http://i.imgur.com/GcXNn4Q.jpg?1");background-repeat:no-repeat;background-position:center}
+
+.chat-log{font-size:10pt;background: url() height=600;
+no-repeat scroll right bottom;
+background:#8080ff;
+color:#000;
+overflow:auto;
+font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
 
-.chat-log {
-	background: url(http://i.imgur.com/fTXBQ98.jpg)	no-repeat scroll right top;
-	color: black;
-}
-
-.battle-log {
-	background: url(http://i.imgur.com/fTXBQ98.jpg);
-	color: black;
-
- }
- .chat-log-add,
-.battle-log-add{
-background: url()
-}
-
-/*"Look for a battle" buttons (when hovered over)*/
-.menugroup .button:hover {
-   	background: #100;
-  	color: #eff
-}
-
-/*"Look for a battle" buttons*/
-.menugroup .button {
-    	background: #fff;
-  		color: #100
-}
+.menugroup .button{background:#737373}.menugroup
 
 .menugroup {
-background: url(http://i.imgur.com/7Pq2XQs.png) center repeat;
+background:#8080ff);
 text-align: center;
-color: black;
 }
 
 .button:hover{background:#373737}
 
 .userlist {
-border-left: 2px;
-background: #eee;
-color: black;
+border-left: 1px solid #D5DDE4;
+background: #d5d5d5;
 }
 
-.pm-log {
-	background: url(http://www.echodeck.net/webflyer/images/cool_present_bg.gif);
-	color: #FFFFFF;
-}
-.pm-window h3 {
-    background: url(http://images2.layoutsparks.com/1/237102/miaka-dbl-bg-sky.gif);
-  	border: 2px;
-}
-.pm-window.focused h3, .pm-window.focused h3:hover {
-background: url(http://freedesignfile.com/upload/2012/09/sun-background-3.jpg);
-border: 2px;
-}
-.pm-log-add{
-        background: #a00;
-  		border: 2px;
-    	border-color: #000;
+.pm-log{
+  font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
 
 .customcymbol {
@@ -106,7 +69,10 @@ border: 2px;
 	position:relative;
 	top:1px;
 }
-.hangman{
-  background: url(http://fc09.deviantart.net/fs71/f/2012/275/7/7/black_and_grey_stripe_pattern_by_wiizkiid-d5gm6uv.png) center;
-  color: #eff;
-}
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#999;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#444;background-color:#F7FDFA;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#999;color:#fff;background-color:#26ADE4;}
+.tg .tg-vn4c{background-color:#D2E4FC}
+.tg .tg-e3zv{font-weight:bold}
+.tg .tg-vv7f{background-color:#D2E4FC;font-weight:bold}
+
