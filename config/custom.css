@@ -1,29 +1,34 @@
-#header{background:url(http://i.gyazo.com/95ee2c92870651008adb02beea1a873c.png)}
-
-body{background-image:url("http://i.imgur.com/GcXNn4Q.jpg?1");background-repeat:no-repeat;background-position:center}
-
-.chat-log{font-size:10pt;background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeGUDIKbi6PcTm_lOGDL9z2T5TBrWSQyRXUcyTsmEtyng6NyrP9g) height=600;
-no-repeat scroll right bottom;
-background:#b45f04;
-color:#000;
-overflow:auto;
-font-family: Geneva, Tahoma, Verdana, sans-serif;
+#header {
+    background-image: url(http://i.gyazo.com/95ee2c92870651008adb02beea1a873c.png);
 }
 
-.menugroup .button{background:#737373}.menugroup
+body {
+    background-image: url(http://i.imgur.com/GcXNn4Q.jpg?1);
+}
+
+.chat-log {
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeGUDIKbi6PcTm_lOGDL9z2T5TBrWSQyRXUcyTsmEtyng6NyrP9g);
+    background-color: #b45f04;
+    font-family: Geneva, Tahoma, Verdana, sans-serif;
+}
+
+.menugroup .button {
+    background: #737373;
+}
 
 .menugroup {
-background:#b45f04;
-text-align: center;
+    background: #b45f04;
 }
 
-.button:hover{background:#373737}
+.button:hover {
+    background: #373737;
+}
 
 .userlist {
-border-left: 1px solid #D5DDE4;
-background: #d5d5d5;
+    border-left: 1px solid #D5DDE4;
+    background: #d5d5d5;
 }
 
-.pm-log{
-  font-family: Geneva, Tahoma, Verdana, sans-serif;
+.pm-log {
+    font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
