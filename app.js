@@ -95,6 +95,32 @@ if (!fs.existsSync('./config/config.js')) {
 
 global.config = require('./config/config.js');
 
+global.reloadCustomAvatars = function() {
+	var path = require('path');
+	var newCustomAvatars = {};
+	fs.readdirSync('./config/avatars').forEach(function (file) {
+		var ext = path.extname(file);
+		if (ext !== '.png' && ext !== '.gif')
+			return;
+
+		var user = toUserid(path.basename(file, ext));
+		newCustomAvatars[user] = file;
+		delete config.customAvatars[user];
+	});
+
+	// Make sure the manually entered avatars exist
+	for (var a in config.customAvatars)
+		if (typeof config.customAvatars[a] === 'number')
+			newCustomAvatars[a] = config.customAvatars[a];
+		else
+			fs.exists('./config/avatars/' + config.customAvatars[a], (function(user, file, isExists) {
+				if (isExists)
+					config.customAvatars[user] = file;
+			}).bind(null, a, config.customAvatars[a]));
+
+	config.customAvatars = newCustomAvatars;
+}
+
 var watchFile = function() {
 	try {
 		return fs.watchFile.apply(fs, arguments);
@@ -109,6 +135,7 @@ if (config.watchConfig) {
 		try {
 			delete require.cache[require.resolve('./config/config.js')];
 			config = require('./config/config.js');
+			reloadCustomAvatars();
 			console.log('Reloaded config/config.js');
 		} catch (e) {}
 	});
@@ -432,5 +459,7 @@ fs.readFile('./config/ipbans.txt', function (err, data) {
 	}
 	Users.checkRangeBanned = Cidr.checker(rangebans);
 });
+
+reloadCustomAvatars();
 global.sysop = require('./sysop.js').sysopOperation();
 global.cafecommands = require('./cafe-commands.js').cafecommands;
