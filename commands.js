@@ -1680,11 +1680,7 @@ requestroom: 'request',
 			return this.sendReply("User '" + name + "' is offline and unauthed, and so can't be promoted.");
 		}
 
-		var currentGroup = room.auth && room.auth[userid];
-		if (!Config.groups[room.type + 'Room'][currentGroup]) {
-			currentGroup = Config.groups.default[room.type + 'Room'];
-		}
-
+		var currentGroup = ((room.auth && room.auth[userid]) || Config.groups.default[room.type + 'Room'])[0];
 		var nextGroup = Config.groups.default[room.type + 'Room'];
 		if (target !== 'deauth') {
 			var isDemote = cmd === 'roomdemote';
@@ -2166,11 +2162,7 @@ requestroom: 'request',
 
 		if (!userid) return this.parse('/help promote');
 
-		var currentGroup = (targetUser && targetUser.group) || Users.usergroups[userid];
-		if (!Config.groups.global[currentGroup]) {
-			currentGroup = Config.groups.default.global;
-		}
-
+		var currentGroup = ((targetUser && targetUser.group) || Users.usergroups[userid] || Config.groups.default.global)[0];
 		var nextGroup = Config.groups.default.global;
 		if (target !== 'deauth') {
 			var isDemote = cmd === 'demote';
