@@ -105,20 +105,20 @@ global.reloadCustomAvatars = function() {
 
 		var user = toUserid(path.basename(file, ext));
 		newCustomAvatars[user] = file;
-		delete config.customAvatars[user];
+		delete Config.customAvatars[user];
 	});
 
 	// Make sure the manually entered avatars exist
-	for (var a in config.customAvatars)
-		if (typeof config.customAvatars[a] === 'number')
-			newCustomAvatars[a] = config.customAvatars[a];
+	for (var a in Config.customAvatars)
+		if (typeof Config.customAvatars[a] === 'number')
+			newCustomAvatars[a] = Config.customAvatars[a];
 		else
-			fs.exists('./config/avatars/' + config.customAvatars[a], (function(user, file, isExists) {
+			fs.exists('./config/avatars/' + Config.customAvatars[a], (function(user, file, isExists) {
 				if (isExists)
-					config.customAvatars[user] = file;
-			}).bind(null, a, config.customAvatars[a]));
+					Config.customAvatars[user] = file;
+			}).bind(null, a, Config.customAvatars[a]));
 
-	config.customAvatars = newCustomAvatars;
+	Config.customAvatars = newCustomAvatars;
 }
 
 var watchFile = function() {
