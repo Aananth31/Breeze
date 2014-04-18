@@ -1587,7 +1587,7 @@ var commands = exports.commands = {
         },
         jolteon64: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('Fuck me')
+	 	this.sendReplyBox('Fuck me, Im a nub')
 	 }
 
 };
