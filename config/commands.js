@@ -1577,7 +1577,7 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.imgur.com/LbNFp1N.png>');
 	 },
-	 pokerkid: function(target,room,user) {
+	 poker: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<center><img src=http://i.imgur.com/xwx0RZS.png>')
 	 },
@@ -1585,9 +1585,13 @@ var commands = exports.commands = {
                 if (!this.canBroadcast()) return;
                 this.sendReplyBox('<center><img src="http://i.imgur.com/IHd5yRT.gif"><br><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/piplup.gif"><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/prinplup.gif"><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/empoleon.gif"><br><font color=blue>The control on yourself is raised when you evolve your way to think.<br>Ace: Empoleon');
         },
-        magickarpz: function(target,room,user) {
+        karpz: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<center><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif><br>Hi Im Karpz, call me Karpz!')
-	 }
+	 },
+	 jolt: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<marquee><img src=http://gifsforum.com/images/gif/troll%20face/grand/UPVFV.gif><br>I am Jolteon64 the troller lel!')
+	 },
 
 };
