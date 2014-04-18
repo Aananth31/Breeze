@@ -1579,7 +1579,7 @@ var commands = exports.commands = {
 	 },
 	 pokerkid: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<center><img src=http://i.imgur.com/VUfuycm.png>')
+	 	this.sendReplyBox('<center><img src=http://i.imgur.com/xwx0RZS.png>')
 	 },
 	 empo: function(target, room, user) {
                 if (!this.canBroadcast()) return;
