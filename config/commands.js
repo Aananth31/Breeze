@@ -1580,6 +1580,10 @@ var commands = exports.commands = {
 	 pokerkid: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('Im so jealous ;3')
-	 }
+	 },
+	 empo: function(target, room, user) {
+                if (!this.canBroadcast()) return;
+                this.sendReplyBox('<center><img src="http://i.imgur.com/IHd5yRT.gif"><br><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/piplup.gif"><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/prinplup.gif"><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/empoleon.gif"><br><font color=blue>The control on yourself is raised when you evolve your way to think.<br>Ace: Empoleon');
+        }
 
 };
