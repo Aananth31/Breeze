@@ -1587,7 +1587,7 @@ var commands = exports.commands = {
         },
         magickarpz: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<center><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif><br><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif><br><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif><br><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif><br><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif><br><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif>')
+	 	this.sendReplyBox('<center><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif><br>Hi Im Karpz, call me Karpz!')
 	 }
 
 };
