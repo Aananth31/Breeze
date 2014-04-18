@@ -1579,7 +1579,7 @@ var commands = exports.commands = {
 	 },
 	 pokerkid: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('Im so jealous ;3')
+	 	this.sendReplyBox('<center><img src=http://i.imgur.com/VUfuycm.png>')
 	 },
 	 empo: function(target, room, user) {
                 if (!this.canBroadcast()) return;
