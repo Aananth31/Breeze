@@ -609,7 +609,7 @@ var commands = exports.commands = {
 
 	uptime: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		var uptime = process.uptime() % (24).hours();
+		var uptime = process.uptime() % (24 / 1000).hours();
 		var uptimeText;
 		if (uptime > 24*60*60) {
 			var uptimeDays = Math.floor(uptime/(24*60*60));
