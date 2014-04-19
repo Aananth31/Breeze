@@ -708,15 +708,15 @@ requestroom: 'request',
                 }
 
 				if (Users.get('Siiilver')) {
-				this.send('|pm|~Cafe Bot|~Siiilver|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				Users.get('Siiilver').send('|pm|~Cafe Bot|~Siiilver|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
 				else if (Users.get('Judgement v2')) {
-				this.send('|pm|~Cafe Bot|~Judgement v2|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				Users.get('Judgement v2').send('|pm|~Cafe Bot|~Judgement v2|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
 				else if (Users.get('Pokerkid')) {
-				this.send('|pm|~Cafe Bot|~Pokerkid|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				Users.get('PokerKid').send('|pm|~Cafe Bot|~Pokerkid|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
-				Rooms.get('staff').send(user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				Rooms.get('staff').add(user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				user.requested = true;
 				},
 
