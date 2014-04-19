@@ -2178,10 +2178,10 @@ requestroom: 'request',
 		if (currentGroup === nextGroup) {
 			return this.sendReply("User '" + name + "' is already a " + groupName);
 		}
-		if (!user.can('promote', currentGroup, room)) {
+		if (!user.can('promote', currentGroup)) {
 			return this.sendReply("/" + cmd + " - Access denied for removing " + (Config.groups.bySymbol[currentGroup].name || "regular user") + ".");
 		}
-		if (!user.can('promote', nextGroup, room)) {
+		if (!user.can('promote', nextGroup)) {
 			return this.sendReply("/" + cmd + " - Access denied for giving " + groupName + ".");
 		}
 
