@@ -1489,7 +1489,7 @@ requestroom: 'request',
 		return this.parse('/msg ' + (user.lastPM||'') + ', ' + target);
 	},
 
-		pm: 'msg',
+	pm: 'msg',
 	whisper: 'msg',
 	w: 'msg',
 	msg: function(target, room, user) {
@@ -1497,56 +1497,52 @@ requestroom: 'request',
 		target = this.splitTarget(target);
 		var targetUser = this.targetUser;
 		if (!target) {
-			this.sendReply('You forgot the comma.');
+			this.sendReply("You forgot the comma.");
 			return this.parse('/help msg');
 		}
 		if (!targetUser || !targetUser.connected) {
 			if (targetUser && !targetUser.connected) {
-				this.popupReply('User '+this.targetUsername+' is offline.');
+				this.popupReply("User " + this.targetUsername + " is offline.");
 			} else if (!target) {
-				this.popupReply('User '+this.targetUsername+' not found. Did you forget a comma?');
+				this.popupReply("User " + this.targetUsername + " not found. Did you forget a comma?");
 			} else {
-				this.popupReply('User '+this.targetUsername+' not found. Did you misspell their name?');
+				this.popupReply("User "  + this.targetUsername + " not found. Did you misspell their name?");
 			}
 			return this.parse('/help msg');
 		}
 
-		if (config.pmmodchat) {
+		if (Config.modchat.pm) {
 			var userGroup = user.group;
-			if (config.groupsranking.indexOf(userGroup) < config.groupsranking.indexOf(config.pmmodchat)) {
-				var groupName = config.groups[config.pmmodchat].name;
-				if (!groupName) groupName = config.pmmodchat;
-				this.popupReply('Because moderated chat is set, you must be of rank ' + groupName +' or higher to PM users.');
+			if (Config.groups.bySymbol[userGroup].globalRank < Config.groups.bySymbol[Config.modchat.pm].globalRank) {
+				var groupName = Config.groups.bySymbol[Config.modchat.pm].name || Config.modchat.pm;
+				this.popupReply("Because moderated chat is set, you must be of rank " + groupName + " or higher to PM users.");
 				return false;
 			}
 		}
 
 		if (user.locked && !targetUser.can('lock', user)) {
-			return this.popupReply('You can only private message members of the moderation team (users marked by %, @, &, or ~) when locked.');
+			return this.popupReply("You can only private message members of the moderation team (users marked by " + Users.getGroupsThatCan('lock', user).join(", ") + ") when locked.");
 		}
 		if (targetUser.locked && !user.can('lock', targetUser)) {
-			return this.popupReply('This user is locked and cannot PM.');
+			return this.popupReply("This user is locked and cannot PM.");
 		}
 		if (targetUser.ignorePMs && !user.can('lock')) {
 			if (!targetUser.can('lock')) {
-				return this.popupReply('This user is blocking Private Messages right now.');
+				return this.popupReply("This user is blocking Private Messages right now.");
 			} else if (targetUser.can('hotpatch')) {
-				return this.popupReply('This admin is too busy to answer Private Messages right now. Please contact a different staff member.');
+				return this.popupReply("This " + (Config.groups.bySymbol[targetUser.group].name || "Administrator") + " is too busy to answer Private Messages right now. Please contact a different staff member.");
 			}
 		}
 
 		target = this.canTalk(target, null);
 		if (!target) return false;
 
-		var message = '|pm|'+user.getIdentity()+'|'+targetUser.getIdentity()+'|'+target;
-		Rooms.rooms.spyroom.add(message); //spy
+		var message = '|pm|' + user.getIdentity() + '|' + targetUser.getIdentity() + '|' + target;
 		user.send(message);
 		if (targetUser !== user) targetUser.send(message);
 		targetUser.lastPM = user.userid;
 		user.lastPM = targetUser.userid;
 	},
-	
-	
 
 	blockpm: 'ignorepms',
 	blockpms: 'ignorepms',
@@ -1742,17 +1738,24 @@ requestroom: 'request',
 		if (!target) return false;
 		var targetRoom = Rooms.get(target) || Rooms.get(toId(target));
 		if (!targetRoom) {
-			if (target === 'lobby') return connection.sendTo(target, "|noinit|nonexistent|");
-			return connection.sendTo(target, "|noinit|nonexistent|The room '"+target+"' does not exist.");
+			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
-		//if (targetRoom.id == "spyroom" && !user.isPermit) {
-		//return connection.sendTo(target, "|noinit|nonexistent|The room '"+target+"' does not exist.");
-		//}
-		if (targetRoom.isPrivate && !user.named) {
-			return connection.sendTo(target, "|noinit|namerequired|You must have a name in order to join the room '"+target+"'.");
+		if (targetRoom.isPrivate) {
+			if (targetRoom.modjoin) {
+				var userGroup = user.group;
+				if (targetRoom.auth) {
+					userGroup = targetRoom.auth[user.userid] || Config.groups.default[room.type + 'Room'];
+				}
+				if (Config.groups.bySymbol[userGroup].rank < Config.groups.bySymbol[targetRoom.modchat].rank) {
+					return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
+				}
+			}
+			if (!user.named) {
+				return connection.sendTo(target, "|noinit|namerequired|You must have a name in order to join the room '" + target + "'.");
+			}
 		}
 		if (!user.joinRoom(targetRoom || room, connection)) {
-			return connection.sendTo(target, "|noinit|joinfailed|The room '"+target+"' could not be joined.");
+			return connection.sendTo(target, "|noinit|joinfailed|The room '" + target + "' could not be joined.");
 		}
 		if (target.toLowerCase() == "lobby") {
 					return connection.sendTo('lobby','|raw|<div class=infobox><center><b><u>Welcome to Lé Café!</b></u></center><br>\u25BA We serve one of the best Coffee\'s in the world~<br>\u25BA Join now to have a chance to get a room and taste the best coffee!<br>\u25BA The most important rule here is to have fun! We hope you will have an enjoyable and comfortable stay here.<br>\u25BA We have a Cafe point/bucks/coins system now! You can buy items in the server or even in game items using these!<br>\u25BA Any ideas or suggestions please report it to a @, &, ~<br>\u25BA Use /room <name>, <reason> to suggest a room to the admins<br>\u25BA Our ranks recently got reset PM an Admin(~) to get them back :)<br><center><a href="http://cafepsim.weebly.com"><img src=http://www.ozmega.com.au/images/meals/cupofhotyumminess2.png height=30></a></center></div>');
