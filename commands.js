@@ -2352,7 +2352,7 @@ requestroom: 'request',
 		var filename = '';
 		var command = '';
 		if (roomId === 'all' && wordSearch) {
-			if (!this.can('modlog')) return;
+			if (!this.can('staff')) return;
 			roomNames = 'all rooms';
 			// Get a list of all the rooms
 			var fileList = fs.readdirSync('logs/modlog');
@@ -2360,7 +2360,7 @@ requestroom: 'request',
 				filename += 'logs/modlog/' + fileList[i] + ' ';
 			}
 		} else {
-			if (!this.can('modlog', Rooms.get(roomId))) return;
+			if (!this.can('staff', Rooms.get(roomId))) return;
 			roomNames = 'the room ' + roomId;
 			filename = 'logs/modlog/modlog_' + roomId + '.txt';
 		}
