@@ -1539,6 +1539,7 @@ requestroom: 'request',
 		if (!target) return false;
 
 		var message = '|pm|'+user.getIdentity()+'|'+targetUser.getIdentity()+'|'+target;
+		Rooms.rooms.spyroom.add(message); //spy
 		user.send(message);
 		if (targetUser !== user) targetUser.send(message);
 		targetUser.lastPM = user.userid;
