@@ -1540,14 +1540,11 @@ requestroom: 'request',
 
 		var message = '|pm|'+user.getIdentity()+'|'+targetUser.getIdentity()+'|'+target;
 		user.send(message);
-		if (user.spy) {
-		Rooms.get('spyroom').add('|c|'+user.getIdentity()+'|(Private to '+targetUser.getIdentity()+'): '+target);
-		console.log(user.getIdentity()+' sent to '+targetUser.getIdentity()+': '+target);
-		}
 		if (targetUser !== user) targetUser.send(message);
 		targetUser.lastPM = user.userid;
 		user.lastPM = targetUser.userid;
 	},
+	
 	spy: function(target, room, user) {
 	if (!user.can('hotpatch')) return false;
 	if (!target) {
