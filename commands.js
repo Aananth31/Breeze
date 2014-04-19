@@ -1851,23 +1851,21 @@ requestroom: 'request',
 	/*********************************************************
 	 * Moderating: Punishments
 	 *********************************************************/
-	   kick: function(target, room, user){
-		if (!this.can('lock')) return this.sendReply('/kick - Access Denied');
-		if (!target) return this.sendReply('|raw|/kick <em>username</em> - kicks the user from the room.');
-		var targetUser = Users.get(target);
-		if (!targetUser) return this.sendReply('User '+target+' not found.');
-		if (targetUser.group === '~') {
-			return this.sendReply('Administrators can\'t be room kicked.');
+
+	k: 'kick',
+	kick: function(target, room, user){
+		if (!target) return;
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+		if (!targetUser || !targetUser.connected) {
+			return this.sendReply("User " + this.targetUsername + " not found.");
 		}
-
-		if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target+' is not in this room.');
-		targetUser.popup('You have been kicked from room '+ room.title +' by '+user.name+'.');
+		if (!this.can('kick', targetUser, room)) return false;
+		var msg = "kicked by " + user.name + (target ? " (" + target + ")" : "") + ".";
+		this.addModCommand(targetUser.name + " was " + msg);
+		targetUser.popup("You have been " + msg);
 		targetUser.leaveRoom(room);
-		room.add('|raw|'+ targetUser.name + ' has been kicked from room by '+ user.name + '.');
-		this.logModCommand(user.name+' kicked '+targetUser.name+' from ' +room.id);
 	},
-
-
 
 	warn: function(target, room, user) {
 		if (!target) return this.parse('/help warn');
