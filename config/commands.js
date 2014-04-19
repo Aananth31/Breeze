@@ -1591,7 +1591,11 @@ var commands = exports.commands = {
 	 },
 	 jolt: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<marquee><img src=http://gifsforum.com/images/gif/troll%20face/grand/UPVFV.gif><br>I am Jolteon64 the troller lel!')
+	 	this.sendReplyBox('<marquee><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/jolteon.gif><br>Fight me with all your power! But you wont win!')
+	 },
+	 spam: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('shjfdgnfdlkgjdgfdsdgfsdfkljgfdsohgfdl;vna;orhg;rgna;ehg;lknrek;fdjbvjlbvxklcbvxkjvbxvkjnbfjlgnblgnsdklgnsdjlgshfsklgnsdklghskldgnsdklgnskldgnskldgsjhdklnklfndsklfhklfskdfnskldfhsdklfjhsdlkfndsklgfsndklgfshdklgsndklgsndgklsdglndsklghkldgnsldgdskhgdsklgndslkgnskldgndsklgnsklgnskdlgnsdklgnsdklgsndkglsndklgsndklgsndklgndsklgdnsklgsnklgsngklsngskldngsklgnskldhgldhfuewytrioewutewoytrkldnsvcxmvcvkjsyudiojnfskdnklfjhskldnflskdnklvdsjflksdnfskldnfklvsdjhviohdsklfjnklqjhwiruqpwioureqwpoueqipwueqopwiueqpwueqiopwueqopwuieqpwueqopwuieqopwureqpwoirqew;ojfkldjskljfskldjfskldjfsdklmfdklfnskldhfioskdjnczxknczxczxciodhfkedslfnrewkfgidsojfdijfdsifjsdiofjsdoifjsdoifjhsiodnviovnioewnvioewnvkxnlnvklsdnvskldjklvjndsklngklnskldngdsklngdsklgnskldngsldgnsdklgnsklddnklndklgjdgklsdnlskdgnskldjhgoiejiowuiojfshood;fhs;fsdhfj;dsofhdsklf;dsfnsdklfsndklghnklrengjhrengjregreg')
 	 },
 
 };
