@@ -12,7 +12,7 @@
  */
 
 var crypto = require('crypto');
-var poofeh = true;r
+var poofeh = true;
 var inShop = ['symbol', 'custom', 'animated', 'room', 'trainer', 'fix', 'potd'];
 var closeShop = false;
 var closedShop = 0;
