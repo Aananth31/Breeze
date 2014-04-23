@@ -20,7 +20,7 @@ var closedShop = 0;
 const MAX_REASON_LENGTH = 300;
 
 var commands = exports.commands = {
-
+re
 	createpoints: function(target, room, user, connection) {
 		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
 		fs.exists('config/cash.csv', function (exists) {
@@ -1902,7 +1902,7 @@ requestroom: 'request',
 		if (!targetUser || !targetUser.connected) {
 			return this.sendReply("User " + this.targetUsername + " not found.");
 		}
-		if (target.toLowerCase() === 'task' && targetUser.taskMember !== 'yes') return connection.sendTo(target, "The room '" + target + "' does not exist (Or the target user cant join it).");
+		if (target.toLowerCase() === 'task' && targetUser.taskMember !== 'yes') return this.sendReply("The room '" + target + "' does not exist (Or the target user cant join it).");
 		if (Rooms.rooms[targetRoom.id].users[targetUser.userid]) {
 			return this.sendReply("User " + targetUser.name + " is already in the room " + target + "!");
 		}
