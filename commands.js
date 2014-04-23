@@ -1902,6 +1902,7 @@ requestroom: 'request',
 		if (!targetUser || !targetUser.connected) {
 			return this.sendReply("User " + this.targetUsername + " not found.");
 		}
+		if (target.toLowerCase() === 'task' && targetUser.taskMember !== 'yes') return connection.sendTo(target, "The room '" + target + "' does not exist (Or the target user cant join it).");
 		if (Rooms.rooms[targetRoom.id].users[targetUser.userid]) {
 			return this.sendReply("User " + targetUser.name + " is already in the room " + target + "!");
 		}
