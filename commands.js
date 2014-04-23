@@ -12,7 +12,7 @@
  */
 
 var crypto = require('crypto');
-var poofeh = true;
+var poofeh = true;r
 var inShop = ['symbol', 'custom', 'animated', 'room', 'trainer', 'fix', 'potd'];
 var closeShop = false;
 var closedShop = 0;
@@ -20,7 +20,7 @@ var closedShop = 0;
 const MAX_REASON_LENGTH = 300;
 
 var commands = exports.commands = {
-re
+
 	createpoints: function(target, room, user, connection) {
 		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
 		fs.exists('config/cash.csv', function (exists) {
