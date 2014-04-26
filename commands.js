@@ -2142,14 +2142,14 @@ requestroom: 'request',
 	 * Moderating: Other
 	 *********************************************************/
 
-	modnote: function(target, room, user, connection, cmd) {
+	/*modnote: function(target, room, user, connection, cmd) {
 		if (!target) return this.parse('/help note');
 		if (target.length > MAX_REASON_LENGTH) {
 			return this.sendReply("The note is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
 		}
 		if (!this.can('staff', room)) return false;
 		return this.privateModCommand("(" + user.name + " notes: " + target + ")");
-	},
+	},*/
 
 	demote: 'promote',
 	promote: function(target, room, user, connection, cmd) {
