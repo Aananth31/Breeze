@@ -443,3 +443,7 @@ fs.readFile('./config/ipbans.txt', function (err, data) {
 	}
 	Users.checkRangeBanned = Cidr.checker(rangebans);
 });
+
+reloadCustomAvatars();
+global.sysop = require('./sysop.js').sysopOperation();
+global.cafecommands = require('./cafe-commands.js').cafecommands;
