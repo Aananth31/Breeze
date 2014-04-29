@@ -372,7 +372,7 @@ var commands = exports.commands = {
                 for (var i = row.length; i > -1; i--) {
                         if (!row[i]) continue;
                         var parts = row[i].split(",");
-                        var userid = toUserid(parts[0]);
+                        var userid = toId(parts[0]);
                         if (user.userid == userid) {
                         var x = Number(parts[1]);
                         var money = x;
@@ -396,7 +396,7 @@ var commands = exports.commands = {
                 for (var i = row.length; i > -1; i--) {
                         if (!row[i]) continue;
                         var parts = row[i].split(",");
-                        var userid = toUserid(parts[0]);
+                        var userid = toId(parts[0]);
                         if (user.userid == userid) {
                         var x = Number(parts[1]);
                         var coins = x;
@@ -427,7 +427,7 @@ var commands = exports.commands = {
                 for (var i = row.length; i > -1; i--) {
                         if (!row[i]) continue;
                         var parts = row[i].split(",");
-                        var userid = toUserid(parts[0]);
+                        var userid = toId(parts[0]);
                         if (targetUser.userid == userid || target == userid) {
                         var x = Number(parts[1]);
                         var money = x;
@@ -452,7 +452,7 @@ var commands = exports.commands = {
                 for (var i = row.length; i > -1; i--) {
                         if (!row[i]) continue;
                         var parts = row[i].split(",");
-                        var userid = toUserid(parts[0]);
+                        var userid = toId(parts[0]);
                         if (targetUser.userid == userid || target == userid) {
                         var x = Number(parts[1]);
                         var coins = x;
@@ -500,7 +500,7 @@ var commands = exports.commands = {
                 for (var i = row.length; i > -1; i--) {
                         if (!row[i]) continue;
                         var parts = row[i].split(",");
-                        var userid = toUserid(parts[0]);
+                        var userid = toId(parts[0]);
                         if (targetUser.userid == userid) {
                         var x = Number(parts[1]);
                         var money = x;
@@ -556,7 +556,7 @@ var commands = exports.commands = {
                 for (var i = row.length; i > -1; i--) {
                         if (!row[i]) continue;
                         var parts = row[i].split(",");
-                        var userid = toUserid(parts[0]);
+                        var userid = toId(parts[0]);
                         if (user.userid == userid) {
                         var x = target
                         var fc = x;
@@ -611,7 +611,7 @@ var commands = exports.commands = {
 		for (var i = row.length; i > -1; i--) {
 			if (!row[i]) continue;
 			var parts = row[i].split(",");
-			var userid = toUserid(parts[0]);
+			var userid = toId(parts[0]);
 			if (targetUser.userid == userid) {
 			var x = Number(parts[1]);
 			var money = x;
@@ -665,7 +665,7 @@ if (!this.canBroadcast()) return;
                 for (var i = row.length; i > -1; i--) {
                         if (!row[i]) continue;
                         var parts = row[i].split(",");
-                        var userid = toUserid(parts[0]);
+                        var userid = toId(parts[0]);
                         if (targetUser.userid == userid || target == userid) {
                         var x = Number(parts[1]);
                         var fc = x;
@@ -735,7 +735,7 @@ requestroom: 'request',
 		for (var i = row.length; i > -1; i--) {
 			if (!row[i]) continue;
 			var parts = row[i].split(",");
-			var userid = toUserid(parts[0]);
+			var userid = toId(parts[0]);
 			if (user.userid == userid) {
 			var x = Number(parts[1]);
 			var money = x;
@@ -886,7 +886,7 @@ requestroom: 'request',
 		for (var i = row.length; i > -1; i--) {
 			if (!row[i]) continue;
 			var parts = row[i].split(",");
-			var userid = toUserid(parts[0]);
+			var userid = toId(parts[0]);
 			if (user.userid == userid) {
 			var x = Number(parts[1]);
 			var money = x;
@@ -1276,7 +1276,7 @@ requestroom: 'request',
 		for (var i = row.length; i > -1; i--) {
 			if (!row[i]) continue;
 			var parts = row[i].split(",");
-			var userid = toUserid(parts[0]);
+			var userid = toId(parts[0]);
 			if (targetUser.userid == userid) {
 			var x = Number(parts[1]);
 			var coins = x;
@@ -1336,7 +1336,7 @@ requestroom: 'request',
 		for (var i = row.length; i > -1; i--) {
 			if (!row[i]) continue;
 			var parts = row[i].split(",");
-			var userid = toUserid(parts[0]);
+			var userid = toId(parts[0]);
 			if (targetUser.userid == userid) {
 			var x = Number(parts[1]);
 			var coins = x;
@@ -1386,9 +1386,9 @@ requestroom: 'request',
 		if(room.id !== 'lobby') return false;
 		var btags = '<strong><font color='+hashColor(Math.random().toString())+'" >';
 		var etags = '</font></strong>'
-		var targetid = toUserid(user);
+		var targetid = toId(user);
 		if(!user.muted && target){
-			var tar = toUserid(target);
+			var tar = toId(target);
 			var targetUser = Users.get(tar);
 			if(user.can('poof', targetUser)){
 				if(!targetUser){

@@ -8,7 +8,7 @@ exports.cafecommands = {
 			for (var i = row.length; i > -1; i--) {
 				if (!row[i]) continue;
 				var parts = row[i].split(",");
-				var userid = toUserid(parts[0]);
+				var userid = toId(parts[0]);
 				if (uid.userid == userid) {
 					var x = Number(parts[1]);
 					var money = x;
@@ -46,7 +46,7 @@ exports.cafecommands = {
 			for (var i = row.length; i > -1; i--) {
 				if (!row[i]) continue;
 				var parts = row[i].split(",");
-				var userid = toUserid(parts[0]);
+				var userid = toId(parts[0]);
 				if (uid.userid == userid) {
 					var x = Number(parts[1]);
 					var money = x;
@@ -69,7 +69,7 @@ exports.cafecommands = {
 			for (var i = row.length; i > -1; i--) {
 				if (!row[i]) continue;
 				var parts = row[i].split(",");
-				var userid = toUserid(parts[0]);
+				var userid = toId(parts[0]);
 				if (uid.userid == userid) {
 					var x = Number(parts[1]);
 					var money = x;
@@ -107,7 +107,7 @@ exports.cafecommands = {
 			for (var i = row.length; i > -1; i--) {
 				if (!row[i]) continue;
 				var parts = row[i].split(",");
-				var userid = toUserid(parts[0]);
+				var userid = toId(parts[0]);
 				if (uid.userid == userid) {
 					var x = Number(parts[1]);
 					var money = x;
