@@ -40,7 +40,7 @@ var GlobalRoom = (function () {
 
 		if (!this.chatRoomData.length) {
 			this.chatRoomData = [{
-				title: 'Lobby',
+				title: 'Café',
 				autojoin: true
 			}, {
 				title: 'Staff',
