@@ -1620,7 +1620,7 @@ var commands = exports.commands = {
 	 },
 	 gayhentai: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/c3f923378b0cabd3a9fb70effd8f515c.png>')
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/02fb6496e6dec81091e461daa381ac10.png>')
 	 },
 
 };
