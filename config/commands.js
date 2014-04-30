@@ -1622,5 +1622,9 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.gyazo.com/02fb6496e6dec81091e461daa381ac10.png>')
 	 },
+	 leshentai: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/ab87a5d9c2f94cd9c4f1bfaee5345aa2.png>')
+	 },
 
 };
