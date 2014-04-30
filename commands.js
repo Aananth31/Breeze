@@ -328,7 +328,7 @@ var commands = exports.commands = {
 		if (!target) return this.parse('/pmall [message] - Sends a PM to every user in a room.');
 		if (!this.can('pmall')) return false;
 
-		var pmName = '~Frost PM';
+		var pmName = '#Cafe';
 
 		for (var i in Users.users) {
 			var message = '|pm|'+pmName+'|'+Users.users[i].getIdentity()+'|'+target;
@@ -343,7 +343,7 @@ var commands = exports.commands = {
 
 		for (var u in Users.users) {
 			if (Users.users[u].isStaff) {
-				Users.users[u].send('|pm|~Staff PM|'+Users.users[u].group+Users.users[u].name+'|'+target);
+				Users.users[u].send('|pm|#Cafe Staff|'+Users.users[u].group+Users.users[u].name+'|'+target);
 			}
 		}
 	},
