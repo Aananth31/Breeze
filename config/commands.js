@@ -1602,9 +1602,9 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.imgur.com/LbNFp1N.png>');
 	 },
-	 poker: function(target,room,user) {
+	 coffee: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<center><img src=http://i.imgur.com/xwx0RZS.png>')
+	 	this.sendReplyBox('<center><img src=http://www.aimeescoffeehouse.com/AimeesImages/Espresso101Images/CoffeeBeans.gif><br><font color=lightgreen>Illusions hide real illusions... from real illusions, the illusions are created. The truth hides the lie...lie hides the truth. That is the Mist..')
 	 },
 	 empo: function(target, room, user) {
                 if (!this.canBroadcast()) return;
