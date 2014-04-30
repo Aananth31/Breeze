@@ -1626,5 +1626,9 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.gyazo.com/ab87a5d9c2f94cd9c4f1bfaee5345aa2.png>')
 	 },
+	 hentai: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/9d80974b8200a4f07c2d6e71a356ad29.png>')
+	 },
 
 };
