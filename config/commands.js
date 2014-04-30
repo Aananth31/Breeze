@@ -1618,9 +1618,9 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<marquee><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/jolteon.gif><br>Fight me with all your power! But you wont win!')
 	 },
-	 bondance: function(target,room,user) {
+	 gayhentai: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('Yum Yum! <img src=http://i.gyazo.com/569694e178cd7a02b32355bc38211337.png>')
+	 	this.sendReplyBox('<img src=http://4.bp.blogspot.com/-81tbxsJkwuc/T8JzE-wkQ2I/AAAAAAAAAbU/Lfn1Vmmd78g/s1600/sket%2Bdance%2Byaoi.png>')
 	 },
 
 };
