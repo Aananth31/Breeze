@@ -1620,7 +1620,7 @@ var commands = exports.commands = {
 	 },
 	 gayhentai: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://4.bp.blogspot.com/-81tbxsJkwuc/T8JzE-wkQ2I/AAAAAAAAAbU/Lfn1Vmmd78g/s1600/sket%2Bdance%2Byaoi.png>')
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/da0357e455eaf679a801f59fffde01d1.png>')
 	 },
 
 };
