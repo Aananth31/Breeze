@@ -12,6 +12,10 @@ body {
     font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
 
+.menugroup .button {
+    background-color: #737373;
+}
+
 .menugroup {
     background-color: #b45f04;
 }
