@@ -1889,7 +1889,8 @@ requestroom: 'request',
 
 		this.addModCommand("" + targetUser.name + " was warned by " + user.name + "." + (target ? " (" + target + ")" : ""));
 		targetUser.send('|c|~|/warn ' + target);
-		this.add('|unlink|' + targetUser.userid);
+		var nickToUnlink = targetUser.named ? targetUser.userid : (Object.keys(targetUser.prevNames).last() || targetUser.userid);
+		this.add('|unlink|' + nickToUnlink);
 	},
 
 	redirect: 'redir',
@@ -1961,7 +1962,8 @@ requestroom: 'request',
 		this.addModCommand("" + targetUser.name + " was muted by " + user.name + " for 7 minutes." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
 		if (alts.length) this.addModCommand("" + targetUser.name + "'s alts were also muted: " + alts.join(", "));
-		this.add('|unlink|' + targetUser.userid);
+		var nickToUnlink = targetUser.named ? targetUser.userid : (Object.keys(targetUser.prevNames).last() || targetUser.userid);
+		this.add('|unlink|' + nickToUnlink);
 
 		targetUser.mute(room.id, 7 * 60 * 1000);
 	},
@@ -1989,7 +1991,8 @@ requestroom: 'request',
 		this.addModCommand("" + targetUser.name + " was muted by " + user.name + " for 60 minutes." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
 		if (alts.length) this.addModCommand("" + targetUser.name + "'s alts were also muted: " + alts.join(", "));
-		this.add('|unlink|' + targetUser.userid);
+		var nickToUnlink = targetUser.named ? targetUser.userid : (Object.keys(targetUser.prevNames).last() || targetUser.userid);
+		this.add('|unlink|' + nickToUnlink);
 
 		targetUser.mute(room.id, 60 * 60 * 1000, true);
 	},
@@ -2037,7 +2040,8 @@ requestroom: 'request',
 		this.addModCommand("" + targetUser.name + " was locked from talking by " + user.name + "." + (target ? " (" + target + ")" : ""));
 		var alts = targetUser.getAlts();
 		if (alts.length) this.addModCommand("" + targetUser.name + "'s alts were also locked: " + alts.join(", "));
-		this.add('|unlink|' + targetUser.userid);
+		var nickToUnlink = targetUser.named ? targetUser.userid : (Object.keys(targetUser.prevNames).last() || targetUser.userid);
+		this.add('|unlink|' + nickToUnlink);
 
 		targetUser.lock();
 	},
@@ -2088,7 +2092,8 @@ requestroom: 'request',
 			}
 		}
 
-		this.add('|unlink|' + targetUser.userid);
+		var nickToUnlink = targetUser.named ? targetUser.userid : (Object.keys(targetUser.prevNames).last() || targetUser.userid);
+		this.add('|unlink|' + nickToUnlink);
 		targetUser.ban();
 	},
 
@@ -2780,7 +2785,7 @@ requestroom: 'request',
 		}
 		if (target === 'all') {
 			this.sendReply("Calculating Total size...");
-			var total = (roomSize + configSize + rmSize + appSize + cpSize + simSize + toolsSize + usersSize) || 0;
+			var total = (roomSize + configSize + rmSize + cpSize + simSize + toolsSize + usersSize) || 0;
 			var units = ["bytes", "K", "M", "G"];
 			var converted = total;
 			var unit = 0;
