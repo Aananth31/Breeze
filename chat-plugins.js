@@ -13,7 +13,7 @@
 
 var plugins = exports.plugins = {
 	/**
-	 * Scanvenger hunts plugin.
+	 * Scavenger hunts plugin.
 	 * This game is meant to show a first hint. Players will find the name of a room with that hint.
 	 * When you find a room, it gives you a hint for the next room.
 	 * You finish upon reaching the third room.
@@ -59,10 +59,10 @@ var plugins = exports.plugins = {
 				var second = plugins.scavenger.finished[1];
 				var third = plugins.scavenger.finished[2];
 				var consolation = plugins.scavenger.finished.slice(3);
-				result += '<strong>Winner of Scavenger Hunt: ' + ((winner)? winner : 'no one') + '.';
-				result += '</strong> Second place: ' + ((second)? second : 'no one') + '.';
-				result += ' Third place: ' + ((third)? third : 'no one') + '.';
-				result += ' Consolation prize to: ' + ((consolation.length > 0)? consolation.join(', ') : 'no one') + '.';
+				result += '<strong>Winner of Scavenger Hunt: ' + ((winner)? sanitize(winner) : 'no one') + '.';
+				result += '</strong> Second place: ' + ((second)? sanitize(second) : 'no one') + '.';
+				result += ' Third place: ' + ((third)? sanitize(third) : 'no one') + '.';
+				result += ' Consolation prize to: ' + ((consolation.length > 0)? sanitize(consolation.join(', ')) : 'no one') + '.';
 				result += '<br />Solution: ' + plugins.scavenger.roomOne + ', ' 
 				+ plugins.scavenger.roomTwo + ', ' + plugins.scavenger.roomThree + '.';
 				if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>');
@@ -117,7 +117,7 @@ var plugins = exports.plugins = {
 						plugins.scavenger.finished.push(user.name);
 						var winningPositions = {1:'winner', 2:'second', 3:'third'};
 						var position = plugins.scavenger.finished.length;
-						var result = 'The user ' + user.name + ' has finished the hunt! (S)he is the '
+						var result = 'The user ' + sanitize(user.name) + ' has finished the hunt! (S)he is the '
 						+ ((winningPositions[position])? winningPositions[position] : position + 'th') + '!';
 						if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add(
 							'|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>'
