@@ -1181,8 +1181,8 @@ var commands = exports.commands = {
 	},
 
 	customavatars: 'customavatar',
-	customavatar: (function() {
-		const script = (function() {/*
+	customavatar: (function () {
+		const script = (function () {/*
 			FILENAME=`mktemp`
 			function cleanup {
 				rm -f $FILENAME
@@ -1191,7 +1191,7 @@ var commands = exports.commands = {
 
 			set -xe
 
-			wget "$1" -nv -O $FILENAME
+			timeout 10 wget "$1" -nv -O $FILENAME
 
 			FRAMES=`identify $FILENAME | wc -l`
 			if [ $FRAMES -gt 1 ]; then
@@ -1200,11 +1200,11 @@ var commands = exports.commands = {
 				EXT=".png"
 			fi
 
-			convert $FILENAME -layers TrimBounds -coalesce -adaptive-resize 80x80\> -background transparent -gravity center -extent 80x80 "$2$EXT"
+			timeout 10 convert $FILENAME -layers TrimBounds -coalesce -adaptive-resize 80x80\> -background transparent -gravity center -extent 80x80 "$2$EXT"
 		*/}).toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1];
 
 		var pendingAdds = {};
-		return function(target) {
+		return function (target) {
 			var parts = target.split(',');
 			var cmd = parts[0].trim().toLowerCase();
 
@@ -1245,7 +1245,7 @@ var commands = exports.commands = {
 					var avatar = pendingAdds[hash].avatar;
 					delete pendingAdds[hash];
 
-					require('child_process').execFile('bash', ['-c', script, '-', avatar, './config/avatars/' + userid], (function(e, out, err) {
+					require('child_process').execFile('bash', ['-c', script, '-', avatar, './config/avatars/' + userid], (function (e, out, err) {
 						if (e) {
 							this.sendReply(userid + "'s custom avatar failed to be set. Script output:");
 							(out + err).split('\n').forEach(this.sendReply.bind(this));
