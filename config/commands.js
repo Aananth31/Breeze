@@ -1650,6 +1650,6 @@ var commands = exports.commands = {
 	 },
 	 death: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/11a37fe9851c56f9ee9d51229e412984.mp4>')
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/11a37fe9851c56f9ee9d51229e412984.gif>')
 	 }
 };
