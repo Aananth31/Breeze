@@ -13,11 +13,11 @@ body {
 }
 
 .menugroup .button {
-    background-color: #0EFF22;
+    background-color: #06E248;
 }
 
 .menugroup {
-    background-color: #0EFF22;
+    background-color: #06E248;
 }
 
 .button:hover {
@@ -25,8 +25,8 @@ body {
 }
 
 .userlist {
-    border-left: 1px solid #0EFF22;
-    background-color: #0EFF22;
+    border-left: 1px solid #06E248;
+    background-color: #06E248;
 }
 
 .pm-log {
