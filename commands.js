@@ -1764,6 +1764,9 @@ requestroom: 'request',
 		if (target.toLowerCase() == "lobby") {
 					return connection.sendTo('lobby','|raw|<div class=infobox><center><img src=http://i.imgur.com/k5GRKM1.png></center><br><center><font color=blue>Welcome to Le Cafe! Have the time of your life as you would not find any place more cosy than this one!</center><center><font color=blue>Join Now! and have a chance to taste the Best Coffee!</center><center><font color=blue>The most important rule here is to have fun! We hope you will have an enjoyable and comfortable stay here.</center><center><font color=blue>Use /room , to suggest a room to the admins</center><br><center><font color=green>Dig some <a href=http://emerald.psim.us>Emeralds</a> in our allied server!</center><center><font color=green>Be sure to Join our <a href=http://plug.dj/ps-cafe/>Music Community</a> too!</center><br><center><a href=http://cafepsim.weebly.com/><img src=http://i.imgur.com/sC5u1vD.png></a></center></div>');
 		}
+		if (target.toLowerCase() == "staff") {
+					return connection.sendTo('lobby','|raw|<div class=infobox><center><img src=http://i.imgur.com/9rp2kJW.png></center><br><center><font size=5>Welcome to the Club where Staff Hangs OUt!</center><br><center>We can talk about Promotions and Demotions here!</center><center>Also talk about suggestioins to make our server better!</center><center>However if you do not want to talk about these, you can talk whatever you like! Make this place your home!</center><br><center><font color=red>However if you spam / caps Bot v2 will mute you, so do them at your risk.</center><br></div>');
+		}
 	},
 
 	rb: 'roomban',
