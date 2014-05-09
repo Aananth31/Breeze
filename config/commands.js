@@ -1648,12 +1648,16 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.gyazo.com/9819d81f93ccc828506a8d748adc96c8.png>')
 	 },
-	 ilikebuses: function(target,room,user) {
+	 lol: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/11a37fe9851c56f9ee9d51229e412984.gif><font size=5>I like Buses.')
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/893af3c627cbe85047008d2036ac90ce.gif>')
 	 },
-	 ilikelogs: function(target,room,user) {
+	 logs: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/6398bb1390c436100f6d0373ad7fe4d1.gif><font size=5>I like Logs.')
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/6398bb1390c436100f6d0373ad7fe4d1.gif>')
+	 },
+	 fall: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/d06aa1b52073af9f8f1cb5ca0400999a.gif>')
 	 },
 };
