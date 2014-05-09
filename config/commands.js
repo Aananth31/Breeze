@@ -1644,5 +1644,8 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.gyazo.com/9d80974b8200a4f07c2d6e71a356ad29.png>')
 	 },
-
+	 howtoearnbucks: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/9819d81f93ccc828506a8d748adc96c8.png>')
+	 },
 };
