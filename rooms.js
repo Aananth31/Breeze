@@ -46,7 +46,7 @@ var GlobalRoom = (function () {
 				title: 'Staff',
 				isPrivate: true,
 				staffRoom: true,
-				staffAutojoin: true,
+				staffAutojoin: true
 			}];
 		}
 
