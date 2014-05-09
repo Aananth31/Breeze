@@ -1767,6 +1767,9 @@ requestroom: 'request',
 		if (target.toLowerCase() == "staff") {
 					return connection.sendTo('staff','|raw|<div class=infobox><center><img src=http://i.imgur.com/WEoqdtX.png></center><br><center><font size=5><font color=blue>This is  the Club where Staff Hangs Out!</center><br><center>We can talk about Promotions and Demotions here!</center><center>Also talk about suggestioins to make our server better!</center><center>However if you do not want to talk about these, you can talk whatever you like! Make this place your home!</center><br><center><font color=red>However if you spam / caps Bot v2 will mute you, so do them at your risk.</center><br></div>');
 		}
+		if (target.toLowerCase() == "tourneysandgames") {
+					return connection.sendTo('tourneysandgames','|raw|<div class=infobox><center><img src=http://i.imgur.com/AbV9haX.png></center><br><center><font size=5><font color=blue>One Word - FUN!</center><br><center>Participate in tournaments here and earn bucks!</center><center>Win games like Hangman and Scavenger Hunt!</center><center>Feel free to give suggestions and make the room better!</center><br><center><font color=red>Remember to follow the rules in the /rules section while playing!</center><br></div>');
+		}
 	},
 
 	rb: 'roomban',
