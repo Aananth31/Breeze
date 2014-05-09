@@ -1648,8 +1648,11 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.gyazo.com/9819d81f93ccc828506a8d748adc96c8.png>')
 	 },
-	 death: function(target,room,user) {
+	 ilikebuses: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/11a37fe9851c56f9ee9d51229e412984.gif>')
-	 }
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/11a37fe9851c56f9ee9d51229e412984.gif><font size=5>I like Buses.')
+	 },
+	 ilikelogs: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/6398bb1390c436100f6d0373ad7fe4d1.gif><font size=5>I like Logs.')
 };
