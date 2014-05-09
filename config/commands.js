@@ -1655,4 +1655,5 @@ var commands = exports.commands = {
 	 ilikelogs: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.gyazo.com/6398bb1390c436100f6d0373ad7fe4d1.gif><font size=5>I like Logs.')
+	 },
 };
