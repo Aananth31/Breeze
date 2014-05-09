@@ -12,14 +12,6 @@ body {
     font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
 
-.menugroup .button {
-    background-color: #8DFF00;
-}
-
-.menugroup {
-    background-color: #8DFF00;
-}
-
 .button:hover {
     background-color: #373737;
 }
