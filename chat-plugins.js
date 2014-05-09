@@ -182,7 +182,7 @@ var plugins = exports.plugins = {
 				if (room.id !== 'tourneysandgames') return this.sendReply('You can only start mafia games in the Mafia room.');
 				if (plugins.mafia.status !== 'off') return this.sendReply('There is already an active mafia game.');
 				plugins.mafia.status = 'signups';
-				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(
+				if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add(
 					'|raw|<div class="broadcast-blue"><strong>A new mafia game has been started!'
 					+ ' Type /joinmafia to sign up</strong></div>'
 				);
@@ -229,7 +229,7 @@ var plugins = exports.plugins = {
     				}
     			}
 
-				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(
+				if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add(
 					'|raw|<div class="broadcast-blue"><strong>Signups for the mafia game have now ended!'
 					+ ' It is ' + plugins.mafia.stage + ' and there are: ' + JSON.stringify(plugins.mafia.totals) + '. type "/myrole" to see your role</strong></div>'
 				);
@@ -260,7 +260,7 @@ var plugins = exports.plugins = {
 				if (room.id !== 'tourneysandgames') return this.sendReply('You can only join mafia games in the Mafia room.');
 				if (plugins.mafia.participants[user.userid]) return this.sendReply('You are already participating in the current mafia game.');
 				plugins.mafia.participants[user.userid] = '';
-				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(user + ' has joined! Total players: ' + Object.keys(plugins.mafia.participants).length);
+				if (mRooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add(user + ' has joined! Total players: ' + Object.keys(plugins.mafia.participants).length);
 				return this.sendReply('(You joined the mafia game!)');
 			},
 
@@ -279,9 +279,9 @@ var plugins = exports.plugins = {
 				plugins.mafia.votes[user.userid] = targetUser;
 
 				if (targetUser === 'no lynch') {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(user + ' has voted to lynch: no lynch');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add(user + ' has voted to lynch: no lynch');
 				} else {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(user + ' has voted to lynch: ' + this.targetUsername);
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add(user + ' has voted to lynch: ' + this.targetUsername);
 				}
 
 				var keys = Object.keys(plugins.mafia.votes);
@@ -302,12 +302,12 @@ var plugins = exports.plugins = {
 				if (totals[targetUser] >= (Math.floor(Object.keys(plugins.mafia.participants).length / 2) +1)) {
 					plugins.mafia.stage = 'night';
 					if (targetUser === 'no lynch') {
-						if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>No one was lynched!</strong></div>');
+						if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>No one was lynched!</strong></div>');
 					} else if (target === '1-Shot Lynchproof Townie') {
-						if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>No one was lynched!</strong></div>');
+						if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>No one was lynched!</strong></div>');
 						plugins.mafia.participants[target] = 'Villager';
 					} else {
-						if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + this.targetUsername + ' was lynched and was a ' + plugins.mafia.participants[targetUser] + '!');
+						if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>' + this.targetUsername + ' was lynched and was a ' + plugins.mafia.participants[targetUser] + '!');
 						delete plugins.mafia.participants[targetUser];
 
 						var winner = [];
@@ -327,7 +327,7 @@ var plugins = exports.plugins = {
 						}
 
 						if (winner.length === 1) {
-							if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
+							if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
 							// reset everything to starting values
 
 							plugins.mafia.status = 'off';
@@ -339,7 +339,7 @@ var plugins = exports.plugins = {
 							return;
 						}
 					}
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>It is now ' + plugins.mafia.stage + '. If you have a nightaction you can use it using "/nightaction target"</strong></div>');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>It is now ' + plugins.mafia.stage + '. If you have a nightaction you can use it using "/nightaction target"</strong></div>');
 					room.modchat = '+';
 					plugins.mafia.votes = {};
 
@@ -360,7 +360,7 @@ var plugins = exports.plugins = {
 
 				if (keys.length === Object.keys(plugins.mafia.participants).length) {
 					plugins.mafia.stage = 'night';
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>No one was lynched! </strong></div>');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>No one was lynched! </strong></div>');
 					plugins.mafia.votes = {};
 
 					for (var key in plugins.mafia.participants) {
@@ -375,7 +375,7 @@ var plugins = exports.plugins = {
     						plugins.mafia.nightactions[role][key] = '';
     					}
 					}
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>It is now ' + plugins.mafia.stage + '</strong></div>');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>It is now ' + plugins.mafia.stage + '</strong></div>');
 					room.modchat = '+';
 				}
 			},
@@ -586,9 +586,9 @@ var plugins = exports.plugins = {
 				}
 
 				if (message === '') {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>No one was killed!</strong></div>');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>No one was killed!</strong></div>');
 				} else {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>The deaths tonight are: ' + message + '</strong></div>');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>The deaths tonight are: ' + message + '</strong></div>');
 				}
 
 				// check if any side has won
@@ -610,7 +610,7 @@ var plugins = exports.plugins = {
 				}
 
 				if (winner.length === 1) {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
 					// reset everything to starting values
 
 					plugins.mafia.status = 'off';
@@ -620,7 +620,7 @@ var plugins = exports.plugins = {
 					plugins.mafia.votes = {};
 
 				} else {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>It is now day! The remaining players are: ' + Object.keys(plugins.mafia.participants) + '</strong></div>');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>It is now day! The remaining players are: ' + Object.keys(plugins.mafia.participants) + '</strong></div>');
 				}
 
 				plugins.mafia.nightactions = {Mafia: {}};
@@ -647,7 +647,7 @@ var plugins = exports.plugins = {
 					delete plugins.mafia.nightactions.role[targetUser];
 				}
 
-				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + this.targetUsername + ' the ' + role + ' was killed by a mod!</strong></div>');
+				if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>' + this.targetUsername + ' the ' + role + ' was killed by a mod!</strong></div>');
 
 				var winner = [];
 
@@ -666,7 +666,7 @@ var plugins = exports.plugins = {
 				}
 
 				if (winner.length === 1) {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
+					if (Rooms.rooms.tourneysandgames) Rooms.rooms.tourneysandgames.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
 					// reset everything to starting values
 
 					plugins.mafia.status = 'off';
