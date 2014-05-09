@@ -179,7 +179,7 @@ var plugins = exports.plugins = {
 		commands: {
 			startmafia: function(target, room, user) {
 				if (!this.can('mafia', room)) return false;
-				if (room.id !== 'mafia') return this.sendReply('You can only start mafia games in the Mafia room.');
+				if (room.id !== 'tourneysandgames') return this.sendReply('You can only start mafia games in the Mafia room.');
 				if (plugins.mafia.status !== 'off') return this.sendReply('There is already an active mafia game.');
 				plugins.mafia.status = 'signups';
 				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(
@@ -257,7 +257,7 @@ var plugins = exports.plugins = {
 
 			joinmafia: function(target, room, user) {
 				if (plugins.mafia.status !== 'signups') return this.sendReply('Signups are not happening right now');
-				if (room.id !== 'mafia') return this.sendReply('You can only join mafia games in the Mafia room.');
+				if (room.id !== 'tourneysandgames') return this.sendReply('You can only join mafia games in the Mafia room.');
 				if (plugins.mafia.participants[user.userid]) return this.sendReply('You are already participating in the current mafia game.');
 				plugins.mafia.participants[user.userid] = '';
 				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(user + ' has joined! Total players: ' + Object.keys(plugins.mafia.participants).length);
@@ -630,7 +630,7 @@ var plugins = exports.plugins = {
 
 			modkill: function(target, room, user) {
 				if (!this.can('mafia', room)) return false;
-				if (room.id !== 'mafia') return this.sendReply('You can only modkill in the Mafia room.');
+				if (room.id !== 'tourneysandgames') return this.sendReply('You can only modkill in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('There is no active mafia game.');
 				target = this.splitTarget(target);
 				var targetUser = this.targetUser;
@@ -679,7 +679,7 @@ var plugins = exports.plugins = {
 			},
 
 			inspections: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only see mafia votes in the Mafia room.');
+				if (room.id !== 'tourneysandgames') return this.sendReply('You can only see mafia votes in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('A mafia game hasn\'t started yet');
 				if (plugins.mafia.participants[user.userid] !== 'Cop' && plugins.mafia.participants[user.userid] !== 'Mafia Seer') return this.sendReply('You are not a cop or mafia seer');
 
@@ -687,7 +687,7 @@ var plugins = exports.plugins = {
 			},
 
 			votes: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only see mafia votes in the Mafia room.');
+				if (room.id !== 'tourneysandgames') return this.sendReply('You can only see mafia votes in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('A mafia game hasn\'t started yet');
 				if (plugins.mafia.stage !== 'day') return this.sendReply('You can only have votes during the day');
 				if (!this.canBroadcast()) return;
@@ -706,21 +706,21 @@ var plugins = exports.plugins = {
 			},
 
 			players: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only use this command in the Mafia room.');
+				if (room.id !== 'tourneysandgames') return this.sendReply('You can only use this command in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('A mafia game hasn\'t started yet');
 				if (!this.canBroadcast()) return;
 				return this.sendReply('Current players are: ' + Object.keys(plugins.mafia.participants));
 			},
 
 			roles: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only use this command in the Mafia room.');
+				if (room.id !== 'tourneysandgames') return this.sendReply('You can only use this command in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('A mafia game hasn\'t started yet');
 				if (!this.canBroadcast()) return;
 				return this.sendReply('Current roles are: ' + JSON.stringify(plugins.mafia.totals));
 			},
 
 			mafiahelp: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only use this command in the Mafia room.');
+				if (room.id !== 'tourneysandgames') return this.sendReply('You can only use this command in the Mafia room.');
 				if (!this.canBroadcast()) return;
 				this.sendReplyBox(
 					'<strong>Player commands:</strong><br />' +
