@@ -1652,4 +1652,8 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<img src=http://i.gyazo.com/d06aa1b52073af9f8f1cb5ca0400999a.gif>')
 	 },
+	 games: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<font size=5><font color=red><center>Which Game should we Play Now?</center><br><center><button name="send" value="**We should play GAME OF SURVIVOR.**" target="_blank">Game of Survivor. (Winner Gets Promoted, Dead Gets Locked for the Game.)</button> <button name="send" value="**We should START A TOURNAMENT.**" target="_blank">Tournament. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY MAFIA.**" target="_blank">Mafia. (Winner Gets Bucks.)</button> <button name="send" value="**We should START A SCAVENGER HUNT.**" target="_blank">Scavenger. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY HANGMAN.**" target="_blank">Hangman. (Winner Gets Bucks.)</button></center>')
+	 },
 };
