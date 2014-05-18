@@ -1649,6 +1649,6 @@ var commands = exports.commands = {
 	 },
 	 kitsuya: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.imgur.com/2fqrLbz.jpg><center><font color=red>The Reason you lost, was because you had me as your opponent.')
+	 	this.sendReplyBox('<center><img src=http://i.imgur.com/2fqrLbz.jpg></center><center><font color=red>The Reason you lost, was because you had me as your opponent.')
 	 },
 };
