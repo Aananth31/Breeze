@@ -1647,4 +1647,8 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<font size=5><font color=red><center>Which Game should we Play Now?</center><center><button name="send" value="**We should play GAME OF SURVIVOR.**" target="_blank">Game of Survivor. (Winner Gets Promoted, Dead Gets Game Locked.)</button> <button name="send" value="**We should START A TOURNAMENT.**" target="_blank">Tournament. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY MAFIA.**" target="_blank">Mafia. (Winner Gets Bucks.)</button> <button name="send" value="**We should START A SCAVENGER HUNT.**" target="_blank">Scavenger. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY HANGMAN.**" target="_blank">Hangman. (Winner Gets Bucks.)</button></center>')
 	 },
+	 kitsuya: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.imgur.com/2fqrLbz.jpg><font color=red>The Reason you lost, was because you had me as your opponent.')
+	 },
 };
