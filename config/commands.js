@@ -1654,5 +1654,10 @@ var commands = exports.commands = {
 	 tv: function(target, room, user) {
                 if (!this.canBroadcast()) return;
                 this.sendReplyBox('<center><font size=5><font color=red>Vote for the Next Tornament!!</center><br><center><button name="send" value="/pm coffeebeans,**Random Battle.**" target="_blank">Random Battle</button> <button name="send" value="/pm coffeebeans,**Smogon Doubles.**" target="_blank">Smogon Doubles</button> <button name="send" value="/pm coffeebeans,**Over Used.**" target="_blank">OU</button> <button name="send" value="/pm coffeebeans,**Challenge Cup 1vs1.**" target="_blank">Challenge Cup 1vs1</button> <button name="send" value="/pm coffeebeans,**Little Cup.**" target="_blank">Little Cup</button></center><br><center><font color=blue>For more tier Suggestions, Please PM Coffee Beans.</center>');
-        },
+         },
+         doctorgrace: 'grace',
+         grace: function(target,room,user) {
+         	if (!this.canBroadcast()) return;
+         	this.sendReplyBox('<center><img src=http://media0.giphy.com/media/DCp4s7Z1FizZe/giphy.gif height=100><font size=3><b><font color=blue>Doctor Grace~<img src=http://img3.wikia.nocookie.net/__cb20130119052202/fairytail/images/e/e3/Frosch_won%27t_disappear.png height=100><br></font></font><b>Quote:</b> <font color=red>Sir wanna have a cup of coffee?');
+         },
 };
