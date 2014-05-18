@@ -3244,7 +3244,7 @@ function getRandMessage(user){
 		break;
 		case 21: message = message + user.name + ' was used as a tool to dig coffee beans!';
 		break;
-		case 22: message = message + user.name + ' stepped on one of Tails\'s tail;
+		case 22: message = message + user.name + ' stepped on one of Tails tail;
 		break;
 		case 23: message = message + user.name + ' received judgment from the almighty Judgement v2!';
 		break;
