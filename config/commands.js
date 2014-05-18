@@ -1649,6 +1649,6 @@ var commands = exports.commands = {
 	 },
 	 kitsuya: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<center><img src=http://fc02.deviantart.net/fs70/f/2013/088/f/8/edo_tayuya_by_sicnesse-d5zo0pw.png></center><center><font color=red>The Reason you lost, was because you had me as your opponent.')
+	 	this.sendReplyBox('<center><img src=http://i.imgur.com/f0aXDjL.png></center><center><font color=red>The Reason you lost, was because you had me as your opponent.')
 	 },
 };
