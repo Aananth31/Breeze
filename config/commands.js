@@ -1651,4 +1651,8 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<center><img src=http://i.imgur.com/f0aXDjL.png></center><center><font color=red><b>The Reason you lost, was because you had me as your opponent.')
 	 },
+	 tv: function(target, room, user) {
+                if (!this.canBroadcast()) return;
+                this.sendReplyBox('<center><font size=5><font color=red>Vote for the Next Tornament!!</center><br><center><button name="send" value="/pm coffeebeans,**Random Battle.**" target="_blank">Random Battle</button> <button name="send" value="/pm coffeebeans,**Smogon Doubles.**" target="_blank">Smogon Doubles</button> <button name="send" value="/pm coffeebeans,**Over Used.**" target="_blank">OU</button> <button name="send" value="/pm coffeebeans,**Challenge Cup 1vs1.**" target="_blank">Challenge Cup 1vs1</button> <button name="send" value="/pm coffeebeans,**Little Cup.**" target="_blank">Little Cup</button></center><br><center><font color=blue>For more tier Suggestions, Please PM Coffee Beans.</center>');
+        },
 };
