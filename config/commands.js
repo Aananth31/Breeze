@@ -1665,4 +1665,10 @@ var commands = exports.commands = {
          	if (!this.canBroadcast()) return;
          	this.sendReplyBox('<center><img src=http://fc08.deviantart.net/fs70/f/2012/243/a/9/tails_gif_by_hiccrid-d5d1h8t.gif height=150>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=orange><b><font size=3><u>Tails</u></font></b></font><img src= http://www.rankopedia.com/CandidatePix/75261.gif height=150><br><b><fon size=2><font color=red>Quote:</font></b> I am sexy AF');
          },
+         chaarizard: 'char',
+         charizard: 'char',
+         char: function(target,room,user) {
+         	if (!this.sendReplyBox()) return;
+         	this.sendReplyBox('<center><img src=http://play.pokemonshowdown.com/sprites/xyani/charizard-mega-x.gif height=125><img src=http://i.imgur.com/j1hggX6.png height=90><img src=http://play.pokemonshowdown.com/sprites/xyani/charizard-mega-y.gif height=150></center><br><font size=2><center><font color=red><b>Quote:</b></font> Nobody is perfetc</center></font>');
+         },
 };
