@@ -71,76 +71,74 @@ var commands = exports.commands = {
 		});
 	},
 
-
-
 	stafflist: function(target, room, user, connection) {
-        var buffer = [];
-        var admins = [];
-        var developers = [];
-        var leaders = [];
-        var mods = [];
-        var drivers = [];
-        var voices = [];
-        var allies = [];
+		var buffer = [];
+		var admins = [];
+		var developers = [];
+		var leaders = [];
+		var mods = [];
+		var drivers = [];
+		var voices = [];
+		var allies = [];
 
-        admins2 = ''; developers2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; allies2 = '';
-        stafflist = fs.readFileSync('config/usergroups.csv','utf8');
-        stafflist = stafflist.split('\n');
-        for (var u in stafflist) {
-            line = stafflist[u].split(',');
+		admins2 = ''; developers2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; allies2 = '';
+		stafflist = fs.readFileSync('config/usergroups.csv','utf8');
+		stafflist = stafflist.split('\n');
+		for (var u in stafflist) {
+			line = stafflist[u].split(',');
 			if (line[1] == '~') {
-                admins2 = admins2 +line[0]+',';
-            }
-            if (line[1] == '&') {
-                leaders2 = leaders2 +line[0]+',';
-            }
-            if (line[1] == '@') {
-                mods2 = mods2 +line[0]+',';
-            }
-            if (line[1] == '%') {
-                drivers2 = drivers2 +line[0]+',';
-            }
-            if (line[1] == '+') {
-                voices2 = voices2 +line[0]+',';
-             }
-        }
-        admins2 = admins2.split(',');
-        leaders2 = leaders2.split(',');
-        mods2 = mods2.split(',');
-        drivers2 = drivers2.split(',');
-        voices2 = voices2.split(',');
-        for (var u in admins2) {
-            if (admins2[u] != '') admins.push(admins2[u]);
-        }
-        for (var u in leaders2) {
-            if (leaders2[u] != '') leaders.push(leaders2[u]);
-        }
-        for (var u in mods2) {
-            if (mods2[u] != '') mods.push(mods2[u]);
-        }
-        for (var u in drivers2) {
-            if (drivers2[u] != '') drivers.push(drivers2[u]);
-        }
-        for (var u in voices2) {
-            if (voices2[u] != '') voices.push(voices2[u]);
-        }
-        if (admins.length > 0) {
-            admins = admins.join(', ');
-        }
-        if (leaders.length > 0) {
-            leaders = leaders.join(', ');
-        }
-        if (mods.length > 0) {
-            mods = mods.join(', ');
-        }
-        if (drivers.length > 0) {
-            drivers = drivers.join(', ');
-        }
-        if (voices.length > 0) {
-            voices = voices.join(', ');
-        }
-        connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
-    },
+				admins2 = admins2 +line[0]+',';
+			}
+			if (line[1] == '&') {
+				leaders2 = leaders2 +line[0]+',';
+			}
+			if (line[1] == '@') {
+				mods2 = mods2 +line[0]+',';
+			}
+			if (line[1] == '%') {
+				drivers2 = drivers2 +line[0]+',';
+			}
+			if (line[1] == '+') {
+				voices2 = voices2 +line[0]+',';
+			 }
+		}
+		admins2 = admins2.split(',');
+		leaders2 = leaders2.split(',');
+		mods2 = mods2.split(',');
+		drivers2 = drivers2.split(',');
+		voices2 = voices2.split(',');
+		for (var u in admins2) {
+			if (admins2[u] != '') admins.push(admins2[u]);
+		}
+		for (var u in leaders2) {
+			if (leaders2[u] != '') leaders.push(leaders2[u]);
+		}
+		for (var u in mods2) {
+			if (mods2[u] != '') mods.push(mods2[u]);
+		}
+		for (var u in drivers2) {
+			if (drivers2[u] != '') drivers.push(drivers2[u]);
+		}
+		for (var u in voices2) {
+			if (voices2[u] != '') voices.push(voices2[u]);
+		}
+		if (admins.length > 0) {
+			admins = admins.join(', ');
+		}
+		if (leaders.length > 0) {
+			leaders = leaders.join(', ');
+		}
+		if (mods.length > 0) {
+			mods = mods.join(', ');
+		}
+		if (drivers.length > 0) {
+			drivers = drivers.join(', ');
+		}
+		if (voices.length > 0) {
+			voices = voices.join(', ');
+		}
+		connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
+	},
 
 	restart: function(target, room, user) {
 		if (!this.can('lockdown')) return false;
@@ -164,11 +162,11 @@ var commands = exports.commands = {
 
 	eating: 'away',
 	gaming: 'away',
-    	sleep: 'away',
-    	work: 'away',
-    	working: 'away',
-    	sleeping: 'away',
-    	busy: 'away',
+	sleep: 'away',
+	work: 'away',
+	working: 'away',
+	sleeping: 'away',
+	busy: 'away',
 	afk: 'away',
 	away: function(target, room, user, connection, cmd) {
 		if (!this.can('lock')) return false;
@@ -347,244 +345,242 @@ var commands = exports.commands = {
 		}
 	},
 
-
 	/*********************************************************
 	 * Money
 	 *********************************************************/
 
 	bp: 'atm',
-        wallet: 'atm',
-        satchel: 'atm',
-        fannypack: 'atm',
-        purse: 'atm',
-        bag: 'atm',
-        atm: function(target, room, user, connection, cmd) {
-        if (!this.canBroadcast()) return;
-        var cMatch = false;
-        var mMatch = false;
-        var money = 0;
-        var coins = 0;
-        var total = '';
-        if (!target) {
-        var data = fs.readFileSync('config/cash.csv','utf8')
-                var row = (''+data).split("\n");
-                for (var i = row.length; i > -1; i--) {
-                        if (!row[i]) continue;
-                        var parts = row[i].split(",");
-                        var userid = toId(parts[0]);
-                        if (user.userid == userid) {
-                        var x = Number(parts[1]);
-                        var money = x;
-                        mMatch = true;
-                        if (mMatch === true) {
-                                break;
-                        }
-                        }
-                }
-                if (mMatch === true) {
-                        var p = 'bucks';
-                        if (money < 2) p = 'buck';
-                        total += user.name + ' has ' + money + ' ' + p + '.'
-                }
-                if (mMatch === false || money == 0) {
-                        total += 'You have no bucks.<br />';
-                }
-                user.money = money;
-                var data = fs.readFileSync('config/coins.csv','utf8')
-                var row = (''+data).split("\n");
-                for (var i = row.length; i > -1; i--) {
-                        if (!row[i]) continue;
-                        var parts = row[i].split(",");
-                        var userid = toId(parts[0]);
-                        if (user.userid == userid) {
-                        var x = Number(parts[1]);
-                        var coins = x;
-                        cMatch = true;
-                        if (cMatch === true) {
-                                break;
-                        }
-                        }
-                }
-                if (cMatch === true) {
-                        var p = 'coins';
-                        if (coins < 2) p = 'coin';
-                        total += user.name + ' has ' + coins + ' ' + p + '.'
-                }
-                if (cMatch === false) {
-                        total += 'You have no coins.'
-                }
-                user.coins = coins;
-        } else {
-                var data = fs.readFileSync('config/cash.csv','utf8')
-                target = this.splitTarget(target);
-                var targetUser = this.targetUser;
-                if (!targetUser) {
-                        return this.sendReply('User '+this.targetUsername+' not found.');
-                }
-                var money = 0;
-                var row = (''+data).split("\n");
-                for (var i = row.length; i > -1; i--) {
-                        if (!row[i]) continue;
-                        var parts = row[i].split(",");
-                        var userid = toId(parts[0]);
-                        if (targetUser.userid == userid || target == userid) {
-                        var x = Number(parts[1]);
-                        var money = x;
-                        mMatch = true;
-                        if (mMatch === true) {
-                                break;
-                        }
-                        }
-                }
-                if (mMatch === true) {
-                        var p = 'bucks';
-                        if (money < 2) p = 'buck';
-                        total += targetUser.name + ' has ' + money + ' ' + p + '.<br />';
-                }
-                if (mMatch === false) {
-                        total += targetUser.name + ' has no bucks.<br />';
-                }
-                targetUser.money = money;
-                var data = fs.readFileSync('config/coins.csv','utf8')
-                var coins = 0;
-                var row = (''+data).split("\n");
-                for (var i = row.length; i > -1; i--) {
-                        if (!row[i]) continue;
-                        var parts = row[i].split(",");
-                        var userid = toId(parts[0]);
-                        if (targetUser.userid == userid || target == userid) {
-                        var x = Number(parts[1]);
-                        var coins = x;
-                        cMatch = true;
-                        if (cMatch === true) {
-                                break;
-                        }
-                        }
-                }
-                if (cMatch === true) {
-                        var p = 'coins';
-                        if (coins < 2) p = 'coin';
-                        total += targetUser.name + ' has ' + coins + ' ' + p + '.<br />';
-                }
-                if (cMatch === false) {
-                        total += targetUser.name + ' has no coins.<br />';
-                }
-                targetUser.coins = coins;
-        }
-        return this.sendReplyBox(total);
-        },
+		wallet: 'atm',
+		satchel: 'atm',
+		fannypack: 'atm',
+		purse: 'atm',
+		bag: 'atm',
+		atm: function(target, room, user, connection, cmd) {
+		if (!this.canBroadcast()) return;
+		var cMatch = false;
+		var mMatch = false;
+		var money = 0;
+		var coins = 0;
+		var total = '';
+		if (!target) {
+		var data = fs.readFileSync('config/cash.csv','utf8')
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (user.userid == userid) {
+						var x = Number(parts[1]);
+						var money = x;
+						mMatch = true;
+						if (mMatch === true) {
+								break;
+						}
+						}
+				}
+				if (mMatch === true) {
+						var p = 'bucks';
+						if (money < 2) p = 'buck';
+						total += user.name + ' has ' + money + ' ' + p + '.'
+				}
+				if (mMatch === false || money == 0) {
+						total += 'You have no bucks.<br />';
+				}
+				user.money = money;
+				var data = fs.readFileSync('config/coins.csv','utf8')
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (user.userid == userid) {
+						var x = Number(parts[1]);
+						var coins = x;
+						cMatch = true;
+						if (cMatch === true) {
+								break;
+						}
+						}
+				}
+				if (cMatch === true) {
+						var p = 'coins';
+						if (coins < 2) p = 'coin';
+						total += user.name + ' has ' + coins + ' ' + p + '.'
+				}
+				if (cMatch === false) {
+						total += 'You have no coins.'
+				}
+				user.coins = coins;
+		} else {
+				var data = fs.readFileSync('config/cash.csv','utf8')
+				target = this.splitTarget(target);
+				var targetUser = this.targetUser;
+				if (!targetUser) {
+						return this.sendReply('User '+this.targetUsername+' not found.');
+				}
+				var money = 0;
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (targetUser.userid == userid || target == userid) {
+						var x = Number(parts[1]);
+						var money = x;
+						mMatch = true;
+						if (mMatch === true) {
+								break;
+						}
+						}
+				}
+				if (mMatch === true) {
+						var p = 'bucks';
+						if (money < 2) p = 'buck';
+						total += targetUser.name + ' has ' + money + ' ' + p + '.<br />';
+				}
+				if (mMatch === false) {
+						total += targetUser.name + ' has no bucks.<br />';
+				}
+				targetUser.money = money;
+				var data = fs.readFileSync('config/coins.csv','utf8')
+				var coins = 0;
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (targetUser.userid == userid || target == userid) {
+						var x = Number(parts[1]);
+						var coins = x;
+						cMatch = true;
+						if (cMatch === true) {
+								break;
+						}
+						}
+				}
+				if (cMatch === true) {
+						var p = 'coins';
+						if (coins < 2) p = 'coin';
+						total += targetUser.name + ' has ' + coins + ' ' + p + '.<br />';
+				}
+				if (cMatch === false) {
+						total += targetUser.name + ' has no coins.<br />';
+				}
+				targetUser.coins = coins;
+		}
+		return this.sendReplyBox(total);
+		},
 
-        awardbucks: 'givebucks',
-        gb: 'givebucks',
-        givebucks: function(target, room, user) {
-                if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
-                if(!target) return this.parse('/help givebucks');
-                if (target.indexOf(',') != -1) {
-                        var parts = target.split(',');
-                        parts[0] = this.splitTarget(parts[0]);
-                        var targetUser = this.targetUser;
-                if (!targetUser) {
-                        return this.sendReply('User '+this.targetUsername+' not found.');
-                }
-                if (isNaN(parts[1])) {
-                        return this.sendReply('Very funny, now use a real number.');
-                }
-                var cleanedUp = parts[1].trim();
-                var giveMoney = Number(cleanedUp);
-                var data = fs.readFileSync('config/cash.csv','utf8')
-                var match = false;
-                var money = 0;
-                var line = '';
-                var row = (''+data).split("\n");
-                for (var i = row.length; i > -1; i--) {
-                        if (!row[i]) continue;
-                        var parts = row[i].split(",");
-                        var userid = toId(parts[0]);
-                        if (targetUser.userid == userid) {
-                        var x = Number(parts[1]);
-                        var money = x;
-                        match = true;
-                        if (match === true) {
-                                line = line + row[i];
-                                break;
-                        }
-                        }
-                }
-                targetUser.money = money;
-                targetUser.money += giveMoney;
-                if (match === true) {
-                        var re = new RegExp(line,"g");
-                        fs.readFile('config/cash.csv', 'utf8', function (err,data) {
-                        if (err) {
-                                return console.log(err);
-                        }
-                        var result = data.replace(re, targetUser.userid+','+targetUser.money);
-                        fs.writeFile('config/cash.csv', result, 'utf8', function (err) {
-                                if (err) return console.log(err);
-                        });
-                        });
-                } else {
-                        var log = fs.createWriteStream('config/cash.csv', {'flags': 'a'});
-                        log.write("\n"+targetUser.userid+','+targetUser.money);
-                }
-                var p = 'bucks';
-                if (giveMoney < 2) p = 'buck';
-                this.sendReply(targetUser.name + ' was given ' + giveMoney + ' ' + p + '. This user now has ' + targetUser.money + ' bucks.');
-                targetUser.send(user.name + ' has given you ' + giveMoney + ' ' + p + '.');
-                } else {
-                        return this.parse('/help givebucks');
-                }
+		awardbucks: 'givebucks',
+		gb: 'givebucks',
+		givebucks: function(target, room, user) {
+				if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+				if(!target) return this.parse('/help givebucks');
+				if (target.indexOf(',') != -1) {
+						var parts = target.split(',');
+						parts[0] = this.splitTarget(parts[0]);
+						var targetUser = this.targetUser;
+				if (!targetUser) {
+						return this.sendReply('User '+this.targetUsername+' not found.');
+				}
+				if (isNaN(parts[1])) {
+						return this.sendReply('Very funny, now use a real number.');
+				}
+				var cleanedUp = parts[1].trim();
+				var giveMoney = Number(cleanedUp);
+				var data = fs.readFileSync('config/cash.csv','utf8')
+				var match = false;
+				var money = 0;
+				var line = '';
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (targetUser.userid == userid) {
+						var x = Number(parts[1]);
+						var money = x;
+						match = true;
+						if (match === true) {
+								line = line + row[i];
+								break;
+						}
+						}
+				}
+				targetUser.money = money;
+				targetUser.money += giveMoney;
+				if (match === true) {
+						var re = new RegExp(line,"g");
+						fs.readFile('config/cash.csv', 'utf8', function (err,data) {
+						if (err) {
+								return console.log(err);
+						}
+						var result = data.replace(re, targetUser.userid+','+targetUser.money);
+						fs.writeFile('config/cash.csv', result, 'utf8', function (err) {
+								if (err) return console.log(err);
+						});
+						});
+				} else {
+						var log = fs.createWriteStream('config/cash.csv', {'flags': 'a'});
+						log.write("\n"+targetUser.userid+','+targetUser.money);
+				}
+				var p = 'bucks';
+				if (giveMoney < 2) p = 'buck';
+				this.sendReply(targetUser.name + ' was given ' + giveMoney + ' ' + p + '. This user now has ' + targetUser.money + ' bucks.');
+				targetUser.send(user.name + ' has given you ' + giveMoney + ' ' + p + '.');
+				} else {
+						return this.parse('/help givebucks');
+				}
 				},
 
-
 		rfc: 'registerfriendcode',
-        registerfc: 'registerfriendcode',
-        registerfriendcode: function(target, room, user) {
-                if(!target) return this.parse('You need to specify a friend code.');
-                if (isNaN(target)) {
-                        return this.sendReply('Very funny, now use a real number.');
-                }
+		registerfc: 'registerfriendcode',
+		registerfriendcode: function(target, room, user) {
+				if(!target) return this.parse('You need to specify a friend code.');
+				if (isNaN(target)) {
+						return this.sendReply('Very funny, now use a real number.');
+				}
 				if (target == 0 || target.length !== 12) {
-                        return this.sendReply('That ain\'t a real friendcode, you lazy bum! Check your 3DS!');
-                }
-                var fc = target;
-                var data = fs.readFileSync('config/fc.csv','utf8')
-                var match = false;
-                var line = '';
-                var row = (''+data).split("\n");
-                for (var i = row.length; i > -1; i--) {
-                        if (!row[i]) continue;
-                        var parts = row[i].split(",");
-                        var userid = toId(parts[0]);
-                        if (user.userid == userid) {
-                        var x = target
-                        var fc = x;
-                        match = true;
-                        if (match === true) {
-                                line = line + row[i];
-                                break;
-                        }
-                        }
-                }
-                user.fc = fc;
-                if (match === true) {
-                        var re = new RegExp(line,"g");
-                        fs.readFile('config/fc.csv', 'utf8', function (err,data) {
-                        if (err) {
-                                return console.log(err);
-                        }
-                        var result = data.replace(re, user.userid+','+user.fc);
-                        fs.writeFile('config/fc.csv', result, 'utf8', function (err) {
-                                if (err) return console.log(err);
-                        });
-                        });
-                } else {
-                        var log = fs.createWriteStream('config/fc.csv', {'flags': 'a'});
-                        log.write("\n"+user.userid+','+user.fc);
-                }
-                user.send('You have successfully registered the friend code '+target+'!');
+						return this.sendReply('That ain\'t a real friendcode, you lazy bum! Check your 3DS!');
+				}
+				var fc = target;
+				var data = fs.readFileSync('config/fc.csv','utf8')
+				var match = false;
+				var line = '';
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (user.userid == userid) {
+						var x = target
+						var fc = x;
+						match = true;
+						if (match === true) {
+								line = line + row[i];
+								break;
+						}
+						}
+				}
+				user.fc = fc;
+				if (match === true) {
+						var re = new RegExp(line,"g");
+						fs.readFile('config/fc.csv', 'utf8', function (err,data) {
+						if (err) {
+								return console.log(err);
+						}
+						var result = data.replace(re, user.userid+','+user.fc);
+						fs.writeFile('config/fc.csv', result, 'utf8', function (err) {
+								if (err) return console.log(err);
+						});
+						});
+				} else {
+						var log = fs.createWriteStream('config/fc.csv', {'flags': 'a'});
+						log.write("\n"+user.userid+','+user.fc);
+				}
+				user.send('You have successfully registered the friend code '+target+'!');
 
-        },
+		},
 
 	takebucks: 'removebucks',
 	removebucks: function(target, room, user) {
@@ -650,31 +646,31 @@ var commands = exports.commands = {
 			fc: 'friendcode',
 friendcode: function(target, room, user, connection, cmd) {
 if (!this.canBroadcast()) return;
-        var aMatch = false;
-        var fc = 0;
-        var total = '';
+		var aMatch = false;
+		var fc = 0;
+		var total = '';
  var data = fs.readFileSync('config/fc.csv','utf8')
-                target = this.splitTarget(target);
-                var targetUser = this.targetUser;
-                if (!targetUser) {
-                        return this.sendReply('User '+this.targetUsername+' not found.');
-                }
-                var fc = 0;
-                var row = (''+data).split("\n");
-                for (var i = row.length; i > -1; i--) {
-                        if (!row[i]) continue;
-                        var parts = row[i].split(",");
-                        var userid = toId(parts[0]);
-                        if (targetUser.userid == userid || target == userid) {
-                        var x = Number(parts[1]);
-                        var fc = x;
-                        aMatch = true;
-                        if (aMatch === true) {
-                                break;
-                        }
-                        }
-                }
-                if (aMatch === true) {
+				target = this.splitTarget(target);
+				var targetUser = this.targetUser;
+				if (!targetUser) {
+						return this.sendReply('User '+this.targetUsername+' not found.');
+				}
+				var fc = 0;
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (targetUser.userid == userid || target == userid) {
+						var x = Number(parts[1]);
+						var fc = x;
+						aMatch = true;
+						if (aMatch === true) {
+								break;
+						}
+						}
+				}
+				if (aMatch === true) {
 						 var s = fc;
 						 /*fc = fc.slice(0,4)+'-'+fc.slice(4,8)+'-'+fc.slice(8,12);*/
 						 if (fc <= 0) s = 'unregistered';
@@ -691,21 +687,21 @@ return this.sendReplyBox(targetUser.name +'\'s FC is unregistered');
 
 requestroom: 'request',
 		room: 'request',
-        request: function(target, room, user) {
-                if (!target) return this.sendReply('The proper syntax is /request [room name], [reason]');
+		request: function(target, room, user) {
+				if (!target) return this.sendReply('The proper syntax is /request [room name], [reason]');
 				if (user.requested == true) {
 				return this.sendReply('You have already requested a room to be created. Please wait till an admin sees the request');
 				}
-		        if (target.indexOf(',') == -1) return this.sendReply('The proper syntax is /request [room name], [reason]');
-                var targets = target.split(',');
+				if (target.indexOf(',') == -1) return this.sendReply('The proper syntax is /request [room name], [reason]');
+				var targets = target.split(',');
 			target = targets[1];
 				target1 = targets[0];
-                if (!target) {
-                        return this.sendReply('You need to specify the reason you want the room.');
-                }
-                if (!target1) {
-                        return this.sendReply('You need to specify the name of the room you want.');
-                }
+				if (!target) {
+						return this.sendReply('You need to specify the reason you want the room.');
+				}
+				if (!target1) {
+						return this.sendReply('You need to specify the name of the room you want.');
+				}
 
 				if (Users.get('Siiilver')) {
 				Users.get('Siiilver').send('|pm|~Cafe Bot|~Siiilver|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
@@ -763,7 +759,7 @@ requestroom: 'request',
 			price = 20;
 			if (price <= user.money) {
 				if (!target[1]) return this.sendReply('Please specify the avatar you would like you buy. It has a maximum size of 80x80 and must be in .png format. ex: /buy custom, [url to the avatar]');
-       				var filename = target[1].split('.');
+	   				var filename = target[1].split('.');
 				filename = '.'+filename.pop();
 				if (filename != ".png") return this.sendReply('Your avatar must be in .png format.');
 				user.money = user.money - price;
@@ -783,7 +779,7 @@ requestroom: 'request',
 			price = 35;
 			if (price <= user.money) {
 				if (!target[1]) return this.sendReply('Please specify the avatar you would like you buy. It has a maximum size of 80x80 and must be in .gif format. ex: /buy animated, [url to the avatar]');
-       				var filename = target[1].split('.');
+	   				var filename = target[1].split('.');
 				filename = '.'+filename.pop();
 				if (filename != ".gif") return this.sendReply('Your avatar must be in .gif format.');
 				user.money = user.money - price;
@@ -1372,7 +1368,7 @@ requestroom: 'request',
 		}
 	},
 
-    /*********************************************************
+	/*********************************************************
 	 * Other Stuff
 	 *********************************************************/
 
