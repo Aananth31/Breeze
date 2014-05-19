@@ -1660,4 +1660,9 @@ var commands = exports.commands = {
          	if (!this.canBroadcast()) return;
          	this.sendReplyBox('<center><img src=http://media0.giphy.com/media/DCp4s7Z1FizZe/giphy.gif height=100><font size=3><b><font color=blue>Doctor Grace~<img src=http://img3.wikia.nocookie.net/__cb20130119052202/fairytail/images/e/e3/Frosch_won%27t_disappear.png height=100><br></font></font><b>Quote:</b> <font color=red>Sir wanna have a cup of coffee?');
          },
+         tals: 'tails',
+         tails: function(target,room,user) {
+         	if (!this.canBroadcast()) return;
+         	this.sendReplyBox('<center><img src=http://fc08.deviantart.net/fs70/f/2012/243/a/9/tails_gif_by_hiccrid-d5d1h8t.gif height=150>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=orange><b><font size=3><u>Tails</u></font></b></font><img src= http://www.rankopedia.com/CandidatePix/75261.gif height=150><br><b><fon size=2><font color=red>Quote:</font></b> I am sexy AF');
+         },
 };
