@@ -1056,8 +1056,6 @@ var commands = exports.commands = {
 				
 				CommandParser.uncacheTree('./src/tour.js');
 				tour = require('./src/tour.js').tour();
-				CommandParser.uncacheTree('./src/hangman.js');
-				hangman = require('./src/hangman.js').hangman();
 				CommandParser.uncacheTree('./src/economy.js');
 				economy = require('./src/economy.js');
 				CommandParser.uncacheTree('./src/profile.js');
