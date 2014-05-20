@@ -477,6 +477,7 @@ try {
 } catch (e) {
 	console.log('Error loading trainer-cards.js');
 }
+global.bot = require('./source/bot.js').bot();
 
 
 reloadCustomAvatars();
