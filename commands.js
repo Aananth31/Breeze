@@ -1054,6 +1054,10 @@ var commands = exports.commands = {
 				CommandParser.uncacheTree('./tournaments/frontend.js');
 				Tournaments = require('./tournaments/frontend.js');
 				Tournaments.tournaments = runningTournaments;
+				
+				CommandParser.uncacheTree('');
+				
+				CommandParser.uncacheTree('');
 
 				return this.sendReply("Chat commands have been hot-patched.");
 			} catch (e) {
