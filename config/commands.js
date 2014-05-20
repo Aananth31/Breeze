@@ -145,11 +145,13 @@
 
 var commands = exports.commands = {
 
-	ip: 'whois',
-	rooms: 'whois',
-	alt: 'whois',
-	alts: 'whois',
-	whois: function (target, room, user) {
+	getip: 'ip',
+	rooms: 'ip',
+	altcheck: 'ip',
+	alt: 'ip',
+	alts: 'ip',
+	getalts: 'ip',
+	ip: function(target, room, user) {
 		var targetUser = this.targetUserOrSelf(target, user.group === ' ');
 		if (!targetUser) {
 			return this.sendReply("User " + this.targetUsername + " not found.");
@@ -161,18 +163,19 @@ var commands = exports.commands = {
 			var output = Object.keys(targetUser.prevNames).join(", ");
 			if (output) this.sendReply("Previous names: " + output);
 
-			for (var j = 0; j < alts.length; ++j) {
+			for (var j=0; j<alts.length; j++) {
 				var targetAlt = Users.get(alts[j]);
 				if (!targetAlt.named && !targetAlt.connected) continue;
-				if (targetAlt.group === '~' && user.group !== '~') continue;
+				if (Config.groups.bySymbol[targetAlt.group] && Config.groups.bySymbol[user.group] &&
+					Config.groups.bySymbol[targetAlt.group].rank > Config.groups.bySymbol[user.group].rank) continue;
 
 				this.sendReply("Alt: " + targetAlt.name);
 				output = Object.keys(targetAlt.prevNames).join(", ");
 				if (output) this.sendReply("Previous names: " + output);
 			}
 		}
-		if (Config.groups[targetUser.group] && Config.groups[targetUser.group].name) {
-			this.sendReply("Group: " + Config.groups[targetUser.group].name + " (" + targetUser.group + ")");
+		if (Config.groups.bySymbol[targetUser.group] && Config.groups.bySymbol[targetUser.group].name) {
+			this.sendReply("Group: " + Config.groups.bySymbol[targetUser.group].name + " (" + targetUser.group + ")");
 		}
 		if (targetUser.isSysop) {
 			this.sendReply("(Pok\xE9mon Showdown System Operator)");
@@ -195,6 +198,7 @@ var commands = exports.commands = {
 		}
 		this.sendReply('|raw|' + output);
 	},
+
 	ipsearch: function (target, room, user) {
 		if (!this.can('rangeban')) return;
 		var atLeastOne = false;
