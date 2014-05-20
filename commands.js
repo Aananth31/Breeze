@@ -1065,7 +1065,7 @@ var commands = exports.commands = {
 				CommandParser.uncacheTree('./src/trainer-cards.js');
 				trainercards = require('./src/trainer-cards.js');
 				CommandParser.uncacheTree('./src/bot.js');
-				bot = require('./src/bot.js');
+				bot = require('./src/bot.js').botCommands;
 				return this.sendReply("Chat commands have been hot-patched.");
 			} catch (e) {
 				return this.sendReply("Something failed while trying to hotpatch chat: \n" + e.stack);
