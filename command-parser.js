@@ -32,7 +32,6 @@ const MESSAGE_COOLDOWN = 5 * 60 * 1000;
 
 const MAX_PARSE_RECURSION = 10;
 
-var modlog = exports.modlog = modlog || {lobby: fs.createWriteStream('logs/modlog/modlog_lobby.txt', {flags:'a+'})};
 var crypto = require('crypto');
 var fs = require('fs');
 
