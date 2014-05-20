@@ -1055,9 +1055,18 @@ var commands = exports.commands = {
 				Tournaments = require('./tournaments/frontend.js');
 				Tournaments.tournaments = runningTournaments;
 				
-				CommandParser.uncacheTree('');
-				
-				CommandParser.uncacheTree('');
+				CommandParser.uncacheTree('./src/tour.js');
+				tour = require('./src/tour.js').tour();
+				CommandParser.uncacheTree('./src/hangman.js');
+				hangman = require('./src/hangman.js').hangman();
+				CommandParser.uncacheTree('./src/economy.js');
+				economy = require('./src/economy.js');
+				CommandParser.uncacheTree('./src/profile.js');
+				profile = require('./src/profile.js');
+				CommandParser.uncacheTree('./src/custom-commands.js');
+				customcommands = require('./src/custom-commands.js');
+				CommandParser.uncacheTree('./src/trainer-cards.js');
+				trainercards = require('./src/trainer-cards.js');
 
 				return this.sendReply("Chat commands have been hot-patched.");
 			} catch (e) {
