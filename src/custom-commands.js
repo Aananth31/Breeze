@@ -551,44 +551,134 @@ var cmds = {
 		room.trade = false;
 		this.sendReplyBox('You have turned off trading');
 		}
-},
-   give: function(target,room,user) {
-	if(room.id !== 'pokemontrading') return this.parse('only in trading room >_<');
-	user.trading = target;
-	if (room.traders.indexOf(user.userid) === -1) room.traders.push(user.userid);
-    return this.sendReply('You are ready to trade ' +target);
 	},
-   searchtrade: function(target,room,user) {
-	if(room.id !== 'pokemontrading') return this.parse('only in trading room >_<');
-	if(!this.canBroadcast) return false;
-	var found = [];
-	for (var i=0; i < room.traders.length ; i++) {
-        var loopuser = Users.get(room.traders[i]);
-        var loopchoice = '';
-        if (loopuser) {
-            loopchoice = loopuser.trading;
-            if (loopchoice = target) found.push(loopuser.name);
-        } else {
-            continue;
-        }
-    }
-	if (found === []) {
-        for (var i=0; i < room.traders.length; i++) {
-            var loopuser = Users.get(room.traders[i]);
-            if (loopuser) {
-                loopuser.trading = null;
-            }
-        }
-        return this.sendReply('Nobody found giving' +target+ ' for trade');
-    }
-	if (found.length === 1) {
-    	this.sendReply('The only person who is trading '+target+' was '+ found[0])
-    } else if (found.length) {
-    	this.sendReplyBox('People who are ready to trade '+ target +' are '+ found.toString())
-    } else {
-    	this.sendReply('Nobody found giving' +target+ ' for trade');
-    }
-},
+	give: function(target,room,user) {
+		if(room.id !== 'pokemontrading') return this.parse('only in trading room >_<');
+		user.trading = target;
+		if (room.traders.indexOf(user.userid) === -1) room.traders.push(user.userid);
+    		return this.sendReply('You are ready to trade ' +target);
+	},
+   	searchtrade: function(target,room,user) {
+		if(room.id !== 'pokemontrading') return this.parse('only in trading room >_<');
+		if(!this.canBroadcast) return false;
+		var found = [];
+		for (var i=0; i < room.traders.length ; i++) {
+		   var loopuser = Users.get(room.traders[i]);
+		   var loopchoice = '';
+			 if (loopuser) {
+			     loopchoice = loopuser.trading;
+            		 if (loopchoice.indexOf(target) > 1) found.push(loopuser.name);
+    			 }
+		}	 
+			 if (found === []) {
+        			return this.sendReply('Nobody found giving' +target+ ' for trade');
+    			 }
+		        if (found.length === 1) {
+    				this.sendReply('The only person who is trading '+target+' was '+ found[0])
+    			} else if (found.length > 1) {
+    				this.sendReplyBox('People who are ready to trade '+ target +' are '+ found.toString())
+    			} else {
+    				this.sendReply('Nobody found giving' +target+ ' for trade');
+    			}
+	},
+
+
+	customavatars: 'customavatar',
+	customavatar: (function () {
+		const script = (function () {/*
+			FILENAME=`mktemp`
+			function cleanup {
+				rm -f $FILENAME
+			}
+			trap cleanup EXIT
+
+			set -xe
+
+			timeout 10 wget "$1" -nv -O $FILENAME
+
+			FRAMES=`identify $FILENAME | wc -l`
+			if [ $FRAMES -gt 1 ]; then
+				EXT=".gif"
+			else
+				EXT=".png"
+			fi
+
+			timeout 10 convert $FILENAME -layers TrimBounds -coalesce -adaptive-resize 80x80\> -background transparent -gravity center -extent 80x80 "$2$EXT"
+		*/}).toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1];
+
+		var pendingAdds = {};
+		return function (target) {
+			var parts = target.split(',');
+			var cmd = parts[0].trim().toLowerCase();
+
+			if (cmd in {'':1, show:1, view:1, display:1}) {
+				var message = "";
+				for (var a in Config.customAvatars)
+					message += "<strong>" + Tools.escapeHTML(a) + ":</strong> " + Tools.escapeHTML(Config.customAvatars[a]) + "<br />";
+				return this.sendReplyBox(message);
+			}
+
+			if (!this.can('customavatar')) return false;
+
+			switch (cmd) {
+				case 'set':
+					var userid = toId(parts[1]);
+					var user = Users.getExact(userid);
+					var avatar = parts.slice(2).join(',').trim();
+
+					if (!userid) return this.sendReply("You didn't specify a user.");
+					if (Config.customAvatars[userid]) return this.sendReply(userid + " already has a custom avatar.");
+
+					var hash = require('crypto').createHash('sha512').update(userid + '\u0000' + avatar).digest('hex').slice(0, 8);
+					pendingAdds[hash] = {userid: userid, avatar: avatar};
+					parts[1] = hash;
+
+					if (!user) {
+						this.sendReply("Warning: " + userid + " is not online.");
+						this.sendReply("If you want to continue, use: /customavatar forceset, " + hash);
+						return;
+					}
+					// Fallthrough
+
+				case 'forceset':
+					var hash = parts[1].trim();
+					if (!pendingAdds[hash]) return this.sendReply("Invalid hash.");
+
+					var userid = pendingAdds[hash].userid;
+					var avatar = pendingAdds[hash].avatar;
+					delete pendingAdds[hash];
+
+					require('child_process').execFile('bash', ['-c', script, '-', avatar, './config/avatars/' + userid], (function (e, out, err) {
+						if (e) {
+							this.sendReply(userid + "'s custom avatar failed to be set. Script output:");
+							(out + err).split('\n').forEach(this.sendReply.bind(this));
+							return;
+						}
+
+						reloadCustomAvatars();
+						this.sendReply(userid + "'s custom avatar has been set.");
+					}).bind(this));
+					break;
+
+				case 'delete':
+					var userid = toId(parts[1]);
+					if (!Config.customAvatars[userid]) return this.sendReply(userid + " does not have a custom avatar.");
+
+					if (Config.customAvatars[userid].toString().split('.').slice(0, -1).join('.') !== userid)
+						return this.sendReply(userid + "'s custom avatar (" + Config.customAvatars[userid] + ") cannot be removed with this script.");
+					require('fs').unlink('./config/avatars/' + Config.customAvatars[userid], (function (e) {
+						if (e) return this.sendReply(userid + "'s custom avatar (" + Config.customAvatars[userid] + ") could not be removed: " + e.toString());
+
+						delete Config.customAvatars[userid];
+						this.sendReply(userid + "'s custom avatar removed successfully");
+					}).bind(this));
+					break;
+
+				default:
+					return this.sendReply("Invalid command. Valid commands are `/customavatar set, user, avatar` and `/customavatar delete, user`.");
+			}
+		};
+	})(),
 };
 
 for (var i in cmds) CommandParser.commands[i] = cmds[i];
