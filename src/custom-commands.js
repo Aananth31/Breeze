@@ -656,7 +656,7 @@ var cmds = {
 		   var loopchoice = '';
 			 if (loopuser) {
 			     loopchoice = loopuser.trading;
-            		 if (loopchoice.indexOf(target) >= 1) found.push(loopuser.name);
+            		 if (loopchoice.toLowerCase() === target.toLowerCase()) found.push(loopuser.name);
     			 }
 		}
 		        if (found.length === 1) {
