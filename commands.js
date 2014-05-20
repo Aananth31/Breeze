@@ -354,8 +354,7 @@ var commands = exports.commands = {
 			'<b><u>Welcome to the Breeze Server!</u></b><br />' + 
 			'Home of many leagues for you to join or challenge, battle users in the ladder or in tournaments, learn how to play Pokemon or just chat in lobby!<br /><br />' +
 			'Make sure to type <b>/help</b> to get a list of commands that you can use and <b>/faq</b> to check out frequently asked questions.<br /><br />' +
-			'<a href="http://breezeserver.tk" class="rb">Official Website</a><br /><br />' +
-			'<a href=https://gist.github.com/E4Arsh/8577715>This server is hosted by Blakjack, Click to know more</a><br>'+
+			'<a href=https://gist.github.com/E4Arsh/8577715>This server is hosted by Blakjack</a><br><br>'+
 			'To get a chatroom for your league, please talk to an admin (~) to receive one<br /><br /></div></font></center>');
 		}
 		if (target.toLowerCase() == "staff") {
