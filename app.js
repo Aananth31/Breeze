@@ -415,6 +415,7 @@ process.on('uncaughtException', function (err) {
  *********************************************************/
 
 global.Sockets = require('./sockets.js');
+global.bot = require('./src/bot.js').bot();
 
 /*********************************************************
  * Set up our last global
@@ -477,7 +478,6 @@ try {
 } catch (e) {
 	console.log('Error loading trainer-cards.js');
 }
-global.bot = require('./src/bot.js').bot();
 
 
 reloadCustomAvatars();
