@@ -1,4 +1,16 @@
 exports.BattleAliases = {
+	// formats
+	"randbats": "Random Battle",
+	"overused": "OU",
+	"underused": "UU",
+	"rarelyused": "RU",
+	"neverused": "NU",
+	"vgc": "VGC 2014",
+	"bh": "Balanced Hackmons",
+	"monotype": "OU Monotype",
+	"createapokemon": "CAP",
+	"cc1v1": "Challenge Cup 1vs1",
+
 	// mega evos
 	"megaabomasnow": "Abomasnow-Mega",
 	"megaabsol": "Absol-Mega",
@@ -25,14 +37,20 @@ exports.BattleAliases = {
 	"megaluke": "Lucario-Mega",
 	"megamanectric": "Manectric-Mega",
 	"megamawile": "Mawile-Mega",
+	"megamaw": "Mawile-Mega",
 	"megamedicham": "Medicham-Mega",
+	"megamedi": "Medicham-Mega",
 	"megamewtwo": "Mewtwo-Mega-Y",
 	"megamewtwox": "Mewtwo-Mega-X",
 	"megamewtwoy": "Mewtwo-Mega-Y",
 	"megapinsir": "Pinsir-Mega",
 	"megascizor": "Scizor-Mega",
 	"megatyranitar": "Tyranitar-Mega",
+	"megattar": "Tyranitar-Mega",
 	"megavenusaur": "Venusaur-Mega",
+	"megavenu": "Venusaur-Mega",
+	"mmx": "Mewtwo-Mega-X",
+	"mmy": "Mewtwo-Mega-Y",
 
 	// formes
 	"basculinb": "Basculin-Blue-Striped",
@@ -48,6 +66,8 @@ exports.BattleAliases = {
 	"cherrimsunny": "Cherrim-Sunshine",
 	"darmanitanz": "Darmanitan-Zen",
 	"darmanitanzenmode": "Darmanitan-Zen",
+	"deoxysnormal": "Deoxys",
+	"deon": "Deoxys",
 	"deoxysa": "Deoxys-Attack",
 	"deoa": "Deoxys-Attack",
 	"deoxysd": "Deoxys-Defense",
@@ -124,6 +144,20 @@ exports.BattleAliases = {
 	"scarf": "Choice Scarf",
 	"specs": "Choice Specs",
 	"yache": "Yache Berry",
+	"av": "Assault Vest",
+	"assvest": "Assault Vest",
+
+	// gen 1-2 berries
+	"berry": "Oran Berry",
+	"bitterberry": "Persim Berry",
+	"burntberry": "Rawst Berry",
+	"goldberry": "Sitrus Berry",
+	"iceberry": "Aspear Berry",
+	"mintberry": "Chesto Berry",
+	"miracleberry": "Lum Berry",
+	"mysteryberry": "Leppa Berry",
+	"przcureberry": "Cheri Berry",
+	"psncureberry": "Pecha Berry",
 
 	// pokemon
 	"aboma": "Abomasnow",
@@ -137,8 +171,8 @@ exports.BattleAliases = {
 	"kyub": "Kyurem-Black",
 	"kyuw": "Kyurem-White",
 	"lando": "Landorus",
-	"lando-i": "Landorus",
-	"lando-t": "Landorus-Therian",
+	"landoi": "Landorus",
+	"landot": "Landorus-Therian",
 	"luke":  "Lucario",
 	"mence": "Salamence",
 	"p2": "Porygon2",
