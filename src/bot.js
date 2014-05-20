@@ -68,6 +68,14 @@ exports.bot = function() {
 	}
 };
 
+var Utilities = {
+	botDelay: function(botName, room, message) {
+		setTimeout(function(){
+			room.add('|c|' + Users.users[toId(botName)].group + botName + '|' + message);
+		}, (Math.floor(Math.random() * 6) * 1000));
+	}
+};
+
 var botCommands = {
 	penislength: function(target, room, user) {
 		if (!this.canBroadcast()) return false;
@@ -130,7 +138,6 @@ var botCommands = {
 			if(target.toLowerCase() === 'blakjack') return Utilities.botDelay(botName, room, 'The server host. In other regions, he is consider a God. Respect him or get ban.');
 			if(target.toLowerCase() === 'bot') return Utilities.botDelay(botName, room, 'That\'s me.');
 			if(target.toLowerCase() === 'zarel') return Utilities.botDelay(botName, room, 'Pokemon Showdown Creator');
-			if(target.toLowerCase() === 'arjunb') return Utilities.botDelay(botName, room, 'Ladies Man. This guy gets all the bitches!');
 
 			return Utilities.botDelay(botName, room, sanitize(message));
 		};
