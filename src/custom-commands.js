@@ -656,18 +656,18 @@ var cmds = {
 		   var loopchoice = '';
 			 if (loopuser) {
 			     loopchoice = loopuser.trading;
-            		 if (loopchoice.indexOf(target) > 1) found.push(loopuser.name);
+            		 if (loopchoice.indexOf(target) >= 1) found.push(loopuser.name);
     			 }
 		}	 
 			 if (found === []) {
-        			return this.sendReply('Nobody found giving' +target+ ' for trade');
+        			return this.sendReply('Nobody found giving ' +target+ ' for trade');
     			 }
 		        if (found.length === 1) {
     				this.sendReply('The only person who is trading '+target+' was '+ found[0])
     			} else if (found.length > 1) {
     				this.sendReplyBox('People who are ready to trade '+ target +' are '+ found.toString())
     			} else {
-    				this.sendReply('Nobody found giving' +target+ ' for trade');
+    				this.sendReply('Nobody found giving ' +target+ ' for trade');
     			}
 	},
 
