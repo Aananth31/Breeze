@@ -658,10 +658,7 @@ var cmds = {
 			     loopchoice = loopuser.trading;
             		 if (loopchoice.indexOf(target) >= 1) found.push(loopuser.name);
     			 }
-		}	 
-			 if (found === []) {
-        			return this.sendReply('Nobody found giving ' +target+ ' for trade');
-    			 }
+		}
 		        if (found.length === 1) {
     				this.sendReply('The only person who is trading '+target+' was '+ found[0])
     			} else if (found.length > 1) {
