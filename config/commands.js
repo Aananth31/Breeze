@@ -1452,10 +1452,6 @@ var commands = exports.commands = {
 			matched = true;
 			this.sendReply("/redirect or /redir [username], [roomname] - Attempts to redirect the user [username] to the room [roomname]. Requires: " + Users.getGroupsThatCan('redirect', room).join(" "));
 		}
-		if (Users.can(target, 'staff') || target === 'modnote') {
-			matched = true;
-			this.sendReply("/modnote [note] - Adds a moderator note that can be read through modlog. Requires: " + Users.getGroupsThatCan('staff', room).join(" "));
-		}
 		if (Users.can(target, 'forcerename') || target === 'forcerename' || target === 'fr') {
 			matched = true;
 			this.sendReply("/forcerename OR /fr [username], [reason] - Forcibly change a user's name and shows them the [reason]. Requires: " + Users.getGroupsThatCan('forcerename').join(" "));
@@ -1499,6 +1495,14 @@ var commands = exports.commands = {
 		if (Users.can(target, 'mute') || target === 'mute' || target === 'm') {
 			matched = true;
 			this.sendReply("/mute OR /m [username], [reason] - Mutes a user with reason for 7 minutes. Requires: " + Users.getGroupsThatCan('mute', room).join(" "));
+		}
+		if (Users.can(target, 'mute') || target === 'quartermute' || target === 'qm') {
+			matched = true;
+			this.sendReply("/mute OR /m [username], [reason] - Mutes a user with reason for 15 minutes. Requires: " + Users.getGroupsThatCan('mute', room).join(" "));
+		}
+		if (Users.can(target, 'mute') || target === 'thirtymute' || target === 'tm') {
+			matched = true;
+			this.sendReply("/mute OR /m [username], [reason] - Mutes a user with reason for 30 minutes. Requires: " + Users.getGroupsThatCan('mute', room).join(" "));
 		}
 		if (Users.can(target, 'mute') || target === 'hourmute' || target === 'hm') {
 			matched = true;
