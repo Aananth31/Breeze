@@ -72,16 +72,13 @@ var commands = exports.commands = {
 	},
 
 	stafflist: function(target, room, user, connection) {
-		var buffer = [];
 		var admins = [];
-		var developers = [];
 		var leaders = [];
 		var mods = [];
 		var drivers = [];
 		var voices = [];
-		var allies = [];
 
-		admins2 = ''; developers2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; allies2 = '';
+		admins2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; 
 		stafflist = fs.readFileSync('config/usergroups.csv','utf8');
 		stafflist = stafflist.split('\n');
 		for (var u in stafflist) {
