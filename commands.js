@@ -2285,13 +2285,13 @@ requestroom: 'request',
 		this.logModCommand(user.name + " declared " + target);
 	},
 	
-	ydeclare: function (target, room, user) {
+	rdeclare: function (target, room, user) {
 		if (!target) return this.parse('/help declare');
 		if (!this.can('declare', room)) return false;
 
 		if (!this.canTalk()) return;
 
-		this.add('|raw|<div class="broadcast-yellow"><b>' + Tools.escapeHTML(target) + '</b></div>');
+		this.add('|raw|<div class="broadcast-red"><b>' + Tools.escapeHTML(target) + '</b></div>');
 		this.logModCommand(user.name + " declared " + target);
 	},
 
