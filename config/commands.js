@@ -1498,11 +1498,11 @@ var commands = exports.commands = {
 		}
 		if (Users.can(target, 'mute') || target === 'quartermute' || target === 'qm') {
 			matched = true;
-			this.sendReply("/mute OR /m [username], [reason] - Mutes a user with reason for 15 minutes. Requires: " + Users.getGroupsThatCan('mute', room).join(" "));
+			this.sendReply("/quartermute OR /qm [username], [reason] - Mutes a user with reason for 15 minutes. Requires: " + Users.getGroupsThatCan('mute', room).join(" "));
 		}
 		if (Users.can(target, 'mute') || target === 'thirtymute' || target === 'tm') {
 			matched = true;
-			this.sendReply("/mute OR /m [username], [reason] - Mutes a user with reason for 30 minutes. Requires: " + Users.getGroupsThatCan('mute', room).join(" "));
+			this.sendReply("/thirtymute OR /tm [username], [reason] - Mutes a user with reason for 30 minutes. Requires: " + Users.getGroupsThatCan('mute', room).join(" "));
 		}
 		if (Users.can(target, 'mute') || target === 'hourmute' || target === 'hm') {
 			matched = true;
