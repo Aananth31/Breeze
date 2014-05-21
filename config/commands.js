@@ -789,6 +789,8 @@ var commands = exports.commands = {
 			"Room drivers (%) can use:<br />" +
 			"- /warn OR /k <em>username</em>: warn a user and show the Pokemon Showdown rules<br />" +
 			"- /mute OR /m <em>username</em>: 7 minute mute<br />" +
+			"- /quartermute OR /qm <em>username</em>: 15 minute mute<br />" +
+			"- /thirtymute OR /tm <em>username</em>: 15 minute mute<br />" +
 			"- /hourmute OR /hm <em>username</em>: 60 minute mute<br />" +
 			"- /unmute <em>username</em>: unmute<br />" +
 			"- /announce OR /wall <em>message</em>: make an announcement<br />" +
