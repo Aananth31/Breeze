@@ -1916,6 +1916,34 @@ requestroom: 'request',
 
 		targetUser.mute(room.id, 7 * 60 * 1000);
 	},
+	
+	qm: 'quartermute',
+	quartermute: function (target, room, user) {
+		if (!target) return this.parse('/help hourmute');
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+		if (!targetUser) {
+			return this.sendReply("User " + this.targetUsername + " not found.");
+		}
+		if (target.length > MAX_REASON_LENGTH) {
+			return this.sendReply("The reason is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
+		}
+		if (!this.can('mute', targetUser, room)) return false;
+
+		if (((targetUser.mutedRooms[room.id] && (targetUser.muteDuration[room.id] || 0) >= 10 * 60 * 1000) || targetUser.locked) && !target) {
+			var problem = " but was already " + (!targetUser.connected ? "offline" : targetUser.locked ? "locked" : "muted");
+			return this.privateModCommand("(" + targetUser.name + " would be muted by " + user.name + problem + ".)");
+		}
+
+		targetUser.popup("" + user.name + " has muted you for 15 minutes. " + target);
+		this.addModCommand("" + targetUser.name + " was muted by " + user.name + " for 15 minutes." + (target ? " (" + target + ")" : ""));
+		var alts = targetUser.getAlts();
+		if (alts.length) this.addModCommand("" + targetUser.name + "'s alts were also muted: " + alts.join(", "));
+		this.add('|unlink|' + this.getLastIdOf(targetUser));
+
+		targetUser.mute(room.id, 15 * 60 * 1000, true);
+	},
 
 	hm: 'hourmute',
 	hourmute: function (target, room, user) {
