@@ -19,6 +19,47 @@ var closedShop = 0;
 
 const MAX_REASON_LENGTH = 300;
 
+var economy = exports.economy = {
+		writeMoney: function(uid, amount) {
+			var data = fs.readFileSync('config/money.csv','utf8')
+			var match = false;
+			var money = 0;
+			var row = (''+data).split("\n");
+			var line = '';
+			for (var i = row.length; i > -1; i--) {
+				if (!row[i]) continue;
+				var parts = row[i].split(",");
+				var userid = toUserid(parts[0]);
+				if (uid.userid == userid) {
+					var x = Number(parts[1]);
+					var money = x;
+					match = true;
+					if (match === true) {
+						line = line + row[i];
+						break;
+					}
+				}
+			}
+			uid.money = money;
+			uid.money = uid.money + amount;
+			if (match === true) {
+				var re = new RegExp(line,"g");
+				fs.readFile('config/money.csv', 'utf8', function (err,data) {
+				if (err) {
+					return console.log(err);
+				}
+				var result = data.replace(re, uid.userid+','+uid.money);
+				fs.writeFile('config/money.csv', result, 'utf8', function (err) {
+					if (err) return console.log(err);
+				});
+				});
+			} else {
+				var log = fs.createWriteStream('config/money.csv', {'flags': 'a'});
+				log.write("\n"+uid.userid+','+uid.money);
+			}
+		},
+},
+
 var commands = exports.commands = {
 
 	createpoints: function(target, room, user, connection) {
@@ -70,6 +111,45 @@ var commands = exports.commands = {
 			}
 		});
 	},
+	
+	transferbucks: function(target, room, user) {
+		if(!target) return this.sendReply('|raw|Correct Syntax: /transferbucks <i>user</i>, <i>amount</i>');
+		if (target.indexOf(',') >= 0) {
+			var parts = target.split(',');
+			if (parts[0].toLowerCase() === user.name.toLowerCase()) {
+				return this.sendReply('You can\'t transfer Bucks to yourself.');
+			}
+			parts[0] = this.splitTarget(parts[0]);
+			var targetUser = this.targetUser;
+		}
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+		if (isNaN(parts[1])) {
+			return this.sendReply('Very funny, now use a real number.');
+		}
+		if (parts[1] < 0) {
+			return this.sendReply('Number cannot be negative.');
+		}
+		if (String(parts[1]).indexOf('.') >= 0) {
+			return this.sendReply('You cannot transfer numbers with decimals.');
+		}
+		if (parts[1] > user.money) {
+			return this.sendReply('You cannot transfer more money than what you have.');
+		}
+		var p = 'Bucks';
+		var cleanedUp = parts[1].trim();
+		var transferMoney = Number(cleanedUp);
+		if (transferMoney === 1) {
+			p = 'Buck';
+		}
+		economy.writeMoney(user, -transferMoney);
+		//set time delay because of node asynchronous so it will update both users' money instead of either updating one or the other
+		setTimeout(function(){economy.writeMoney(targetUser, transferMoney);fs.appendFile('logs/transactions.log','\n'+Date()+': '+user.name+' has transferred '+transferMoney+' '+p+' to ' + targetUser.name + '. ' +  user.name +' now has '+user.money + ' ' + p + ' and ' + targetUser.name + ' now has ' + targetUser.money +' ' + p +'.');},3000);
+		this.sendReply('You have successfully transferred ' + transferMoney + ' to ' + targetUser.name + '. You now have ' + user.money + ' ' + p + '.');
+		targetUser.send(user.name + ' has transferred ' + transferMoney + ' ' +  p + ' to you.');
+	},
+
 
 	stafflist: function(target, room, user, connection) {
 		var admins = [];
