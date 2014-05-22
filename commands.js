@@ -143,7 +143,7 @@ var commands = exports.commands = {
 			p = 'Buck';
 		}
 		economy.writeMoney(user, -transferMoney);
-		economy.writeMoney(targetUser, transferMoney);
+		setTimeout(function(){economy.writeMoney(targetUser, transferMoney);fs.appendFile('logs/transactions.log','\n'+Date()+': '+user.name+' has transferred '+transferMoney+' '+p+' to ' + targetUser.name + '. ' +  user.name +' now has '+user.money + ' ' + p + ' and ' + targetUser.name + ' now has ' + targetUser.money +' ' + p +'.');},3000);
 		this.sendReply('You have successfully transferred ' + transferMoney + ' to ' + targetUser.name + '. You now have ' + user.money + ' ' + p + '.');
 	       	targetUser.send(user.name + ' has transferred ' + transferMoney + ' ' +  p + ' to you.');
 	},
