@@ -58,7 +58,7 @@ var economy = exports.economy = {
 				log.write("\n"+uid.userid+','+uid.money);
 			}
 		},
-},
+}
 
 var commands = exports.commands = {
 
