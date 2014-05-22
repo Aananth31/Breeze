@@ -862,13 +862,6 @@ var plugins = exports.plugins = {
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
 				if (target.length > 1) return this.sendReplyBox('You can only guess one letter, do /guessword [word] to guess a word ;)');
 				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess because you are the one hosting hangman :P');
-				var t = 0;
-				for (var i=0;i<plugins.hangman.guessers.length;i++) {
-				if (plugins.hangman.guessers[i] === user.userid){
-					t += 1;
-				}
-				}
-				if (t === 2) return this.sendReplyBox('You have aldready made 2 wrong guesses so aren\'t allowed to guess in this game');
 					tlc = target.toLowerCase();
 				for(var l = 0; l < 26;l++) {
 					if(tlc === plugins.hangman.guessedletters[l]) {
@@ -909,13 +902,6 @@ var plugins = exports.plugins = {
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
 				if (target.length > 10) return this.sendReplyBox('Try a shorter guess, that one is too long');
 				if (user.userid === plugins.hangman.host) return this.sendReplyBox('You cant guess cause you are the one hosting hangman :P');
-				var t = 0;
-				for (var i=0;i<plugins.hangman.guessers.length;i++) {
-				if (plugins.hangman.guessers[i] === user.userid){
-					t += 1;
-				}
-				}
-				if (t === 2) return this.sendReplyBox('You have aldready made 2 wrong guesses so aren\'t allowed to guess in this game');
 				var tlc = target.toLowerCase();
 				if (tlc === plugins.hangman.word) {
 					this.add('|html|<b>'+ user.name +'</b> has guessed the word <b>'+ tlc +'</b>. Congrats!');
