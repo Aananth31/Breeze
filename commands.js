@@ -58,8 +58,7 @@ var economy = exports.economy = {
 				log.write("\n"+uid.userid+','+uid.money);
 			}
 		},
-}
-
+	}
 var commands = exports.commands = {
 
 	createpoints: function(target, room, user, connection) {
@@ -144,8 +143,7 @@ var commands = exports.commands = {
 			p = 'Buck';
 		}
 		economy.writeMoney(user, -transferMoney);
-		//set time delay because of node asynchronous so it will update both users' money instead of either updating one or the other
-		setTimeout(function(){economy.writeMoney(targetUser, transferMoney);fs.appendFile('logs/transactions.log','\n'+Date()+': '+user.name+' has transferred '+transferMoney+' '+p+' to ' + targetUser.name + '. ' +  user.name +' now has '+user.money + ' ' + p + ' and ' + targetUser.name + ' now has ' + targetUser.money +' ' + p +'.');},3000);
+		economy.writeMoney(targetUser, transferMoney);
 		this.sendReply('You have successfully transferred ' + transferMoney + ' to ' + targetUser.name + '. You now have ' + user.money + ' ' + p + '.');
 		targetUser.send(user.name + ' has transferred ' + transferMoney + ' ' +  p + ' to you.');
 	},
