@@ -21,7 +21,7 @@ const MAX_REASON_LENGTH = 300;
 
 var economy = exports.economy = {
 		writeMoney: function(uid, amount) {
-			var data = fs.readFileSync('config/money.csv','utf8')
+			var data = fs.readFileSync('config/cash.csv','utf8')
 			var match = false;
 			var money = 0;
 			var row = (''+data).split("\n");
@@ -44,17 +44,17 @@ var economy = exports.economy = {
 			uid.money = uid.money + amount;
 			if (match === true) {
 				var re = new RegExp(line,"g");
-				fs.readFile('config/money.csv', 'utf8', function (err,data) {
+				fs.readFile('config/cash.csv', 'utf8', function (err,data) {
 				if (err) {
 					return console.log(err);
 				}
 				var result = data.replace(re, uid.userid+','+uid.money);
-				fs.writeFile('config/money.csv', result, 'utf8', function (err) {
+				fs.writeFile('config/cash.csv', result, 'utf8', function (err) {
 					if (err) return console.log(err);
 				});
 				});
 			} else {
-				var log = fs.createWriteStream('config/money.csv', {'flags': 'a'});
+				var log = fs.createWriteStream('config/cash.csv', {'flags': 'a'});
 				log.write("\n"+uid.userid+','+uid.money);
 			}
 		},
