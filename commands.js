@@ -19,7 +19,7 @@ var closedShop = 0;
 
 const MAX_REASON_LENGTH = 300;
 
-var economy = exports.economy = {
+var economy = {
 		writeMoney: function(uid, amount) {
 			var data = fs.readFileSync('config/cash.csv','utf8')
 			var match = false;
@@ -29,7 +29,7 @@ var economy = exports.economy = {
 			for (var i = row.length; i > -1; i--) {
 				if (!row[i]) continue;
 				var parts = row[i].split(",");
-				var userid = toUserid(parts[0]);
+				var userid = toId(parts[0]);
 				if (uid.userid == userid) {
 					var x = Number(parts[1]);
 					var money = x;
@@ -145,7 +145,7 @@ var commands = exports.commands = {
 		economy.writeMoney(user, -transferMoney);
 		economy.writeMoney(targetUser, transferMoney);
 		this.sendReply('You have successfully transferred ' + transferMoney + ' to ' + targetUser.name + '. You now have ' + user.money + ' ' + p + '.');
-		targetUser.send(user.name + ' has transferred ' + transferMoney + ' ' +  p + ' to you.');
+	       	targetUser.send(user.name + ' has transferred ' + transferMoney + ' ' +  p + ' to you.');
 	},
 
 
