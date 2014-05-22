@@ -13,7 +13,7 @@
 
 var crypto = require('crypto');
 var fs = require('fs');
-var inShop = ['symbol', 'custom', 'animated', 'room', 'trainer', 'fix', 'potd'];
+var inShop = ['symbol', 'custom', 'animated', 'room', 'trainer', 'fix', 'potd', 'bank'];
 var closeShop = false;
 var closedShop = 0;
 
@@ -913,6 +913,16 @@ requestroom: 'request',
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
 		}
+		if (target2 === 'bank') {
+			price = 50;
+			if (price <= user.money) {
+				user.money = user.money - price;
+				this.sendReply('You have purchased the ability to enable a Bank for yourself or your organisation! You need to message an Admin capable of promoting the bank user. The user name of the Bank user must contain the word \'Bank\'.');
+				this.add(user.name + ' has purchased a Bank User position!');
+			} else {
+				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
+			}
+		}
 		if (match === true) {
 			var re = new RegExp(line,"g");
 			fs.readFile('config/cash.csv', 'utf8', function (err,data) {
@@ -1075,6 +1085,7 @@ requestroom: 'request',
 			'<tr><td>megastone</td><td>Buys a mega stone of your choice (excluding lati@site)</td><td>40</td></tr>' +
 			'<tr><td>Fix</td><td>Buys the ability to alter your current custom avatar or trainer card (don\'t buy if you have neither)!</td><td>10</td></tr>' +
 			'<tr><td>POTD</td><td>Buys the ability to set the Pokemon of the Day. (Lasts for 1 day) Note: Not purchase-able if there is already a POTD for the day.</td><td>15</td></tr>' +
+			'<tr><td>Bank</td><td>Buys a Bank User Position to store money for you or your group.</td><td>50</td></tr>' +
 			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center><br />'+
 	'<center>You must have a valid X/Y Friend Code registered to buy an item from here.</center><br />');
 	},
@@ -1221,6 +1232,17 @@ requestroom: 'request',
 					matched = true;
 					targetUser.canPOTD = true;
 					Rooms.rooms.lobby.add(user.name + ' has stolen the ability to set POTD from the shop!');
+					targetUser.send(user.name + ' has given you ' + theItem + '!');
+				}
+			}
+			if (theItem === 'bank') {
+				if (targetUser.canBank === true) {
+					return this.sendReply('This user has already bought that item from the shop... no need for another.');
+				}
+				if (targetUser.canBank === false) {
+					matched = true;
+					targetUser.canBank = true;
+					Rooms.rooms.lobby.add(user.name + ' recieved a bank position!');
 					targetUser.send(user.name + ' has given you ' + theItem + '!');
 				}
 			}
