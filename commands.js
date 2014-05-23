@@ -2401,7 +2401,7 @@ requestroom: 'request',
 
 		if (!this.canTalk()) return;
 
-		this.add('|raw|<div class="music"><b>' + Tools.escapeHTML(target) + '</b></div>');
+		this.add('|raw|<div class="music"><font color="#000000"><b>' + Tools.escapeHTML(target) + '</b></div>');
 		this.logModCommand(user.name + " declared " + target);
 	},
 	
