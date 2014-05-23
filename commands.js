@@ -1085,7 +1085,7 @@ requestroom: 'request',
 			'<tr><td>POTD</td><td>Buys the ability to set the Pokemon of the Day. (Lasts for 1 day) Note: Not purchase-able if there is already a POTD for the day.</td><td>15</td></tr>' +
 			'<tr><td>Bank</td><td>Buys a Bank User Position to store money for you or your group.</td><td>50</td></tr>' +
 			'<tr><td>FreeBuck</td><td>Gets a Free Buck to start with!</td><td>0</td></tr>' +
-			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center>');
+			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center><br />');
 		if (closeShop) return this.sendReply('|raw|<center><h3><b>The shop is currently closed and will open shortly.</b></h3></center>');
 	},
 
