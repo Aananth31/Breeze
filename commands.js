@@ -152,11 +152,12 @@ var commands = exports.commands = {
 	stafflist: function(target, room, user, connection) {
 		var admins = [];
 		var leaders = [];
+		var musicians = [];
 		var mods = [];
 		var drivers = [];
 		var voices = [];
 
-		admins2 = ''; leaders2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; 
+		admins2 = ''; leaders2 = ''; musicians2 = ' '; mods2 = ''; drivers2 = ''; voices2 = ''; 
 		stafflist = fs.readFileSync('config/usergroups.csv','utf8');
 		stafflist = stafflist.split('\n');
 		for (var u in stafflist) {
@@ -166,6 +167,9 @@ var commands = exports.commands = {
 			}
 			if (line[1] == '&') {
 				leaders2 = leaders2 +line[0]+',';
+			}
+			if (line[1] == '\u266b') {
+				musicians2 = musicians2 +line[0]+',';
 			}
 			if (line[1] == '@') {
 				mods2 = mods2 +line[0]+',';
@@ -179,6 +183,7 @@ var commands = exports.commands = {
 		}
 		admins2 = admins2.split(',');
 		leaders2 = leaders2.split(',');
+		musicians2 = musicians2.split(',')
 		mods2 = mods2.split(',');
 		drivers2 = drivers2.split(',');
 		voices2 = voices2.split(',');
@@ -187,6 +192,9 @@ var commands = exports.commands = {
 		}
 		for (var u in leaders2) {
 			if (leaders2[u] != '') leaders.push(leaders2[u]);
+		}
+		for (var u in musicians2) {
+			if (musicians2[u] != '') musicians.push(musicians2[u]);
 		}
 		for (var u in mods2) {
 			if (mods2[u] != '') mods.push(mods2[u]);
@@ -203,6 +211,9 @@ var commands = exports.commands = {
 		if (leaders.length > 0) {
 			leaders = leaders.join(', ');
 		}
+		if (musicians.length > 0) {
+			musicians = musicians.join(', ');
+		}
 		if (mods.length > 0) {
 			mods = mods.join(', ');
 		}
@@ -212,7 +223,7 @@ var commands = exports.commands = {
 		if (voices.length > 0) {
 			voices = voices.join(', ');
 		}
-		connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
+		connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nMusicians: \n'+musicians+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
 	},
 
 	restart: function(target, room, user) {
