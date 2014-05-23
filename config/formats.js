@@ -317,6 +317,12 @@ exports.Formats = [
 		banlist: ['Talonflame']
 	},
 	{
+		name: "OU Discrimination",
+		section: "Other Metagames",
+
+		ruleset: ['OU', 'Different Type Clause']
+	},
+	{
 		name: "Sky Battles",
 		section: "Other Metagames",
 
