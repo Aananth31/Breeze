@@ -882,7 +882,7 @@ requestroom: 'request',
 			}
 		}
 		if (target[0] === 'room') {
-			price = 80;
+			price = 50;
 			if (price <= user.money) {
 				user.money = user.money - price;
 				this.sendReply('You have purchased a chat room. You need to message an Admin so that the room can be made.');
@@ -1079,7 +1079,7 @@ requestroom: 'request',
 			'<tr><td>Symbol</td><td>Buys a custom symbol to go infront of name and puts you at top of userlist. (Temporary.)</td><td>5</td></tr>' +
 			'<tr><td>Custom</td><td>Buys a custom avatar to be applied to your name.</td><td>20</td></tr>' +
 			'<tr><td>Animated</td><td>Buys an animated avatar to be applied to your name.</td><td>35</td></tr>' +
-			'<tr><td>Room</td><td>Buys a chatroom for you to own. (Can be refused and refunded in half price.)</td><td>100</td></tr>' +
+			'<tr><td>Room</td><td>Buys a chatroom for you to own. (Can be refused and refunded in half price.)</td><td>50</td></tr>' +
 			'<tr><td>Trainer</td><td>Buys a trainer card which shows information through a command.</td><td>40</td></tr>' +
 			'<tr><td>Fix</td><td>Buys the ability to alter your current custom avatar or trainer card!</td><td>10</td></tr>' +
 			'<tr><td>POTD</td><td>Buys the ability to set the Pokemon of the Day.</td><td>15</td></tr>' +
@@ -1367,8 +1367,8 @@ requestroom: 'request',
 		if (!this.canBroadcast()) return;
 		return this.sendReplyBox('The command for the Money system:<br />' +
 			'/shop - Show the shop with the items you can buy.<br />' +
-			'/buy [command] - Buy an item from the shop using the item command name.<br />' +
-			'/getbucks - A basic introduction into the currency system.<br />' +
+			'/buy [item] - Buy an item from the shop using the item command name.<br />' +
+			'/earnbucks - A basic introduction into the currency system.<br />' +
 			'/atm [username] - Show your bucks (if just /atm) or show someone else\'s bucks.');
 	},
 
