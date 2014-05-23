@@ -1620,14 +1620,10 @@ var commands = exports.commands = {
 	/******************************************************
 	 * Trainer Cards
 	 *****************************************************/
-
-	 offler: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.imgur.com/LbNFp1N.png>');
-	 },
+	 
 	 coffee: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<center><img src=http://zeus.cooltext.com/rendered/cooltext1542216479.png><br><font color=blue>Illusions hide real illusions... from real illusions, the illusions are created.<br><font color=blue>The truth hides the lie...lie hides the truth. That is the Mist..<p align="right">-Mukuro Rokudo.<br><br><font color=red><center>Once you have eliminated the impossible, whatever remains,<br><font color=red>however improbable, must be the truth.<p align="right">-Sherlock Holmes.')
+	 	this.sendReplyBox('|html|<div class="music"><center><img src=http://zeus.cooltext.com/rendered/cooltext1542216479.png><br><font color=blue>Illusions hide real illusions... from real illusions, the illusions are created.<br><font color=blue>The truth hides the lie...lie hides the truth. That is the Mist..<p align="right">-Mukuro Rokudo.<br><br><font color=red><center>Once you have eliminated the impossible, whatever remains,<br><font color=red>however improbable, must be the truth.<p align="right">-Sherlock Holmes.')
 	 },
 	 empo: function(target, room, user) {
                 if (!this.canBroadcast()) return;
