@@ -795,8 +795,8 @@ requestroom: 'request',
 				else if (Users.get('Judgement v2')) {
 				Users.get('Judgement v2').send('|pm|~Cafe Bot|~Judgement v2|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
-				else if (Users.get('Pokerkid')) {
-				Users.get('PokerKid').send('|pm|~Cafe Bot|~Pokerkid|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
+				else if (Users.get('CoffeeBeans')) {
+				Users.get('CoffeeBeans').send('|pm|~Cafe Bot|~Coffee Beans|'+user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				}
 				Rooms.get('staff').add(user.name+' has requested room \''+target1+'\' to be created. Purpose: '+target);
 				user.requested = true;
