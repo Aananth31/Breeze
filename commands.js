@@ -2800,6 +2800,11 @@ requestroom: 'request',
 			connection.sendTo(room, "ibans.txt has been reloaded.");
 		});
 	},
+	
+	clearall: function (target, room, user) {
+		if (!this.can('refreshpage')) return false;
+		Rooms.global.send('>> for (var r in Rooms.rooms) { Rooms.rooms[r].log = []; Rooms.rooms[r].lastUpdate = 0; }');
+	},
 
 	refreshpage: function (target, room, user) {
 		if (!this.can('refreshpage')) return false;
