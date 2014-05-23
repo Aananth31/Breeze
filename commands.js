@@ -2396,6 +2396,15 @@ requestroom: 'request',
 		this.logModCommand(user.name + " declared " + target);
 	},
 	
+	mdeclare: function (target, room, user) {
+		if (!this.can('declare', room)) return false;
+
+		if (!this.canTalk()) return;
+
+		this.add('|raw|<div class="char"><b>' + Tools.escapeHTML(target) + '</b></div>');
+		this.logModCommand(user.name + " declared " + target);
+	},
+	
 	rdeclare: function (target, room, user) {
 		if (!target) return this.parse('/help declare');
 		if (!this.can('declare', room)) return false;
