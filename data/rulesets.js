@@ -527,11 +527,11 @@ exports.BattleFormats = {
 				if (type) typeTable[type] = (typeTable[type]||0) + 1;
 			}
 			for (var type in typeTable) {
-				if (typeTable[type] === 0) {
+				if (typeTable[type] === 1) {
 					return;
 				}
 			}
-			return ["Pokemon in your team mustn not share share a type."];
+			return ["Pokemon in your team must not share a type."];
 		}
 	}
 };
