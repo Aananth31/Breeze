@@ -157,7 +157,7 @@ var commands = exports.commands = {
 		var drivers = [];
 		var voices = [];
 
-		admins2 = ''; leaders2 = ''; musicians2 = ' '; mods2 = ''; drivers2 = ''; voices2 = ''; 
+		admins2 = ''; leaders2 = ''; musicians2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; 
 		stafflist = fs.readFileSync('config/usergroups.csv','utf8');
 		stafflist = stafflist.split('\n');
 		for (var u in stafflist) {
@@ -183,7 +183,7 @@ var commands = exports.commands = {
 		}
 		admins2 = admins2.split(',');
 		leaders2 = leaders2.split(',');
-		musicians2 = musicians2.split(',')
+		musicians2 = musicians2.split(',');
 		mods2 = mods2.split(',');
 		drivers2 = drivers2.split(',');
 		voices2 = voices2.split(',');
