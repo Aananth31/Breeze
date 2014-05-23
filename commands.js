@@ -1009,7 +1009,7 @@ requestroom: 'request',
 				user.money = user.money - price;
 				this.sendReply('You have drank a hot cup of Espresso.');
 				user.coffeefull = true;
-				this.add(user.name + ' drank hot cup of dark body warming coffee made by dark-roast aromatic coffee beans at high pressure in an espresso machine with the best crema in the world.');
+				this.add(user.name + ' drank hot cup of dark body warming Espresso made by dark-roast aromatic coffee beans at high pressure.');
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
@@ -1023,21 +1023,21 @@ requestroom: 'request',
 				user.money = user.money - price;
 				this.sendReply('You have drank a mug of Cappuccino.');
 				user.piefull = true;
-				this.add(user.name + ' drank a mug of hugely popular drink in the Cafe. The kind of cappuccino we serve is the best and a combination of equal parts espresso, steamed milk and milk froth.');
+				this.add(user.name + ' drank a mug of Cappuccino with a combination of equal parts espresso, steamed milk and milk froth.');
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
 		}
 		if (target2 === 'cafeaulait') {
 			if (user.cafeaulaitfull == true) {
-				this.sendReply('You\'ve already drank a hot cup of milky Caf au Lait! You\'ll get the milk disease.');
+				this.sendReply('You\'ve already drank a hot cup of milky Cafe au Lait! You\'ll get the milk disease.');
 			}
 			price = 10;
 			if (price <= user.money) {
 				user.money = user.money - price;
 				this.sendReply('You have drank a cup of milky Caf au Lait.');
 				user.piefull = true;
-				this.add(user.name + ' drank a traditional French drink is made with brewed coffee. Additionally, those brewed coffee collected are the best from world and it is called Caf au lait.');
+				this.add(user.name + ' drank a traditional French drink is made with brewed coffee in milk.');
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
@@ -1051,7 +1051,7 @@ requestroom: 'request',
 				user.money = user.money - price;
 				this.sendReply('You have drank an icy cold cup of Iced Americano.');
 				user.piefull = true;
-				this.add(user.name + ' drank an iced version of Americano made by single shot of espresso added to a cup of hot water. The name is thought to have originated as a bit of an insult to Americans, who had to dilute their espresso when it first gained popularity on this side of the pond. Many Cafes have perfected it, however, it is the best in our cafe, since we make the best espresso with cubed ice.');
+				this.add(user.name + ' drank an iced version of Americano made by single shot of espresso added to a cup of hot water.');
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
@@ -1075,7 +1075,7 @@ requestroom: 'request',
 
 	shop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<center><h4><font size=5>Cafe Shop!</h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
+		this.sendReplyBox('<center><h4><font size=5>Café Shop!</h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
 			'<tr><td>Symbol</td><td>Buys a custom symbol to go infront of name and puts you at top of userlist (temporary until restart)</td><td>5</td></tr>' +
 			'<tr><td>Custom</td><td>Buys a custom avatar to be applied to your name (you supply)</td><td>20</td></tr>' +
 			'<tr><td>Animated</td><td>Buys an animated avatar to be applied to your name (you supply)</td><td>35</td></tr>' +
@@ -1091,7 +1091,7 @@ requestroom: 'request',
 
 	menu: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<center><h4><font size=5>Café Shop!</h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
+		this.sendReplyBox('<center><h4><font size=5>Menu!</h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
 			'<tr><td>Espresso</td><td>A hot cup of dark body warming Espresso made by dark-roast aromatic coffee beans.</td><td>5</td></tr>' +
 			'<tr><td>Cappuccino</td><td>A mug of Cappuccino with a combination of equal parts espresso, steamed milk and milk froth.</td><td>5</td></tr>' +
 			'<tr><td>Cafe au Lait</td><td>This is a traditional French drink is made with delicious brewed coffee in milk.</td><td>10</td></tr>' +
