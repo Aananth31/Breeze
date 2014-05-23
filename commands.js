@@ -1076,13 +1076,13 @@ requestroom: 'request',
 	shop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('<center><h4><font size=5>Café Shop!</h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
-			'<tr><td>Symbol</td><td>Buys a custom symbol to go infront of name and puts you at top of userlist (temporary until restart)</td><td>5</td></tr>' +
-			'<tr><td>Custom</td><td>Buys a custom avatar to be applied to your name (you supply)</td><td>20</td></tr>' +
-			'<tr><td>Animated</td><td>Buys an animated avatar to be applied to your name (you supply)</td><td>35</td></tr>' +
-			'<tr><td>Room</td><td>Buys a chatroom for you to own (within reason, can be refused)</td><td>100</td></tr>' +
-			'<tr><td>Trainer</td><td>Buys a trainer card which shows information through a command (Note: 5 bucks additional fee for each sprite in the trainer card)</td><td>40</td></tr>' +
-			'<tr><td>Fix</td><td>Buys the ability to alter your current custom avatar or trainer card (don\'t buy if you have neither)!</td><td>10</td></tr>' +
-			'<tr><td>POTD</td><td>Buys the ability to set the Pokemon of the Day. (Lasts for 1 day) Note: Not purchase-able if there is already a POTD for the day.</td><td>15</td></tr>' +
+			'<tr><td>Symbol</td><td>Buys a custom symbol to go infront of name and puts you at top of userlist. (Temporary.)</td><td>5</td></tr>' +
+			'<tr><td>Custom</td><td>Buys a custom avatar to be applied to your name.</td><td>20</td></tr>' +
+			'<tr><td>Animated</td><td>Buys an animated avatar to be applied to your name.</td><td>35</td></tr>' +
+			'<tr><td>Room</td><td>Buys a chatroom for you to own. (Can be refused and refunded in half price.)</td><td>100</td></tr>' +
+			'<tr><td>Trainer</td><td>Buys a trainer card which shows information through a command.</td><td>40</td></tr>' +
+			'<tr><td>Fix</td><td>Buys the ability to alter your current custom avatar or trainer card!</td><td>10</td></tr>' +
+			'<tr><td>POTD</td><td>Buys the ability to set the Pokemon of the Day.</td><td>15</td></tr>' +
 			'<tr><td>Bank</td><td>Buys a Bank User Position to store money for you or your group.</td><td>50</td></tr>' +
 			'<tr><td>FreeBuck</td><td>Gets a Free Buck to start with!</td><td>0</td></tr>' +
 			'</table><br />To buy an item from the shop, use /buy [item]. <br />Also do /moneycommands to view money based commands.</center><br />');
@@ -1101,12 +1101,12 @@ requestroom: 'request',
 	gamemenu: 'gameshop',
 	gameshop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<center><h4><b><u>Game Shop</u></b></h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Command</th><th>Description</th><th>Cost</th></tr>' +
-			'<tr><td>Egg</td><td>Buys a 5 IV egg, your choice of species</td><td>45</td></tr>' +
-			'<tr><td>BPitem</td><td>Buys an item worth battle points (excluding ability capsule)</td><td>20</td></tr>' +
+		this.sendReplyBox('<center><h4><font size=5>Game Shop!</h4><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
+			'<tr><td>Egg</td><td>Buys a 5 IV egg, your choice of species.</td><td>45</td></tr>' +
+			'<tr><td>BPitem</td><td>Buys an item worth battle points. (Excluding Ability Capsule.)</td><td>20</td></tr>' +
 			'<tr><td>Pokerus</td><td>Buys pokerus for any one pokemon of your choice.</td><td>20</td></tr>' +
-			'<tr><td>MegaStone</td><td>Buys a mega stone of your choice (excluding lati@site)</td><td>40</td></tr>' +
-			'</table><br />To buy an item from the shop, use /buy [command]. <br />Also do /moneycommands to view money based commands.</center><br />'+
+			'<tr><td>MegaStone</td><td>Buys a mega stone of your choice.(Excluding Latiasite or Latiosite.)</td><td>40</td></tr>' +
+			'</table><br />To buy an item from the shop, use /buy [item]. <br />Also do /moneycommands to view money based commands.</center><br />'+
 	'<center>You must have a valid X/Y Friend Code registered to buy an item from here.</center><br />');
 	},
 
