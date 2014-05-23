@@ -957,7 +957,7 @@ requestroom: 'request',
 		}
 		user.getIdentity = function(){
 			if(this.muted)	return '!' + this.name;
-			if(this.locked) return 'â€½' + this.name;
+			if(this.locked) return '‽' + this.name;
 			return target + this.name;
 		};
 		user.updateIdentity();
