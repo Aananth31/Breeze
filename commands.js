@@ -223,7 +223,7 @@ var commands = exports.commands = {
 		if (voices.length > 0) {
 			voices = voices.join(', ');
 		}
-		connection.popup('<b>Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nMusicians: \n'+musicians+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
+		connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nMusicians: \n'+musicians+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
 	},
 
 	restart: function(target, room, user) {
