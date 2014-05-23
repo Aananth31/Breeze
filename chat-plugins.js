@@ -17,7 +17,6 @@ var plugins = exports.plugins = {
 	 * This game is meant to show a first hint. Players will find the name of a room with that hint.
 	 * When you find a room, it gives you a hint for the next room.
 	 * You finish upon reaching the third room.
-	 * This plugin requires the server to have a room with the id 'tourneysandgames'.
 	 */
 	scavenger: {
 		status: 'off',
@@ -45,7 +44,7 @@ var plugins = exports.plugins = {
 				plugins.scavenger.roomThree = toId(targets[4]);
 				plugins.scavenger.thirdHint = targets[5].trim();
 				if (Rooms.rooms.lobby) Rooms.rooms.lobby.add(
-					'|raw|<div class="broadcast-blue"><strong>A new Scavenger Hunt has been started!' 
+					'|raw|<div class="char"><strong>A new Scavenger Hunt has been started!' 
 					+ ' The first hint is: ' + plugins.scavenger.firstHint + '</strong></div>'
 				);
 				return this.sendReplyBox('Scavenger hunt started.');
@@ -183,7 +182,7 @@ var plugins = exports.plugins = {
 				if (plugins.mafia.status !== 'off') return this.sendReply('There is already an active mafia game.');
 				plugins.mafia.status = 'signups';
 				if (Rooms.rooms.lobby) Rooms.rooms.lobby.add(
-					'|raw|<div class="broadcast-blue"><strong>A new mafia game has been started!'
+					'|raw|<div class="char"><strong>A new mafia game has been started!'
 					+ ' Type /joinmafia to sign up</strong></div>'
 				);
 			},
@@ -832,7 +831,7 @@ var plugins = exports.plugins = {
 						plugins.hangman.letters.push(word[s]);
 						plugins.hangman.show.push('_');
 					}
-					return this.add('|html|<div class=infobox><div class="hangman"><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'</div></div>');
+					return this.add('|html|<div class=char><font size=2><center>A new game of hangman has been started by <b>'+ user.name +'</b>. The word is made of '+ word.length +' letters<br><font size=3>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'</div></div>');
 				}
 			},
 			vh: 'viewhangman',
