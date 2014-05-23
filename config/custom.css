@@ -34,5 +34,10 @@ body {
 
 .char {
      background: url(http://fc09.deviantart.net/fs71/f/2012/275/7/7/black_and_grey_stripe_pattern_by_wiizkiid-d5gm6uv.png) center;
-     color: #eff; /* Text color Making it white cause bg is black/grey */
+     color: #eff; /* Text color Making it white cause bg is black/grey. */
+}
+
+.music {
+     background: url(http://i.imgur.com/8W1OIaq.png) center;
+     color: #eff; /* Text color Making it black cause bg is colorful. */
 }
