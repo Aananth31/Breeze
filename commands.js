@@ -1105,7 +1105,7 @@ requestroom: 'request',
 			'<tr><td>Egg</td><td>Buys a 5 IV egg, your choice of species.</td><td>45</td></tr>' +
 			'<tr><td>BPitem</td><td>Buys an item worth battle points. (Excluding Ability Capsule.)</td><td>20</td></tr>' +
 			'<tr><td>Pokerus</td><td>Buys pokerus for any one pokemon of your choice.</td><td>20</td></tr>' +
-			'<tr><td>MegaStone</td><td>Buys a mega stone of your choice.(Excluding Latiasite or Latiosite.)</td><td>40</td></tr>' +
+			'<tr><td>MegaStone</td><td>Buys a mega stone of your choice.(Excluding Lati@site.)</td><td>40</td></tr>' +
 			'</table><br />To buy an item from the shop, use /buy [item]. <br />Also do /moneycommands to view money based commands.</center><br />'+
 	'<center>You must have a valid X/Y Friend Code registered to buy an item from here.</center><br />');
 	},
