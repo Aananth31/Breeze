@@ -1075,7 +1075,7 @@ requestroom: 'request',
 
 	shop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<center><img src=http://i.imgur.com/5z9ZSmE.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
+		this.sendReplyBox('<center><img src=http://i.imgur.com/mPffP8v.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
 			'<tr><td>Symbol</td><td>Buys a custom symbol to go infront of name and puts you at top of userlist. (Temporary.)</td><td>5</td></tr>' +
 			'<tr><td>Custom</td><td>Buys a custom avatar to be applied to your name.</td><td>20</td></tr>' +
 			'<tr><td>Animated</td><td>Buys an animated avatar to be applied to your name.</td><td>35</td></tr>' +
@@ -1101,7 +1101,7 @@ requestroom: 'request',
 	gamemenu: 'gameshop',
 	gameshop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<center><img src=http://i.imgur.com/MNtT8tu.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
+		this.sendReplyBox('<center><img src=http://i.imgur.com/01sPooM.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
 			'<tr><td>Egg</td><td>Buys a 5 IV egg, your choice of species.</td><td>45</td></tr>' +
 			'<tr><td>BPitem</td><td>Buys an item worth battle points. (Excluding Ability Capsule.)</td><td>20</td></tr>' +
 			'<tr><td>Pokerus</td><td>Buys pokerus for any one pokemon of your choice.</td><td>20</td></tr>' +
