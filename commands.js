@@ -225,6 +225,28 @@ var commands = exports.commands = {
 		}
 		connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nMusicians: \n'+musicians+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
 	},
+	
+	banks: function(target, room, user, connection) {
+		var banks = [];
+
+		banks2 = ''; 
+		banks = fs.readFileSync('config/usergroups.csv','utf8');
+		banks = banks.split('\n');
+		for (var u in banks) {
+			line = banks[u].split(',');
+			if (line[1] == '$') {
+				banks2 = banks2 +line[0]+',';
+			}
+		}
+		banks2 = banks2.split(',');
+		for (var u in banks2) {
+			if (banks2[u] != '') banks.push(banks2[u]);
+		}
+		if (banks.length > 0) {
+			banks = banks.join(', ');
+		}
+		connection.popup('Banks: \n'+banks);
+	},
 
 	restart: function(target, room, user) {
 		if (!this.can('lockdown')) return false;
