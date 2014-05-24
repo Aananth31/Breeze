@@ -1095,7 +1095,7 @@ requestroom: 'request',
 
 	menu: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<div class=menu><center><img src=http://i.imgur.com/tPNOSBE.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
+		this.sendReplyBox('<div class=menu><font color=black><center><img src=http://i.imgur.com/tPNOSBE.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
 			'<tr><td>Espresso</td><td>A hot cup of dark body warming Espresso made by dark-roast aromatic coffee beans.</td><td>5</td></tr>' +
 			'<tr><td>Cappuccino</td><td>A mug of Cappuccino with a combination of equal parts espresso, steamed milk and milk froth.</td><td>5</td></tr>' +
 			'<tr><td>Cafe au Lait</td><td>This is a traditional French drink is made with delicious brewed coffee in milk.</td><td>10</td></tr>' +
