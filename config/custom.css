@@ -48,6 +48,6 @@ body {
 }
 
 .menu {
-     background: url(http://i.imgur.com/Ik6bX7v.png) center, no-repeat;
+     background: url(http://i.imgur.com/Ik6bX7v.png) center no-repeat;
      color: #eff; /* Text color Making it black cause bg is white. */
 }
