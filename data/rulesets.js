@@ -507,6 +507,7 @@ exports.BattleFormats = {
 			return ["Your team must share a type."];
 		}
 	},
+
 	differenttypeclause: {
 		effectType: 'Rule',
 		onStart: function() {
@@ -514,6 +515,8 @@ exports.BattleFormats = {
 		},
 		validateTeam: function(team, format) {
 			var typeTable = {};
+			var types = 0;
+			var verification = 0;
 			for (var i=0; i<team.length; i++) {
 				var template = this.getTemplate(team[i].species);
 				if (!template.types) continue;
@@ -521,15 +524,20 @@ exports.BattleFormats = {
 				// first type
 				var type = template.types[0];
 				typeTable[type] = (typeTable[type]||0) + 1;
+				types = types + 1;
 
 				// second type
 				type = template.types[1];
-				if (type) typeTable[type] = (typeTable[type]||0) + 1;
+				if (type) { 
+				typeTable[type] = (typeTable[type]||0) + 1;
+				types = types + 1;
+				}
 			}
 			for (var type in typeTable) {
 				if (typeTable[type] === 1) {
-					return;
+				verification = verification + 1;
 				}
+				if(types === verification) return;
 			}
 			return ["Pokemon in your team must not share a type."];
 		}
