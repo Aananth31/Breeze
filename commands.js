@@ -227,25 +227,7 @@ var commands = exports.commands = {
 	},
 	
 	banks: function(target, room, user, connection) {
-		var banks = [];
-
-		banks2 = ''; 
-		banks = fs.readFileSync('config/usergroups.csv','utf8');
-		banks = banks.split('\n');
-		for (var u in banks) {
-			line = banks[u].split(',');
-			if (line[1] == '$') {
-				banks2 = banks2 +line[0]+',';
-			}
-		}
-		banks2 = banks2.split(',');
-		for (var u in banks2) {
-			if (banks2[u] != '') banks.push(banks2[u]);
-		}
-		if (banks.length > 0) {
-			banks = banks.join(', ');
-		}
-		connection.popup('Banks: \n'+banks);
+		connection.popup("Banks:\n" + Object.keys(Users.usergroups).filter(function (u) { return Users.usergroups[u][0] === '$'; }).join(", "));
 	},
 
 	restart: function(target, room, user) {
