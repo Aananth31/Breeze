@@ -1295,6 +1295,35 @@ var commands = exports.commands = {
 	 * Help commands
 	 *********************************************************/
 
+	tv: function(target, room, user) {
+                if (!this.canBroadcast()) return;
+                this.sendReplyBox('<center><font size=5><font color=red>Vote for the Next Tornament!!</center><br><center><button name="send" value="**Random Battle.**" target="_blank">Random Battle</button> <button name="send" value="**Smogon Doubles.**" target="_blank">Smogon Doubles</button> <button name="send" value="**Over Used.**" target="_blank">OU</button> <button name="send" value="**Challenge Cup 1vs1.**" target="_blank">Challenge Cup 1vs1</button> <button name="send" value="**Little Cup.**" target="_blank">Little Cup</button> <button name="send" value="**Overused Discrimination.**" target="_blank">OU Discrimination</button></center><br><center><font color=blue>For more tier Suggestions, Please PM Coffee Beans.</center>');
+        },
+	earnbucks: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/2d18b03b7fee724c27eff92790c9bd9f.png>')
+	},
+	games: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<font size=5><font color=red><center>Which Game should we Play Now?</center><center><button name="send" value="**We should play GAME OF SURVIVOR.**" target="_blank">Game of Survivor. (Winner Gets Promoted, Dead Gets Game Locked.)</button> <button name="send" value="**We should START A TOURNAMENT.**" target="_blank">Tournament. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY MAFIA.**" target="_blank">Mafia. (Winner Gets Bucks.)</button> <button name="send" value="**We should START A SCAVENGER HUNT.**" target="_blank">Scavenger. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY HANGMAN.**" target="_blank">Hangman. (Winner Gets Bucks.)</button></center>')
+	},
+	gayhentai: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/02fb6496e6dec81091e461daa381ac10.png>')
+	},
+	leshentai: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/ab87a5d9c2f94cd9c4f1bfaee5345aa2.png>')
+	},
+	hentai: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/9d80974b8200a4f07c2d6e71a356ad29.png>')
+	},
+	discrimination: 'disc',
+	disc: function(target,room,user) {
+	 	if (!this.canBroadcast()) return;
+	 	this.sendReplyBox('<center><font size=5>OU Discrimination</center><center><font size=2><font color=blue><a href=http://pastebin.com/52Nwhb6g>Intro and Rules!</a>')
+	},
 	commands: 'help',
 	h: 'help',
 	'?': 'help',
@@ -1628,8 +1657,8 @@ var commands = exports.commands = {
 	 empo: function(target, room, user) {
                 if (!this.canBroadcast()) return;
                 this.sendReplyBox('<center><img src="http://i.imgur.com/IHd5yRT.gif"><br><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/piplup.gif"><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/prinplup.gif"><img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/empoleon.gif"><br><font color=blue>The control on yourself is raised when you evolve your way to think.<br>Ace: Empoleon');
-        },
-        karpz: function(target,room,user) {
+         },
+         karpz: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<center><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/magikarp.gif><br>Hi Im Karpz, call me Karpz!')
 	 },
@@ -1637,38 +1666,10 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<marquee><img src=http://www.pkparaiso.com/imagenes/xy/sprites/animados/jolteon.gif><br>Fight me with all your power! But you wont win!')
 	 },
-	 gayhentai: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/02fb6496e6dec81091e461daa381ac10.png>')
-	 },
-	 leshentai: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/ab87a5d9c2f94cd9c4f1bfaee5345aa2.png>')
-	 },
-	 hentai: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/9d80974b8200a4f07c2d6e71a356ad29.png>')
-	 },
-	 earnbucks: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/2d18b03b7fee724c27eff92790c9bd9f.png>')
-	 },
-	 fail: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/d06aa1b52073af9f8f1cb5ca0400999a.gif>')
-	 },
-	 games: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<font size=5><font color=red><center>Which Game should we Play Now?</center><center><button name="send" value="**We should play GAME OF SURVIVOR.**" target="_blank">Game of Survivor. (Winner Gets Promoted, Dead Gets Game Locked.)</button> <button name="send" value="**We should START A TOURNAMENT.**" target="_blank">Tournament. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY MAFIA.**" target="_blank">Mafia. (Winner Gets Bucks.)</button> <button name="send" value="**We should START A SCAVENGER HUNT.**" target="_blank">Scavenger. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY HANGMAN.**" target="_blank">Hangman. (Winner Gets Bucks.)</button></center>')
-	 },
 	 kitsuya: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<center><img src=http://i.imgur.com/f0aXDjL.png></center><center><font color=red><b>The Reason you lost, was because you had me as your opponent.')
 	 },
-	 tv: function(target, room, user) {
-                if (!this.canBroadcast()) return;
-                this.sendReplyBox('<center><font size=5><font color=red>Vote for the Next Tornament!!</center><br><center><button name="send" value="**Random Battle.**" target="_blank">Random Battle</button> <button name="send" value="**Smogon Doubles.**" target="_blank">Smogon Doubles</button> <button name="send" value="**Over Used.**" target="_blank">OU</button> <button name="send" value="**Challenge Cup 1vs1.**" target="_blank">Challenge Cup 1vs1</button> <button name="send" value="**Little Cup.**" target="_blank">Little Cup</button> <button name="send" value="**Overused Discrimination.**" target="_blank">OU Discrimination</button></center><br><center><font color=blue>For more tier Suggestions, Please PM Coffee Beans.</center>');
-         },
          sereana: function(target,room,user) {
          	if (!this.canBroadcast()) return;
          	this.sendReplyBox('<center><img src=http://media0.giphy.com/media/DCp4s7Z1FizZe/giphy.gif height=100><font size=3><b><font color=blue>Doctor Grace~<img src=http://img3.wikia.nocookie.net/__cb20130119052202/fairytail/images/e/e3/Frosch_won%27t_disappear.png height=100><br></font></font><b>Quote:</b> <font color=red>Sir wanna have a cup of coffee?');
