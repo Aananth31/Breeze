@@ -1079,7 +1079,7 @@ requestroom: 'request',
 
 	shop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('|raw|<div class=menu><center><img src=http://i.imgur.com/mPffP8v.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
+		this.sendReplyBox('<div class=char><center><img src=http://i.imgur.com/mPffP8v.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
 			'<tr><td>Symbol</td><td>Buys a custom symbol to go infront of name and puts you at top of userlist. (Temporary.)</td><td>5</td></tr>' +
 			'<tr><td>Custom</td><td>Buys a custom avatar to be applied to your name.</td><td>20</td></tr>' +
 			'<tr><td>Animated</td><td>Buys an animated avatar to be applied to your name.</td><td>35</td></tr>' +
@@ -1095,7 +1095,7 @@ requestroom: 'request',
 
 	menu: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('|raw|<div class=menu><center><img src=http://i.imgur.com/tPNOSBE.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
+		this.sendReplyBox('<div class=menu><center><img src=http://i.imgur.com/tPNOSBE.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
 			'<tr><td>Espresso</td><td>A hot cup of dark body warming Espresso made by dark-roast aromatic coffee beans.</td><td>5</td></tr>' +
 			'<tr><td>Cappuccino</td><td>A mug of Cappuccino with a combination of equal parts espresso, steamed milk and milk froth.</td><td>5</td></tr>' +
 			'<tr><td>Cafe au Lait</td><td>This is a traditional French drink is made with delicious brewed coffee in milk.</td><td>10</td></tr>' +
@@ -1105,7 +1105,7 @@ requestroom: 'request',
 	gamemenu: 'gameshop',
 	gameshop: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('|raw|<div class=menu><center><img src=http://i.imgur.com/01sPooM.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
+		this.sendReplyBox('<div class=char><center><img src=http://i.imgur.com/01sPooM.png><table border="1" cellspacing ="0" cellpadding="3"><tr><th>Item</th><th>Description</th><th>Price</th></tr>' +
 			'<tr><td>Egg</td><td>Buys a 5 IV egg, your choice of species.</td><td>45</td></tr>' +
 			'<tr><td>BPitem</td><td>Buys an item worth battle points. (Excluding Ability Capsule.)</td><td>20</td></tr>' +
 			'<tr><td>Pokerus</td><td>Buys pokerus for any one pokemon of your choice.</td><td>20</td></tr>' +
