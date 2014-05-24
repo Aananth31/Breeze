@@ -24,6 +24,11 @@ body {
     background-color: #373737;
 }
 
+.welcome {
+  background: url(http://i.imgur.com/Fr33e5q.png) center repeat-y;
+  margin-top:-2px;
+  color: #ecf0f1;
+}
 .userlist {
     border-left: 1px solid #E2E2E2;
 }
