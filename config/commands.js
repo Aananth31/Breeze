@@ -1651,7 +1651,7 @@ var commands = exports.commands = {
 	 },
 	 earnbucks: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/9819d81f93ccc828506a8d748adc96c8.png>')
+	 	this.sendReplyBox('<img src=http://i.gyazo.com/3f26825067092c19f4d3326191ae8281.png>')
 	 },
 	 fail: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
