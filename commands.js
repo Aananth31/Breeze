@@ -226,7 +226,7 @@ var commands = exports.commands = {
 		connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nMusicians: \n'+musicians+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
 	},
 	
-	banks: function(target, room, user, connection) {
+	banks: function() {
 		connection.popup("Banks:\n" + Object.keys(Users.usergroups).filter(function (u) { return Users.usergroups[u][0] === '$'; }).join(", "));
 	},
 
