@@ -1892,6 +1892,9 @@ requestroom: 'request',
 		if (target.toLowerCase() == "charizardlabs") {
 					return connection.sendTo('charizardlabs','|raw|<div class=infobox><center><img src=http://i.imgur.com/zAJ9vLU.png></center><br><center><font size=5><font color=red>NO TRESPASS!</center><br><center>This is a Room to carry out dangerous experiments.</center><center>For Example, testing out Trainer Cards.</center><br><center><font color=red>As we said, this place is Dangerous.</center><center><font color=red>So, Only Authorised personnel allowed, Trespassers will be prosecuted.</center><br></div>');
 		}
+		if (target.toLowerCase() == "modernleague") {
+					return connection.sendTo('modernleague','|raw|<div class=infobox><center><img src="http://i.imgur.com/b4SkDMa.gif"> <p>The timepass league...challenge for fun! <a href="http://modernleagues.weebly.com/">Our Site</a> <a href="http://plug.dj/modernfamily/">Our Plug Dj</a></p> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/mawile-mega.gif"> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/salamence.gif"> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/mamoswine.gif"><br></div>');
+		}
 	},
 
 	rb: 'roomban',
