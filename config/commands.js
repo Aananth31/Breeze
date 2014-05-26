@@ -645,7 +645,7 @@ var commands = exports.commands = {
 	opensource: function (target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox(
-			"Pokemon Showdown is open source:<br />" +
+			"Cafe is open source but don't copy exactly our special commands :3<br />" +
 			"- Language: JavaScript (Node.js)<br />" +
 			"- <a href=\"https://github.com/Cafe-Team/Pokemon-Showdown/commits/master\">What's new?</a><br />" +
 			"- <a href=\"https://github.com/Cafe-Team/Pokemon-Showdown\">Server source code</a><br />" 
