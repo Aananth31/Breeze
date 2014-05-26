@@ -2,7 +2,7 @@
  * This is poll.js unedited raw.
  */
 
-exports.poll = function () {
+var Poll = exports.poll = function () {
         var poll = {};
         var components = {
 
