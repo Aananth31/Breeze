@@ -647,15 +647,86 @@ var commands = exports.commands = {
 		this.sendReplyBox(
 			"Pokemon Showdown is open source:<br />" +
 			"- Language: JavaScript (Node.js)<br />" +
-			"- <a href=\"https://github.com/Zarel/Pokemon-Showdown/commits/master\">What's new?</a><br />" +
-			"- <a href=\"https://github.com/Zarel/Pokemon-Showdown\">Server source code</a><br />" +
-			"- <a href=\"https://github.com/Zarel/Pokemon-Showdown-Client\">Client source code</a>"
+			"- <a href=\"https://github.com/Cafe-Team/Pokemon-Showdown/commits/master\">What's new?</a><br />" +
+			"- <a href=\"https://github.com/Cafe-Team/Pokemon-Showdown\">Server source code</a><br />" 
 		);
 	},
 
-	staff: function (target, room, user) {
-	    if (!this.canBroadcast()) return;
-	    this.sendReplyBox("<a href=\"http://www.smogon.com/sim/staff_list\">Pokemon Showdown Staff List</a>");
+	staff: function(target, room, user, connection) {
+		var admins = [];
+		var leaders = [];
+		var musicians = [];
+		var mods = [];
+		var drivers = [];
+		var voices = [];
+
+		admins2 = ''; leaders2 = ''; musicians2 = ''; mods2 = ''; drivers2 = ''; voices2 = ''; 
+		stafflist = fs.readFileSync('config/usergroups.csv','utf8');
+		stafflist = stafflist.split('\n');
+		for (var u in stafflist) {
+			line = stafflist[u].split(',');
+			if (line[1] == '~') {
+				admins2 = admins2 +line[0]+',';
+			}
+			if (line[1] == '&') {
+				leaders2 = leaders2 +line[0]+',';
+			}
+			if (line[1] == '\u266b') {
+				musicians2 = musicians2 +line[0]+',';
+			}
+			if (line[1] == '@') {
+				mods2 = mods2 +line[0]+',';
+			}
+			if (line[1] == '%') {
+				drivers2 = drivers2 +line[0]+',';
+			}
+			if (line[1] == '+') {
+				voices2 = voices2 +line[0]+',';
+			 }
+		}
+		admins2 = admins2.split(',');
+		leaders2 = leaders2.split(',');
+		musicians2 = musicians2.split(',');
+		mods2 = mods2.split(',');
+		drivers2 = drivers2.split(',');
+		voices2 = voices2.split(',');
+		for (var u in admins2) {
+			if (admins2[u] != '') admins.push(admins2[u]);
+		}
+		for (var u in leaders2) {
+			if (leaders2[u] != '') leaders.push(leaders2[u]);
+		}
+		for (var u in musicians2) {
+			if (musicians2[u] != '') musicians.push(musicians2[u]);
+		}
+		for (var u in mods2) {
+			if (mods2[u] != '') mods.push(mods2[u]);
+		}
+		for (var u in drivers2) {
+			if (drivers2[u] != '') drivers.push(drivers2[u]);
+		}
+		for (var u in voices2) {
+			if (voices2[u] != '') voices.push(voices2[u]);
+		}
+		if (admins.length > 0) {
+			admins = admins.join(', ');
+		}
+		if (leaders.length > 0) {
+			leaders = leaders.join(', ');
+		}
+		if (musicians.length > 0) {
+			musicians = musicians.join(', ');
+		}
+		if (mods.length > 0) {
+			mods = mods.join(', ');
+		}
+		if (drivers.length > 0) {
+			drivers = drivers.join(', ');
+		}
+		if (voices.length > 0) {
+			voices = voices.join(', ');
+		}
+		connection.popup('Administrators: \n'+admins+'\nLeaders: \n'+leaders+'\nMusicians: \n'+musicians+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
 	},
 
 	avatars: function (target, room, user) {
@@ -675,47 +746,12 @@ var commands = exports.commands = {
 		);
 	},
 
-	mentoring: 'smogintro',
-	smogonintro: 'smogintro',
-	smogintro: function (target, room, user) {
-		if (!this.canBroadcast()) return;
-		this.sendReplyBox(
-			"Welcome to Smogon's official simulator! Here are some useful links to <a href=\"http://www.smogon.com/mentorship/\">Smogon\'s Mentorship Program</a> to help you get integrated into the community:<br />" +
-			"- <a href=\"http://www.smogon.com/mentorship/primer\">Smogon Primer: A brief introduction to Smogon's subcommunities</a><br />" +
-			"- <a href=\"http://www.smogon.com/mentorship/introductions\">Introduce yourself to Smogon!</a><br />" +
-			"- <a href=\"http://www.smogon.com/mentorship/profiles\">Profiles of current Smogon Mentors</a><br />" +
-			"- <a href=\"http://mibbit.com/#mentor@irc.synirc.net\">#mentor: the Smogon Mentorship IRC channel</a>"
-		);
-	},
-
 	calculator: 'calc',
 	calc: function (target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox(
 			"Pokemon Showdown! damage calculator. (Courtesy of Honko)<br />" +
 			"- <a href=\"http://pokemonshowdown.com/damagecalc/\">Damage Calculator</a>"
-		);
-	},
-
-	cap: function (target, room, user) {
-		if (!this.canBroadcast()) return;
-		this.sendReplyBox(
-			"An introduction to the Create-A-Pokemon project:<br />" +
-			"- <a href=\"http://www.smogon.com/cap/\">CAP project website and description</a><br />" +
-			"- <a href=\"http://www.smogon.com/forums/showthread.php?t=48782\">What Pokemon have been made?</a><br />" +
-			"- <a href=\"http://www.smogon.com/forums/showthread.php?t=3464513\">Talk about the metagame here</a><br />" +
-			"- <a href=\"http://www.smogon.com/forums/showthread.php?t=3466826\">Practice BW CAP teams</a>"
-		);
-	},
-
-	gennext: function (target, room, user) {
-		if (!this.canBroadcast()) return;
-		this.sendReplyBox(
-			"NEXT (also called Gen-NEXT) is a mod that makes changes to the game:<br />" +
-			"- <a href=\"https://github.com/Zarel/Pokemon-Showdown/blob/master/mods/gennext/README.md\">README: overview of NEXT</a><br />" +
-			"Example replays:<br />" +
-			"- <a href=\"http://replay.pokemonshowdown.com/gennextou-37815908\">roseyraid vs Zarel</a><br />" +
-			"- <a href=\"http://replay.pokemonshowdown.com/gennextou-37900768\">QwietQwilfish vs pickdenis</a>"
 		);
 	},
 
