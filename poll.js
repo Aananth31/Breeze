@@ -40,7 +40,7 @@ var Poll = exports.poll = function () {
         }
 
         return poll;
-},
+}
 
 function clean(string) {
 	var entityMap = {
