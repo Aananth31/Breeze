@@ -1509,7 +1509,7 @@ var commands = exports.commands = {
 	 
 	 coffee: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<center><img src=http://zeus.cooltext.com/rendered/cooltext1542216479.png><br><br><font color=blue>Illusions hide real illusions... from real illusions, the illusions are created.<br><font color=blue>The truth hides the lie...lie hides the truth. That is the Mist..<p align="right"><font color=blue>-Mukuro Rokudo.<br><br><font color=red><center>Once you have eliminated the impossible, whatever remains,<br><font color=red>however improbable, must be the truth.<p align="right"><font color=red>-Sherlock Holmes.')
+	 	this.sendReplyBox('<center><img src=http://zeus.cooltext.com/rendered/cooltext1542216479.png><br><br><font color=blue>Illusions hide real illusions... from real illusions, the illusions are created.<br><font color=blue>The truth hides the lie...lie hides the truth. That is the Mist..<p align="right"><font color=blue>-Mukuro Rokudo.<br><br><font color=red><center>Once you have eliminated the impossible, whatever remains,<br><font color=red>however improbable, must be the truth.<p align="right"><font color=red>-Sherlock Holmes.<br><br><font color=green><center>Don\'t forget,<br><font color=green>I\'m a Detective.<p align="right"><font color=green>-PokerKid.')
 	 },
 	 empo: function(target, room, user) {
                 if (!this.canBroadcast()) return;
