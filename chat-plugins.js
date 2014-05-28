@@ -982,6 +982,34 @@ var plugins = exports.plugins = {
 					log.write("\n"+user.userid+','+user.score);
 				}
 			},
+			addQuestion: function(question,answer) {
+				var data = fs.appendFileSync('config/triviaQA.csv','utf8');
+				var row = (''+data).split("\n");
+				var line = '';
+				for (var i = row.length; i > -1; i--) {
+					if (!row[i]) continue;
+					var parts = row[i].split(",");
+					line = line + row[i];
+				}
+				if (line) {
+					var re = new RegExp(line,"g");
+					fs.readFile('config/triviaQA.csv', 'utf8', function (err,data) {
+					if (err) {
+						return console.log(err);
+					}
+					var result = data.replace(re, question+','+answer);
+					fs.writeFile('config/triviaQA.csv', result, 'utf8', function (err) {
+						if (err) return console.log(err);
+					});
+					});
+				}
+				return true;
+			},
+		},
+		commands: {
+			trivia: function(target,room,user) {
+				if(room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.')
+			}
 		}
 	}
 	
