@@ -987,9 +987,10 @@ var plugins = exports.plugins = {
 				var row = (''+data).split("\n");
 				var line = '';
 				for (var i = row.length; i > -1; i--) {
-					if (!row[i]) continue;
-					var parts = row[i].split(",");
+					if (!row[i]) {
 					line = line + row[i];
+					continue;
+					}
 				}
 				if (line) {
 					var re = new RegExp(line,"g");
@@ -1003,12 +1004,29 @@ var plugins = exports.plugins = {
 					});
 					});
 				}
-				return true;
+				return line;
 			},
+			removeQuestion: function(line) {
+				var data = fs.appendFileSync('config/triviaQA.csv','utf8');
+				var row = (''+data).split("\n");
+				if(row[line]) {
+					fs.readFile('config/triviaQA.csv', 'utf8', function (err,data) {
+					if (err) {
+						return console.log(err);
+					}
+					var result = data.splice(line,line + 1);
+					fs.writeFile('config/triviaQA.csv', result, 'utf8', function (err) {
+						if (err) return console.log(err);
+					});
+					});
+				}
+				return;
+			},
+			
 		},
 		commands: {
 			trivia: function(target,room,user) {
-				if(room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.')
+				if(room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.');
 			}
 		}
 	}
