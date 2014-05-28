@@ -1022,6 +1022,18 @@ var plugins = exports.plugins = {
 				}
 				return;
 			},
+			readQuestion: function() {
+				var data = fs.appendFileSync('config/trivia.csv','utf8');
+				var row = (''+data).split("\n");
+				var buf = ''
+				for (var i=0;i < row.length;i++) {
+					if (!row[i]) continue;
+					var rowNo = i + 1;
+					var parts = row[i].split(',');
+					buf += rowNo+'. Question: '+parts[0]+' Answer: '+parts[1]+'<br>';
+				}
+				return buf;
+			},
 			
 		},
 		commands: {
