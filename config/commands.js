@@ -1530,7 +1530,7 @@ var commands = exports.commands = {
 	 
 	 coffee: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<div class="menu"><br><center><font color=black><center>Don\'t forget, I\'m a Detective.<p align="right"><font color=black>-PokerKid.<center><img src=http://i.imgur.com/nfLeWWq.png><br><br><font color=blue>Illusions hide real illusions... from real illusions, the illusions are created.<br><font color=blue>The truth hides the lie...lie hides the truth. That is the Mist..<p align="right"><font color=blue>-Mukuro Rokudo.<br><br><font color=red><center>Once you have eliminated the impossible, whatever remains,<br><font color=red>however improbable, must be the truth.<p align="right"><font color=red>-Sherlock Holmes.')
+	 	this.sendReplyBox('<br><center><font color=black><center>Don\'t forget, I\'m a Detective.<p align="right"><font color=black>-PokerKid.<center><img src=http://i.imgur.com/nfLeWWq.png><br><br><font color=blue>Illusions hide real illusions... from real illusions, the illusions are created.<br><font color=blue>The truth hides the lie...lie hides the truth. That is the Mist..<p align="right"><font color=blue>-Mukuro Rokudo.<br><br><font color=red><center>Once you have eliminated the impossible, whatever remains,<br><font color=red>however improbable, must be the truth.<p align="right"><font color=red>-Sherlock Holmes.')
 	 },
 	 empo: function(target, room, user) {
                 if (!this.canBroadcast()) return;
