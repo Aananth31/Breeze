@@ -914,5 +914,75 @@ var plugins = exports.plugins = {
 			}
 
 		}
+	},
+	
+	trivia: {
+	/* Trivia plugin
+	*Requires a room named "Trivia"
+	*/
+		status: 'off',
+		variable: undefined,
+		functions: {
+			readScore: function(user,score) {
+				var data = fs.appendFileSync('config/trivia.csv','utf8');
+				var match = false;
+				var score = 0;
+				var row = (''+data).split("\n");
+				var line = '';
+				for (var i = row.length; i > -1; i--) {
+					if (!row[i]) continue;
+					var parts = row[i].split(",");
+					var userid = toUserid(parts[0]);
+					if (user.userid == userid) {
+						var x = Number(parts[1]);
+						var score = x;
+						match = true;
+						if (match === true) {
+							line = line + row[i];
+							break;
+						}
+					}
+				}
+			},
+			writeScore: function(user,score) {
+				var data = fs.appendFileSync('config/trivia.csv','utf8');
+				var match = false;
+				var score = 0;
+				var row = (''+data).split("\n");
+				var line = '';
+				for (var i = row.length; i > -1; i--) {
+					if (!row[i]) continue;
+					var parts = row[i].split(",");
+					var userid = toUserid(parts[0]);
+					if (user.userid == userid) {
+						var x = Number(parts[1]);
+						var score = x;
+						match = true;
+						if (match === true) {
+							line = line + row[i];
+							break;
+						}
+					}
+				}
+				user.score = score;
+				user.score = user.score + score;
+				if (match === true) {
+					var re = new RegExp(line,"g");
+					fs.readFile('config/trivia.csv', 'utf8', function (err,data) {
+					if (err) {
+						return console.log(err);
+					}
+					var result = data.replace(re, user.userid+','+user.score);
+					fs.writeFile('config/trivia.csv', result, 'utf8', function (err) {
+						if (err) return console.log(err);
+					});
+					});
+				} else {
+					var log = fs.createWriteStream('config/trivia.csv', {'flags': 'a'});
+					log.write("\n"+user.userid+','+user.score);
+				}
+			},
+		}
 	}
+	
 };
