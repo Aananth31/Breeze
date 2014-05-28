@@ -922,6 +922,7 @@ var plugins = exports.plugins = {
 	*/
 		status: 'off',
 		variable: undefined,
+		qno: undefined,
 		functions: {
 			readScore: function(user,score) {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
@@ -1034,11 +1035,24 @@ var plugins = exports.plugins = {
 				}
 				return buf;
 			},
-			
+			checkAnswer: function(QNo,answer) {
+				var data = fs.appendFileSync('config/trivia.csv','utf8');
+				var row = (''+data).split("\n");
+				line = row[QNo];
+				var coloums = line.split(',');
+				if (coloums.length > 2) {
+					for (var i = 2;i < coloums.length;i++) {
+						if(!coloums[i]) continue;
+						if(coloums[i] === answer) {
+								
+						}
+					}
+				}
+			}
 		},
 		commands: {
 			trivia: function(target,room,user) {
-				if(room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.');
+				if (room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.');
 			}
 		}
 	}
