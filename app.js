@@ -450,4 +450,3 @@ fs.readFile('./logs/uptime.txt', function (err, uptime) {
 reloadCustomAvatars();
 global.sysop = require('./sysop.js').sysopOperation();
 global.cafecommands = require('./cafe-commands.js').cafecommands;
-global.Poll = require('./poll.js').poll();
