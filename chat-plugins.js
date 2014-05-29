@@ -1008,15 +1008,15 @@ var plugins = exports.plugins = {
 
 				var child = exec(wget, function(err, stdout, stderr) {
 					if (err) throw err;
-					else console.log(file_name + ' downloaded to ' + DOWNLOAD_DIR);
+					else this.sendReplyBox(file_name + ' downloaded to ' + DOWNLOAD_DIR);
 				});
 				if(fs.existsSync('./config/triviaQA.csv')) {
-					fs.unlinkSync('./config/triviaQA.csv')
+					fs.unlinkSync('./config/triviaQA.csv');
 				}
 				var rename = 'mv '+file_name+' triviaQA.csv';
 				var child1 = exec(rename, function(err, stdout, stderr) {
 					if (err) throw err;
-					else console.log('Trivia database updated.');
+					else this.sendReplyBox('Trivia database updated.');
 				});
 				return;
 			},
