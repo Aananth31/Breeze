@@ -1111,7 +1111,7 @@ var plugins = exports.plugins = {
 							}
 						}
 						plugins.trivia.functions.writeScore(user,plugins.trivia.value);
-						return this.add('|html|User '+user.name+' has successfully completed the trivia game. Congratz!<br>(S)He is also rewarded '+plugins.trivia.value+' points for doing so.'
+						return this.add('|html|User '+user.name+' has successfully completed the trivia game. Congratz!<br>(S)He is also rewarded '+plugins.trivia.value+' points for doing so.');
 					} else {
 						return this.sendReplyBox('Hard Luck! Your guess was wrong.');
 					}
