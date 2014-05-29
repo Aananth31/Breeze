@@ -996,27 +996,21 @@ var plugins = exports.plugins = {
 				}
 			},
 			importQuestions: function(file_url) { //imports question & answers, wont work in windows because it lacks commands like wget and mv
-				var fs = require('fs');
-				var exec = require('child_process').exec;
- 				var url = require('url');
 				var DOWNLOAD_DIR = './config/';
 				// extract the file name
 				var file_name = url.parse(file_url).pathname.split('/').pop();
 				// compose the wget command
-				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url;
-				// excute wget using child_process' exec function
-
-				var child = exec(wget, function(err, stdout, stderr) {
-					if (err) throw err;
-					else this.sendReplyBox(file_name + ' downloaded to ' + DOWNLOAD_DIR);
-				});
+				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url+' && mv '+file_name+' triviaQA.csv';
+				
+				// delete triviaQA.csv if it exists
 				if(fs.existsSync('./config/triviaQA.csv')) {
 					fs.unlinkSync('./config/triviaQA.csv');
 				}
-				var rename = 'mv '+file_name+' triviaQA.csv';
-				var child1 = exec(rename, function(err, stdout, stderr) {
-					if (err) throw err;
-					else this.sendReplyBox('Trivia database updated.');
+				// excute wget using child_process' exec function
+
+				var child = exec(wget, function(err, stdout, stderr) {
+					if (err) room.add(err);
+					else room.add(file_name + ' downloaded to ' + DOWNLOAD_DIR and QA updated);
 				});
 				return;
 			},
