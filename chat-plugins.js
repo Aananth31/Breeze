@@ -995,22 +995,29 @@ var plugins = exports.plugins = {
 					log.write("\n"+user.userid+','+user.score);
 				}
 			},
-			importQuestions: function(file_url) {
-				var DOWNLOAD_DIR = 'config/';
+			importQuestions: function(file_url) { //imports question & answers, wont work in windows because it lacks commands like wget and mv
+				var fs = require('fs');
+				var exec = require('child_process').exec;
+ 				var url = require('url');
+				var DOWNLOAD_DIR = './config/';
 				// extract the file name
-				var file_name = url.parse(file_url).pathname.split('/').pop()+'.csv';
+				var file_name = url.parse(file_url).pathname.split('/').pop();
 				// compose the wget command
-				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url +' -O '+file_name;
+				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url;
 				// excute wget using child_process' exec function
 
 				var child = exec(wget, function(err, stdout, stderr) {
 					if (err) throw err;
-					else this.sendReplyBox(file_name + ' downloaded to ' + DOWNLOAD_DIR);
+					else console.log(file_name + ' downloaded to ' + DOWNLOAD_DIR);
 				});
 				if(fs.existsSync('./config/triviaQA.csv')) {
-					fs.unlinkSync('/config/triviaQA.csv')
+					fs.unlinkSync('./config/triviaQA.csv')
 				}
-				setTimeout(function(){fs.renameSync('config/'+file_name,'config/triviaQA.csv');},3000);	
+				var rename = 'mv '+file_name+' triviaQA.csv';
+				var child1 = exec(rename, function(err, stdout, stderr) {
+					if (err) throw err;
+					else console.log('Trivia database updated.');
+				});
 				return;
 			},
 			readQuestions: function() {
