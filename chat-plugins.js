@@ -998,9 +998,9 @@ var plugins = exports.plugins = {
 			importQuestions: function(file_url) {
 				var DOWNLOAD_DIR = 'config/';
 				// extract the file name
-				var file_name = url.parse(file_url).pathname.split('/').pop();
+				var file_name = url.parse(file_url).pathname.split('/').pop()+'.csv';
 				// compose the wget command
-				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url;
+				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url +' -O file_name';
 				// excute wget using child_process' exec function
 
 				var child = exec(wget, function(err, stdout, stderr) {
@@ -1012,7 +1012,7 @@ var plugins = exports.plugins = {
   						if (err) throw err;
 					});
 				}
-				setTimeout(function(){fs.createReadStream('config/triviaQA.csv');fs.rename('./config/'+file_name,'./config/triviaQA.csv', function (err) {if (err) throw err;});},3000);	
+				setTimeout(function(){fs.rename('./config/'+file_name,'./config/triviaQA.csv', function (err) {if (err) throw err;});},3000);	
 			},
 			readQuestions: function() {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
