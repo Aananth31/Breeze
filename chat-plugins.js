@@ -1009,8 +1009,8 @@ var plugins = exports.plugins = {
 				// excute wget using child_process' exec function
 
 				var child = exec(wget, function(err, stdout, stderr) {
-					if (err) room.add(err);
-					else room.add(file_name + ' downloaded to ' + DOWNLOAD_DIR and QA updated);
+					if (err) throw err;
+					else console.log('Trivia Updated');
 				});
 				return;
 			},
