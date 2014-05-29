@@ -1008,9 +1008,16 @@ var plugins = exports.plugins = {
 					else console.log(file_name + ' downloaded to ' + DOWNLOAD_DIR);
 				});
 				if(fs.existsSync('./config/triviaQA.csv')) {
-					fs.unlinkSync('./config/triviaQA.csv');
+					fs.unlink('/tmp/hello', function (err) {
+  						if (err) throw err;
+					});
 				}
-				setTimeout(function(){fs.renameSync('./config/'+file_name,'./config/triviaQA.csv');},3000);	
+				setTimeout(function(){
+						fs.rename('./config/'+file_name,'./config/triviaQA.csv', function (err) {
+  							if (err) throw err;
+						});
+					},3000
+				);	
 			},
 			readQuestions: function() {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
