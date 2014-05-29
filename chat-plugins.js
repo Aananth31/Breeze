@@ -1001,7 +1001,7 @@ var plugins = exports.plugins = {
 					if (err) {
 						return console.log(err);
 					}
-					var result = data.replace(re, question+','+answer+','+value);
+					var result = data.replace(re, question+','+value+','+answer);
 					fs.writeFile('config/triviaQA.csv', result, 'utf8', function (err) {
 						if (err) return console.log(err);
 					});
@@ -1013,11 +1013,12 @@ var plugins = exports.plugins = {
 				var data = fs.appendFileSync('config/triviaQA.csv','utf8');
 				var row = (''+data).split("\n");
 				if(row[line]) {
+					var re = new RegExp(line,"g");
 					fs.readFile('config/triviaQA.csv', 'utf8', function (err,data) {
 					if (err) {
 						return console.log(err);
 					}
-					var result = data.splice(line,line + 1);
+					var result = data.replace(re, ' ');
 					fs.writeFile('config/triviaQA.csv', result, 'utf8', function (err) {
 						if (err) return console.log(err);
 					});
@@ -1033,7 +1034,9 @@ var plugins = exports.plugins = {
 					if (!row[i]) continue;
 					var rowNo = i + 1;
 					var parts = row[i].split(',');
-					buf += rowNo+'. Question: '+parts[0]+' Answer: '+parts[1]+'<br>';
+					if (row[i] !== ' ') {
+						buf += rowNo+'. Question: '+parts[0]+' Answer: '+parts[1]+'<br>';
+					}
 				}
 				return buf;
 			},
@@ -1044,7 +1047,8 @@ var plugins = exports.plugins = {
 				var parts = row[radomness].split(',');
 				plugins.trivia.question = parts[0];
 				plugins.trivia.QNo = randomness;
-				plugins.trivia.answer = toId(parts[1]);
+				plugins.trivia.answer = toId(row[randomness].splice(0,2));
+				plugins.trivia.value = parts[1];
 				return;
 			}
 		},
@@ -1061,6 +1065,15 @@ var plugins = exports.plugins = {
 				if (tlc[0] === 'remove') {
 					if(!this.can('roompromote')) return this.sendReplyBox('You dont have permissions to use this command');
 					plugins.trivia.functions.removeQuestion(tlc[1])
+					return this.sendReplyBox('You have successfully deleted Question No.'+tlc[1]);
+				}
+				if (tlc[0] === 'new') {
+					if(!this.can('broadcast',null,room)) return false;
+					if (tlc[1] === 'random') {
+						plugins.trivia.functions.getRandomQuestion();
+						return this.add('|html|<div class=broadcast-blue>A new trivia game has been started. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
+					}
+				
 				}
 			}
 		}
