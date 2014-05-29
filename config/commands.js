@@ -1165,18 +1165,7 @@ var commands = exports.commands = {
 	 	if (!this.canBroadcast()) return;
 	 	this.sendReplyBox('<font size=5><font color=red><center>Which Game should we Play Now?</center><center><button name="send" value="**We should play GAME OF SURVIVOR.**" target="_blank">Game of Survivor. (Winner Gets Promoted, Dead Gets Game Locked.)</button> <button name="send" value="**We should START A TOURNAMENT.**" target="_blank">Tournament. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY MAFIA.**" target="_blank">Mafia. (Winner Gets Bucks.)</button> <button name="send" value="**We should START A SCAVENGER HUNT.**" target="_blank">Scavenger. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY HANGMAN.**" target="_blank">Hangman. (Winner Gets Bucks.)</button></center>')
 	},
-	gayhentai: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/02fb6496e6dec81091e461daa381ac10.png>')
-	},
-	leshentai: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/ab87a5d9c2f94cd9c4f1bfaee5345aa2.png>')
-	},
-	hentai: function(target,room,user) {
-	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<img src=http://i.gyazo.com/9d80974b8200a4f07c2d6e71a356ad29.png>')
-	},
+	
 	discrimination: 'disc',
 	disc: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
