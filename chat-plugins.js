@@ -945,7 +945,7 @@ var plugins = exports.plugins = {
 					}
 				}
 			},
-			writeScore: function(user,score) {
+			writeScore: function(user,scorewon) {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
 				var match = false;
 				var score = 0;
@@ -966,7 +966,7 @@ var plugins = exports.plugins = {
 					}
 				}
 				user.score = score;
-				user.score = user.score + score;
+				user.score = user.score + scorewon;
 				if (match === true) {
 					var re = new RegExp(line,"g");
 					fs.readFile('config/trivia.csv', 'utf8', function (err,data) {
@@ -1005,7 +1005,7 @@ var plugins = exports.plugins = {
 					});
 					});
 				}
-				return line;
+				return;
 			},
 			removeQuestion: function(line) {
 				var data = fs.appendFileSync('config/triviaQA.csv','utf8');
@@ -1023,7 +1023,7 @@ var plugins = exports.plugins = {
 				}
 				return;
 			},
-			readQuestion: function() {
+			readQuestions: function() {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
 				var row = (''+data).split("\n");
 				var buf = ''
@@ -1040,19 +1040,23 @@ var plugins = exports.plugins = {
 				var row = (''+data).split("\n");
 				line = row[QNo];
 				var coloums = line.split(',');
-				if (coloums.length > 2) {
-					for (var i = 2;i < coloums.length;i++) {
-						if(!coloums[i]) continue;
-						if(coloums[i] === answer) {
-								
-						}
-					}
+				if (toId(coloums[2]) === toId(answer)) {
+					return true;
+				} else {
+					return false;
 				}
 			}
 		},
 		commands: {
 			trivia: function(target,room,user) {
 				if (room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.');
+				var tlc = target.toLowerCase();
+				if (tlc === 'addquestion') {
+					if(!this.can('roompromote')) return this.sendReplyBox('You dont have permissions to use this command');
+					var targets = target.split(',');
+					plugins.trivia.functions.addQuestion(targets[0],targets[1])
+					return this.sendReplyBox('Your question '+targets[0]+' has been added to the database');
+				}
 			}
 		}
 	}
