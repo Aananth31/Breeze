@@ -915,42 +915,44 @@ var plugins = exports.plugins = {
 
 		}
 	},
-	
+
 	trivia: {
-	/* Trivia plugin
+	/** Trivia plugin
 	*Requires a room named "Trivia"
 	*/
 		status: 'off',
 		variable: undefined,
 		QNo: undefined,
-		answer: '',
-		question: '',
+		answer: undefined,
+		question: undefined,
 		timer: undefined,
+
 		functions: {
-			readScore: function(user,score) {
-				var data = fs.appendFileSync('config/trivia.csv','utf8');
-				var match = false;
-				var score = 0;
+			reset: function() {	
+				plugins.trivia.status = 'off';
+				plugins.trivia.variable = undefined;
+				plugins.trivia.QNo = undefined;
+				plugins.trivia.answer = undefined;
+				plugins.trivia.question = undefined;
+				plugins.trivia.timer = undefined;
+				plugins.trivia.checker = undefined;
+			},
+			readScore: function(user) {
+				var data = fs.readFileSync('config/trivia.csv', 'utf8');
 				var row = (''+data).split("\n");
-				var line = '';
 				for (var i = row.length; i > -1; i--) {
 					if (!row[i]) continue;
 					var parts = row[i].split(",");
-					var userid = toUserid(parts[0]);
+					var userid = toId(parts[0]);
 					if (user.userid == userid) {
 						var x = Number(parts[1]);
 						var score = x;
-						match = true;
-						if (match === true) {
-							line = line + row[i];
-							break;
-						}
 					}
 				}
 				return score;
 			},
 			writeScore: function(user,scorewon) {
-				var data = fs.appendFileSync('config/trivia.csv','utf8');
+				var data = fs.readFileSync('config/trivia.csv', 'utf8');
 				var match = false;
 				var score = 0;
 				var row = (''+data).split("\n");
@@ -958,7 +960,7 @@ var plugins = exports.plugins = {
 				for (var i = row.length; i > -1; i--) {
 					if (!row[i]) continue;
 					var parts = row[i].split(",");
-					var userid = toUserid(parts[0]);
+					var userid = toId(parts[0]);
 					if (user.userid == userid) {
 						var x = Number(parts[1]);
 						var score = x;
@@ -988,44 +990,8 @@ var plugins = exports.plugins = {
 				}
 			},
 			addQuestion: function(question,answer,value) {
-				var data = fs.appendFileSync('config/triviaQA.csv','utf8');
-				var row = (''+data).split("\n");
-				var line = '';
-				for (var i = row.length; i > -1; i--) {
-					if (!row[i]) {
-					line = line + row[i];
-					continue;
-					}
-				}
-				if (line) {
-					var re = new RegExp(line,"g");
-					fs.readFile('config/triviaQA.csv', 'utf8', function (err,data) {
-					if (err) {
-						return console.log(err);
-					}
-					var result = data.replace(re, question+','+value+','+answer);
-					fs.writeFile('config/triviaQA.csv', result, 'utf8', function (err) {
-						if (err) return console.log(err);
-					});
-					});
-				}
-				return;
-			},
-			removeQuestion: function(line) {
-				var data = fs.appendFileSync('config/triviaQA.csv','utf8');
-				var row = (''+data).split("\n");
-				if(row[line]) {
-					var re = new RegExp(line,"g");
-					fs.readFile('config/triviaQA.csv', 'utf8', function (err,data) {
-					if (err) {
-						return console.log(err);
-					}
-					var result = data.replace(re, ' ');
-					fs.writeFile('config/triviaQA.csv', result, 'utf8', function (err) {
-						if (err) return console.log(err);
-					});
-					});
-				}
+				var log = fs.createWriteStream('config/triviaQA.csv', {'flags': 'a'});
+				log.write("\n"+question+','+value+','+answer);
 				return;
 			},
 			readQuestions: function() {
@@ -1043,13 +1009,14 @@ var plugins = exports.plugins = {
 				return buf;
 			},
 			getRandomQuestion: function() {
-				var data = fs.appendFileSync('config/trivia.csv','utf8');
+				var data = fs.readFileSync('./config/triviaQA.csv');
 				var row = (''+data).split("\n");
-				var randomness = Math.floor(Math.random() * row.length);
-				var parts = row[radomness].split(',');
+				var randomness = Math.floor(Math.random()*row.length);
+				var parts = row[randomness].split(",");
 				plugins.trivia.question = parts[0];
+				console.log(parts)
 				plugins.trivia.QNo = randomness;
-				plugins.trivia.answer = toId(row[randomness].splice(0,2));
+				plugins.trivia.answer = parts[2];
 				plugins.trivia.value = parts[1];
 				return;
 			}
@@ -1061,7 +1028,7 @@ var plugins = exports.plugins = {
 				var targets = target.split(',');
 				if (tlc[0] === 'addquestion') {
 					if(!this.can('roompromote')) return this.sendReplyBox('You dont have permissions to use this command');
-					plugins.trivia.functions.addQuestion(targets[1],targets[2],targets[3]);
+					plugins.trivia.functions.addQuestion(targets[1],targets[3],targets[2]);
 					return this.sendReplyBox('Your question '+targets[0]+' has been added to the database');
 				}
 				if (tlc[0] === 'remove') {
@@ -1070,39 +1037,39 @@ var plugins = exports.plugins = {
 					return this.sendReplyBox('You have successfully deleted Question No.'+tlc[1]);
 				}
 				if (tlc[0] === 'new') {
-					if(!this.can('broadcast',null,room)) return this.sendReplyBox('You dont have permissions to use this command');
+					if(!this.can('broadcast',null,room) && tlc[1] !== 'guess') return this.sendReplyBox('You dont have permissions to use this command');
 					if(plugins.trivia.status === 'on') return this.sendReplyBox('There is aldready a trivia game going on');
 					if (tlc[1] === 'random') {
 						plugins.trivia.functions.getRandomQuestion();
 						plugins.trivia.status = 'on';
-						return this.add('|html|<div class=broadcast-blue>A new trivia game has been started. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
+						return this.add('|html|<div class=broadcast-blue><b>A new trivia game has been started.<br>Points: '+plugins.trivia.value+'<br>Quesion: '+plugins.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
 					}
 					if (tlc[1] === 'randomtimer') {
 						plugins.trivia.functions.getRandomQuestion();
-						plugins.trivia.status = 'on';
-						if (isNaN(tlc[2])) {
-							 return this.sendReply('Very funny, now use a real number.');
+							if (isNaN(tlc[2])) {
+								return this.sendReply('Very funny, now use a real number.');
 	    					}
+						plugins.trivia.status = 'on';
 						plugins.trivia.timer = setInterval(function(){plugins.trivia.value -= tlc[2]},1000);
-						return this.add('|html|<div class=broadcast-blue>A new timed trivia game has been started. You would be losing '+tlc[2]+' points per second. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
+						return this.add('|html|<div class=broadcast-blue><b>A new timed trivia game has been started.<br>Points: '+plugins.trivia.value+'<br>Question: '+plugins.trivia.question+'.<br> You would be losing '+tlc[2]+' points per second. <code>/trivia guess,<i>guess</i></code> to guess.');
 					}
 					if (tlc[1] === 'customtimer') {
-						plugins.trivia.status = 'on'
-						plugins.trivia.question = targets[2]
 						if (isNaN(targets[3]) || isNaN(targets[4])) {
 	        					return this.sendReply('Very funny, now use a real number.');
-	    					}
+	    				}
+						plugins.trivia.status = 'on'
+						plugins.trivia.question = targets[2]
 						plugins.trivia.value = targets[3]
 						plugins.trivia.answer = targets[5]
 						plugins.trivia.timer = setInterval(function(){plugins.trivia.value -= tlc[4]},1000);
-						return this.add('|html|<div class=broadcast-blue>A new timed trivia game has been started. You would be losing '+tlc[2]+' points per second. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
+						return this.add('|html|<div class=broadcast-blue><b>A new timed trivia game has been started.<br>Points: '+plugins.trivia.value+'<br>Question: '+plugins.trivia.question+'.<br> You would be losing '+tlc[4]+' points per second. <code>/trivia guess,<i>guess</i></code> to guess.');
 					}
-				
+
 				}
 				if (tlc[0] === 'guess') {
 					if (!this.canTalk()) return this.sendReplyBox('You dont have permissions to use this command');
 					if (plugins.trivia.status === 'off') return this.sendReplyBox('There is no trivia game going on');
-					var tid = toId(target);
+					var tid = toId(targets[1]);
 					var aid = toId(plugins.trivia.answer);
 					if (tid === aid) {
 						if (plugins.trivia.timer) {
@@ -1110,14 +1077,23 @@ var plugins = exports.plugins = {
 								clearInterval(plugins.trivia.timer);
 							}
 						}
+						if(plugins.trivia.value < 1) plugins.trivia.value = 1;
 						plugins.trivia.functions.writeScore(user,plugins.trivia.value);
-						return this.add('|html|User '+user.name+' has successfully completed the trivia game. Congratz!<br>(S)He is also rewarded '+plugins.trivia.value+' points for doing so.');
+						this.add('|html|User '+user.name+' has successfully completed the trivia game. Congratz!<br>(S)He is also rewarded '+plugins.trivia.value+' points for doing so.');
+						return plugins.trivia.functions.reset();
 					} else {
 						return this.sendReplyBox('Hard Luck! Your guess was wrong.');
 					}
 				}
+				if (tlc[0] === 'score') {
+					if(!this.canBroadcast()) return;
+					if(!targets[1]) return this.sendReplyBox('/trivia score,user - Shows the score of <i>User</i>');
+					var user = Users.get(toId(targets[1]));
+					var score = plugins.trivia.functions.readScore(user);
+					return this.sendReplyBox(user.name+'\'s Trivia Score is '+score);
+				}
 			}
 		}
 	}
-	
+
 };
