@@ -999,8 +999,9 @@ var plugins = exports.plugins = {
 				var DOWNLOAD_DIR = './config/';
 				// extract the file name
 				var file_name = url.parse(file_url).pathname.split('/').pop();
+				console.log(file_name);
 				// compose the wget command
-				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url+' && mv '+file_name+' triviaQA.csv';
+				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url+' && cd config && mv '+file_name+' triviaQA.csv';
 				
 				// delete triviaQA.csv if it exists
 				if(fs.existsSync('./config/triviaQA.csv')) {
