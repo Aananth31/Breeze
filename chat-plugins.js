@@ -311,7 +311,7 @@ var plugins = exports.plugins = {
 						  '<b>/changehint</b> - Changes the hint of the current hangman. Requires you to be the host (the one who started the game)');
 			}
 		}
-	}
+	},
 	
 	trivia: {
 	/** Trivia plugin
