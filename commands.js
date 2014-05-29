@@ -2509,7 +2509,9 @@ requestroom: 'request',
 
 		if (!this.canTalk()) return;
 
-		this.add('|raw|<div class="broadcast-blue"><b>' + target + '</b></div>');
+		for (var id in Rooms.rooms) {
+			if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b>' + target + '</b></div>');
+		}
 		this.logModCommand(user.name + " declared " + target);
 	},
 
