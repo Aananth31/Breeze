@@ -925,6 +925,7 @@ var plugins = exports.plugins = {
 		QNo: undefined,
 		answer: '',
 		question: '',
+		timer: undefined,
 		functions: {
 			readScore: function(user,score) {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
@@ -946,6 +947,7 @@ var plugins = exports.plugins = {
 						}
 					}
 				}
+				return score;
 			},
 			writeScore: function(user,scorewon) {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
@@ -1081,7 +1083,7 @@ var plugins = exports.plugins = {
 						if (isNaN(tlc[2])) {
 							 return this.sendReply('Very funny, now use a real number.');
 	    					}
-						setInterval(function(){plugins.trivia.value -= tlc[2]},1000);
+						plugins.trivia.timer = setInterval(function(){plugins.trivia.value -= tlc[2]},1000);
 						return this.add('|html|<div class=broadcast-blue>A new timed trivia game has been started. You would be losing '+tlc[2]+' points per second. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
 					}
 					if (tlc[1] === 'customtimer') {
@@ -1092,10 +1094,27 @@ var plugins = exports.plugins = {
 	    					}
 						plugins.trivia.value = targets[3]
 						plugins.trivia.answer = targets[5]
-						setInterval(function(){plugins.trivia.value -= tlc[4]},1000);
+						plugins.trivia.timer = setInterval(function(){plugins.trivia.value -= tlc[4]},1000);
 						return this.add('|html|<div class=broadcast-blue>A new timed trivia game has been started. You would be losing '+tlc[2]+' points per second. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
 					}
 				
+				}
+				if (tlc[0] === 'guess') {
+					if (!this.canTalk()) return this.sendReplyBox('You dont have permissions to use this command');
+					if (plugins.trivia.status === 'off') return this.sendReplyBox('There is no trivia game going on');
+					var tid = toId(target);
+					var aid = toId(plugins.trivia.answer);
+					if (tid === aid) {
+						if (plugins.trivia.timer) {
+							clearTimer = function(){
+								clearInterval(plugins.trivia.timer);
+							}
+						}
+						plugins.trivia.functions.writeScore(user,plugins.trivia.value);
+						return this.add('|html|User '+user.name+' has successfully completed the trivia game. Congratz!<br>(S)He is also rewarded '+plugins.trivia.value+' points for doing so.'
+					} else {
+						return this.sendReplyBox('Hard Luck! Your guess was wrong.');
+					}
 				}
 			}
 		}
