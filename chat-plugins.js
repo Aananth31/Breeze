@@ -10,6 +10,8 @@
  *
  * @license MIT license
  */
+var exec = require('child_process').exec;
+var url = require('url');
 
 var plugins = exports.plugins = {
 	/**
@@ -391,8 +393,6 @@ var plugins = exports.plugins = {
 				}
 			},
 			importQuestions: function(file_url) {
-				var exec = require('child_process').exec;
- 				var url = require('url');
 				var DOWNLOAD_DIR = 'config/';
 				// extract the file name
 				var file_name = url.parse(file_url).pathname.split('/').pop();
@@ -407,7 +407,7 @@ var plugins = exports.plugins = {
 				if(fs.existsSync('config/triviaQA.csv')) {
 					fs.unlinkSync('config/triviaQA.csv');
 				}
-				setTimeout(function(){fs.renameSync('config/'+file_name,'config/triviaQA.csv');},3000);	
+				setTimeout(function(){fs.renameSync('config/'+file_name,'config/triviaQA.csv');},2000);	
 			},
 			readQuestions: function() {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
@@ -500,8 +500,8 @@ var plugins = exports.plugins = {
 							  '<code>-/trivia new,random</code> Creates a random trivia game from the databse. Requires +<br>'+
 							  '<code>-/trivia new,randomtimer,[points lost per second]</code> Creates a random timed trivia game from the databse. Requires +<br>'+
 							  '<code>-/trivia guess,option</code> Guesses the answer for the current trivia game.<br>'+
-							  '<code>-/trivia score,username</code> Shows the score of username'+
-							  '<code>-/importquestions url</code>. Imports and updates the databse. Please dont use this command if you dont know where you are going (<a href=http://goo.gl/B7V55v>Guide</a>). Requires: #');
+							  '<code>-/trivia score,username</code> Shows the score of username<br>'+
+							  '<code>-/trivia importquestions url</code>. Imports and updates the databse. Please dont use this command if you dont know where you are going (<a href=http://goo.gl/B7V55v>Guide</a>). Requires: #');
 				} else {
 				this.parse('/trivia help');
 				}
