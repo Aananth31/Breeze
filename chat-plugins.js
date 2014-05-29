@@ -1000,7 +1000,7 @@ var plugins = exports.plugins = {
 				// extract the file name
 				var file_name = url.parse(file_url).pathname.split('/').pop()+'.csv';
 				// compose the wget command
-				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url +' -O file_name';
+				var wget = 'wget -P ' + DOWNLOAD_DIR + ' ' + file_url +' -O '+file_name;
 				// excute wget using child_process' exec function
 
 				var child = exec(wget, function(err, stdout, stderr) {
