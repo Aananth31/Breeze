@@ -1056,9 +1056,9 @@ var plugins = exports.plugins = {
 			trivia: function(target,room,user) {
 				if (room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.');
 				var tlc = target.toLowerCase().split(',');
+				var targets = target.split(',');
 				if (tlc[0] === 'addquestion') {
 					if(!this.can('roompromote')) return this.sendReplyBox('You dont have permissions to use this command');
-					var targets = target.split(',');
 					plugins.trivia.functions.addQuestion(targets[1],targets[2],targets[3]);
 					return this.sendReplyBox('Your question '+targets[0]+' has been added to the database');
 				}
@@ -1068,10 +1068,32 @@ var plugins = exports.plugins = {
 					return this.sendReplyBox('You have successfully deleted Question No.'+tlc[1]);
 				}
 				if (tlc[0] === 'new') {
-					if(!this.can('broadcast',null,room)) return false;
+					if(!this.can('broadcast',null,room)) return this.sendReplyBox('You dont have permissions to use this command');
+					if(plugins.trivia.status === 'on') return this.sendReplyBox('There is aldready a trivia game going on');
 					if (tlc[1] === 'random') {
 						plugins.trivia.functions.getRandomQuestion();
+						plugins.trivia.status = 'on';
 						return this.add('|html|<div class=broadcast-blue>A new trivia game has been started. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
+					}
+					if (tlc[1] === 'randomtimer') {
+						plugins.trivia.functions.getRandomQuestion();
+						plugins.trivia.status = 'on';
+						if (isNaN(tlc[2])) {
+							 return this.sendReply('Very funny, now use a real number.');
+	    					}
+						setInterval(function(){plugins.trivia.value -= tlc[2]},1000);
+						return this.add('|html|<div class=broadcast-blue>A new timed trivia game has been started. You would be losing '+tlc[2]+' points per second. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
+					}
+					if (tlc[1] === 'customtimer') {
+						plugins.trivia.status = 'on'
+						plugins.trivia.question = targets[2]
+						if (isNaN(targets[3]) || isNaN(targets[4])) {
+	        					return this.sendReply('Very funny, now use a real number.');
+	    					}
+						plugins.trivia.value = targets[3]
+						plugins.trivia.answer = targets[5]
+						setInterval(function(){plugins.trivia.value -= tlc[4]},1000);
+						return this.add('|html|<div class=broadcast-blue>A new timed trivia game has been started. You would be losing '+tlc[2]+' points per second. '+plugin.trivia.question+'. <code>/trivia guess,<i>guess</i></code> to guess.');
 					}
 				
 				}
