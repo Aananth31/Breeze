@@ -983,7 +983,7 @@ var plugins = exports.plugins = {
 					log.write("\n"+user.userid+','+user.score);
 				}
 			},
-			addQuestion: function(question,answer) {
+			addQuestion: function(question,answer,value) {
 				var data = fs.appendFileSync('config/triviaQA.csv','utf8');
 				var row = (''+data).split("\n");
 				var line = '';
@@ -999,7 +999,7 @@ var plugins = exports.plugins = {
 					if (err) {
 						return console.log(err);
 					}
-					var result = data.replace(re, question+','+answer);
+					var result = data.replace(re, question+','+answer+','+value);
 					fs.writeFile('config/triviaQA.csv', result, 'utf8', function (err) {
 						if (err) return console.log(err);
 					});
@@ -1050,12 +1050,16 @@ var plugins = exports.plugins = {
 		commands: {
 			trivia: function(target,room,user) {
 				if (room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.');
-				var tlc = target.toLowerCase();
-				if (tlc === 'addquestion') {
+				var tlc = target.toLowerCase().split(',');
+				if (tlc[0] === 'addquestion') {
 					if(!this.can('roompromote')) return this.sendReplyBox('You dont have permissions to use this command');
 					var targets = target.split(',');
-					plugins.trivia.functions.addQuestion(targets[0],targets[1])
+					plugins.trivia.functions.addQuestion(targets[1],targets[2],targets[3]);
 					return this.sendReplyBox('Your question '+targets[0]+' has been added to the database');
+				}
+				if (tlc[0] === 'remove') {
+					if(!this.can('roompromote')) return this.sendReplyBox('You dont have permissions to use this command');
+					plugins.trivia.functions.removeQuestion(tlc[1])
 				}
 			}
 		}
