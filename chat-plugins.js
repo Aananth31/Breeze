@@ -996,7 +996,7 @@ var plugins = exports.plugins = {
 				}
 			},
 			importQuestions: function(file_url) { //imports question & answers, wont work in windows because it lacks commands like wget and mv
-				var DOWNLOAD_DIR = './config/';
+				var DOWNLOAD_DIR = 'config';
 				// extract the file name
 				var file_name = url.parse(file_url).pathname.split('/').pop();
 				console.log(file_name);
@@ -1010,9 +1010,10 @@ var plugins = exports.plugins = {
 				// excute wget using child_process' exec function
 
 				var child = exec(wget, function(err, stdout, stderr) {
-					if (err) return err;
-					else return('Trivia Updated');
+					if (err) throw err;
+					else console.log('Trivia Updated');
 				});
+				return;
 			},
 			readQuestions: function() {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
@@ -1048,8 +1049,8 @@ var plugins = exports.plugins = {
 				if (tlc[0] === 'importquestions') {
 					if(!this.can('roomdesc')) return this.sendReplyBox('You dont have permissions to use this command');
 					if(!targets[1]) return this.sendReplyBox('/trivia importquestions,<em>url</em>.URL must be the download link.');
-					var wget = plugins.trivia.functions.importQuestions(tlc[1]);
-					return this.sendReplyBox(wget);
+					plugins.trivia.functions.importQuestions(tlc[1]);
+					return this.sendReplyBox('Trivia updated');
 				}
 				else if (tlc[0] === 'new') {
 					if(!this.can('broadcast',null,room) && tlc[1] !== 'guess') return this.sendReplyBox('You dont have permissions to use this command');
