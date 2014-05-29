@@ -1007,10 +1007,10 @@ var plugins = exports.plugins = {
 					if (err) throw err;
 					else console.log(file_name + ' downloaded to ' + DOWNLOAD_DIR);
 				});
-				if(fs.existsSync('config/triviaQA.csv')) {
-					fs.unlinkSync('config/triviaQA.csv');
+				if(fs.existsSync('./config/triviaQA.csv')) {
+					fs.unlinkSync('./config/triviaQA.csv');
 				}
-				setTimeout(function(){fs.renameSync('config/'+file_name,'config/triviaQA.csv');},3000);	
+				setTimeout(function(){fs.renameSync('./config/'+file_name,'./config/triviaQA.csv');},3000);	
 			},
 			readQuestions: function() {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
@@ -1104,7 +1104,7 @@ var plugins = exports.plugins = {
 							  '<code>-/trivia new,randomtimer,[points lost per second]</code> Creates a random timed trivia game from the databse. Requires +<br>'+
 							  '<code>-/trivia guess,option</code> Guesses the answer for the current trivia game.<br>'+
 							  '<code>-/trivia score,username</code> Shows the score of username<br>'+
-							  '<code>-/trivia importquestions,url</code>. Imports and updates the databse. Please dont use this command if you dont know where you are going (<a href=http://goo.gl/B7V55v>Guide</a>). Requires: #');
+							  '<code>-/trivia importquestions url</code>. Imports and updates the databse. Please dont use this command if you dont know where you are going (<a href=http://goo.gl/B7V55v>Guide</a>). Requires: #');
 				} else {
 				this.parse('/trivia help');
 				}
