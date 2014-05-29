@@ -1010,10 +1010,9 @@ var plugins = exports.plugins = {
 				// excute wget using child_process' exec function
 
 				var child = exec(wget, function(err, stdout, stderr) {
-					if (err) throw err;
-					else console.log('Trivia Updated');
+					if (err) return err;
+					else return('Trivia Updated');
 				});
-				return;
 			},
 			readQuestions: function() {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
@@ -1049,8 +1048,8 @@ var plugins = exports.plugins = {
 				if (tlc[0] === 'importquestions') {
 					if(!this.can('roomdesc')) return this.sendReplyBox('You dont have permissions to use this command');
 					if(!targets[1]) return this.sendReplyBox('/trivia importquestions,<em>url</em>.URL must be the download link.');
-					plugins.trivia.functions.importQuestions(tlc[1]);
-					return this.sendReplyBox('Your questions have been updated');
+					var wget = plugins.trivia.functions.importQuestions(tlc[1]);
+					return this.sendReplyBox(wget);
 				}
 				else if (tlc[0] === 'new') {
 					if(!this.can('broadcast',null,room) && tlc[1] !== 'guess') return this.sendReplyBox('You dont have permissions to use this command');
