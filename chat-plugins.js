@@ -922,7 +922,9 @@ var plugins = exports.plugins = {
 	*/
 		status: 'off',
 		variable: undefined,
-		qno: undefined,
+		QNo: undefined,
+		answer: '',
+		question: '',
 		functions: {
 			readScore: function(user,score) {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
@@ -1035,16 +1037,15 @@ var plugins = exports.plugins = {
 				}
 				return buf;
 			},
-			checkAnswer: function(QNo,answer) {
+			getRandomQuestion: function() {
 				var data = fs.appendFileSync('config/trivia.csv','utf8');
 				var row = (''+data).split("\n");
-				line = row[QNo];
-				var coloums = line.split(',');
-				if (toId(coloums[2]) === toId(answer)) {
-					return true;
-				} else {
-					return false;
-				}
+				var randomness = Math.floor(Math.random() * row.length);
+				var parts = row[radomness].split(',');
+				plugins.trivia.question = parts[0];
+				plugins.trivia.QNo = randomness;
+				plugins.trivia.answer = toId(parts[1]);
+				return;
 			}
 		},
 		commands: {
