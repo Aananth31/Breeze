@@ -1651,6 +1651,8 @@ requestroom: 'request',
 				return this.popupReply("This user is blocking Private Messages right now.");
 			} else if (targetUser.can('hotpatch')) {
 				return this.popupReply("This " + (Config.groups.bySymbol[targetUser.group].name || "Administrator") + " is too busy to answer Private Messages right now. Please contact a different staff member.");
+			} else if (targetUser.can('hotpatch')) {
+				return this.popupReply("This " + (Config.groups.bySymbol[targetUser.group].name || "Musician") + " is too busy to answer Private Messages right now. They are either playing music or contributing to Cafe.");
 			}
 		}
 
