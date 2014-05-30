@@ -1012,8 +1012,8 @@ var plugins = exports.plugins = {
 				// excute wget using child_process' exec function
 
 				var child = exec(wget, function(err, stdout, stderr) {
-					if (err) throw err;
-					else console.log('Trivia Updated');
+					if (err) return err;
+					else return 'Trivia Updated';
 				});
 				return;
 			},
