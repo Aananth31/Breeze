@@ -10,8 +10,6 @@
  *
  * @license MIT license
  */
- var exec = require('child_process').exec;
- var url = require('url');
 
 var plugins = exports.plugins = {
 	/**
@@ -996,6 +994,10 @@ var plugins = exports.plugins = {
 				}
 			},
 			importQuestions: function(file_url) { //imports question & answers, wont work in windows because it lacks commands like wget and mv
+				var exec = require('child_process').exec;
+			 	var url = require('url');
+				var fs = require('fs');
+				
 				var DOWNLOAD_DIR = 'config';
 				// extract the file name
 				var file_name = url.parse(file_url).pathname.split('/').pop();
