@@ -1113,6 +1113,9 @@ var plugins = exports.plugins = {
 				} else {
 				this.parse('/trivia help');
 				}
+			},
+			g: function(target, room, user) {
+				return this.parse('/trivia guess,'+target);
 			}
 		}
 	}
