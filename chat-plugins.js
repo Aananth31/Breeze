@@ -10,6 +10,7 @@
  *
  * @license MIT license
  */
+var fs = require('fs');
 
 var plugins = exports.plugins = {
 	/**
