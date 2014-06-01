@@ -11,7 +11,7 @@ body {
 }
 
 .chat-log {
-    background: url("http://i.imgur.com/BrmWF72.gif") right top no-repeat;
+    background: url("http://i.imgur.com/BrmWF72.gif") right bottom no-repeat;
     font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
 .menugroup .button {
