@@ -696,7 +696,7 @@ var commands = exports.commands = {
 		givepoint: function (target, room, user) {
 				if (room.id === 'games') return this.sendReply('This command can only be used in the Games chatroom.');
 				if (user.gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
-				if(!target) return this.parse('/help givepoints');
+				if(!target) return this.parse('/help givepoint');
 				if (target.indexOf(',') != -1) {
 					var parts = target.split(',');
 					parts[0] = this.splitTarget(parts[0]);
@@ -750,7 +750,7 @@ var commands = exports.commands = {
 				this.sendReply(targetUser.name + ' was given ' + givePoint + ' ' + g + '. This user now has ' + targetUser.gamePoint + ' points.');
 				targetUser.send(user.name + ' has given you ' + givePoint + ' ' + g + '.');
 				} else {
-						return this.parse('/help givepoints');
+						return this.parse('/help givepoint');
 			}
 		},
 
@@ -864,12 +864,12 @@ var commands = exports.commands = {
 		}
 	},
 	
-	tp: 'removepoints',
-	takepoints: 'removepoints',
-	removepoints: function(target, room, user) {
+	tp: 'removepoint',
+	takepoint: 'removepoint',
+	removepoint: function(target, room, user) {
 		if (room.id === 'games') return this.sendReply('This command can only be used in the Games chatroom.');
 		if (user.gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
-		if(!target) return this.parse('/help removepoints');
+		if(!target) return this.parse('/help removepoint');
 		if (target.indexOf(',') != -1) {
 			var parts = target.split(',');
 			parts[0] = this.splitTarget(parts[0]);
@@ -923,7 +923,7 @@ var commands = exports.commands = {
 		this.sendReply(targetUser.name + ' has had ' + takePoint + ' ' + p + ' removed. This user now has ' + targetUser.gamePoint + ' points.');
 		targetUser.send(user.name + ' has removed ' + takePoint + ' bucks from you.');
 		} else {
-			return this.parse('/help removepoints');
+			return this.parse('/help removepoint');
 		}
 	},
 
