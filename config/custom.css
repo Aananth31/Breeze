@@ -7,8 +7,6 @@ body {
 }
 
 .chat-log {
-    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeGUDIKbi6PcTm_lOGDL9z2T5TBrWSQyRXUcyTsmEtyng6NyrP9g);
-    background-color: #b45f04;
     font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
  
@@ -48,6 +46,6 @@ body {
 }
 
 .menu {
-     background: url(http://www.cafe-lucas.de/images/background-tisch.jpg) center no-repeat;
+     background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeGUDIKbi6PcTm_lOGDL9z2T5TBrWSQyRXUcyTsmEtyng6NyrP9g) center;
      color: #eff; /* Text color Making it black cause bg is white. */
 }
