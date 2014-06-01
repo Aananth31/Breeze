@@ -1163,7 +1163,7 @@ var commands = exports.commands = {
 	},
 	games: function(target,room,user) {
 	 	if (!this.canBroadcast()) return;
-	 	this.sendReplyBox('<font size=5><font color=red><center>Which Game should we Play Now?</center><center><button name="send" value="**We should play GAME OF SURVIVOR.**" target="_blank">Game of Survivor. (Winner Gets Promoted, Dead Gets Game Locked.)</button> <button name="send" value="**We should START A TOURNAMENT.**" target="_blank">Tournament. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY MAFIA.**" target="_blank">Mafia. (Winner Gets Bucks.)</button> <button name="send" value="**We should START A SCAVENGER HUNT.**" target="_blank">Scavenger. (Winner Gets Bucks.)</button> <button name="send" value="**We should PLAY HANGMAN.**" target="_blank">Hangman. (Winner Gets Bucks.)</button></center>')
+	 	this.sendReplyBox('<font size=5><font color=red><center>Which Game should we Play Now?</center><center><button name="send" value="**We should play GAME OF SURVIVOR.**" target="_blank">Game of Survivor. (Winner Gets Promoted, Dead Gets Game Locked.)</button> <button name="send" value="**We should START A TOURNAMENT.**" target="_blank">Tournament. (Winner Gets Bucks.)</button> <button name="send" value="/join mafia" target="_blank">Mafia. (Winner Gets Bucks.)</button> <button name="send" value="/join scavengers" target="_blank">Scavengers. (Winner Gets Bucks.)</button> <button name="send" value="/join hangman" target="_blank">Hangman. (Winner Gets Bucks.)</button></center> <button name="send" value="/join trivia" target="_blank">Trivia. (Winner Gets Points.)</button></center>')
 	},
 	
 	discrimination: 'disc',
