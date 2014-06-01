@@ -864,9 +864,11 @@ var commands = exports.commands = {
 		}
 	},
 	
+	tp: 'removepoints',
 	takepoints: 'removepoints',
 	removepoints: function(target, room, user) {
-		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+		if (room.id === 'games') return this.sendReply('This command can only be used in the Games chatroom.');
+		if (user.gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
 		if(!target) return this.parse('/help removepoints');
 		if (target.indexOf(',') != -1) {
 			var parts = target.split(',');
