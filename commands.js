@@ -694,8 +694,8 @@ var commands = exports.commands = {
 		gp: 'givepoint',
 		gamepoint: 'givepoint',
 		givepoint: function (target, room, user) {
-				if (room.id === 'games') return this.sendReply('This command can only be used in the Games chatroom.');
-				if (user.gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
+				if (room.id !== 'games') return this.sendReply('This command can only be used in the Games chatroom.');
+				if (user !==gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
 				if(!target) return this.parse('/help givepoint');
 				if (target.indexOf(',') != -1) {
 					var parts = target.split(',');
@@ -867,8 +867,8 @@ var commands = exports.commands = {
 	tp: 'removepoint',
 	takepoint: 'removepoint',
 	removepoint: function(target, room, user) {
-		if (room.id === 'games') return this.sendReply('This command can only be used in the Games chatroom.');
-		if (user.gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
+		if (room.id !== 'games') return this.sendReply('This command can only be used in the Games chatroom.');
+		if (user !== gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
 		if(!target) return this.parse('/help removepoint');
 		if (target.indexOf(',') != -1) {
 			var parts = target.split(',');
