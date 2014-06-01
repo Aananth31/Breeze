@@ -32,8 +32,8 @@ var plugins = exports.plugins = {
 		finished: [],
 		commands: {
 			scavengerstarthunt: function (target, room, user) {
-				if (!this.can('scavengers', room)) return false;
-				if (room.id !== 'scavengers') return this.sendReply('You can only start scavenger hunts on Scavengers room.');
+				if (!this.can('games', room)) return false;
+				if (room.id !== 'games') return this.sendReply('You can only start scavenger hunts on Scavengers room.');
 				if (plugins.scavenger.status === 'on') return this.sendReply('There is already an active scavenger hunt.');
 				var targets = target.split(',');
 				if (!targets[0] || !targets[1] || !targets[2] || !targets[3] || !targets[4] || !targets[5])
@@ -45,15 +45,15 @@ var plugins = exports.plugins = {
 				plugins.scavenger.secondHint = targets[3].trim();
 				plugins.scavenger.roomThree = toId(targets[4]);
 				plugins.scavenger.thirdHint = targets[5].trim();
-				if (Rooms.rooms.scavengers) Rooms.rooms.scavengers.add(
+				if (Rooms.rooms.games) Rooms.rooms.games.add(
 					'|raw|<div class="broadcast-blue"><strong>A new Scavenger Hunt has been started!'
 					+ ' The first hint is: ' + plugins.scavenger.firstHint + '</strong></div>'
 				);
 				return this.sendReply('Scavenger hunt started.');
 			},
 			scavengerendhunt: function (target, room, user) {
-				if (!this.can('scavengers', room)) return false;
-				if (room.id !== 'scavengers') return this.sendReply('You can only end scavenger hunts on Scavengers room.');
+				if (!this.can('games', room)) return false;
+				if (room.id !== 'games') return this.sendReply('You can only end scavenger hunts on Scavengers room.');
 				if (plugins.scavenger.status !== 'on') return this.sendReply('There is no active scavenger hunt.');
 				var result = '';
 				var winner = plugins.scavenger.finished[0];
@@ -66,13 +66,13 @@ var plugins = exports.plugins = {
 				result += ' Consolation prize to: ' + ((consolation.length > 0)? sanitize(consolation.join(', ')) : 'no one') + '.';
 				result += '<br />Solution: ' + plugins.scavenger.roomOne + ', '
 				+ plugins.scavenger.roomTwo + ', ' + plugins.scavenger.roomThree + '.';
-				if (Rooms.rooms.scavengers) Rooms.rooms.scavengers.add('|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>');
+				if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>');
 				this.parse('/scavengerresethunt');
 				return this.sendReply('Scavenger hunt finished.');
 			},
 			scavengerresethunt: function (target, room, user) {
-				if (!this.can('scavengers', room)) return false;
-				if (room.id !== 'scavengers') return this.sendReply('You can only reset scavenger hunts on Scavengers room.');
+				if (!this.can('games', room)) return false;
+				if (room.id !== 'games') return this.sendReply('You can only reset scavenger hunts on Scavengers room.');
 				plugins.scavenger.status = 'off';
 				plugins.scavenger.roomOne = '';
 				plugins.scavenger.roomTwo = '';
@@ -86,7 +86,7 @@ var plugins = exports.plugins = {
 			},
 			scavenger: 'scavengers',
 			scavengers: function (target, room, user) {
-				return this.parse('/join scavengers');
+				return this.parse('/join games');
 			},
 			scavengerhint: function (target, room, user) {
 				if (plugins.scavenger.status !== 'on') return this.sendReply('There is no active scavenger hunt right now.');
@@ -120,7 +120,7 @@ var plugins = exports.plugins = {
 						var position = plugins.scavenger.finished.length;
 						var result = 'The user ' + sanitize(user.name) + ' has finished the hunt! (S)he is the '
 						+ ((winningPositions[position])? winningPositions[position] : position + 'th') + '!';
-						if (Rooms.rooms.scavengers) Rooms.rooms.scavengers.add(
+						if (Rooms.rooms.games) Rooms.rooms.games.add(
 							'|raw|<div class="broadcast-blue"><strong>' + result + '</strong></div>'
 						);
 					}
@@ -145,7 +145,7 @@ var plugins = exports.plugins = {
 				);
 			},
 			scavengerhelp: function (target, room, user) {
-				if (room.id !== 'scavengers') return;
+				if (room.id !== 'games') return;
 				if (!this.canBroadcast()) return;
 				this.sendReplyBox(
 					'<strong>Player commands:</strong><br />' +
@@ -188,11 +188,11 @@ var plugins = exports.plugins = {
 		},
 		commands: {
 			hangman: function(target,room,user) {
-				this.parse('/join hangman')
+				this.parse('/join games')
 			},
 			starthangman: function(target,room,user) {
 				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'games') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /starthangman [word], [topic]');
 				if (plugins.hangman.status === 'off') {
@@ -215,7 +215,7 @@ var plugins = exports.plugins = {
 			vh: 'viewhangman',
 			viewhangman: function(target,room,user) {
 				if (!this.canBroadcast()) return false;
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'games') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('There is no hangman going on ;)');
 				this.sendReplyBox('|<div class=infobox><div class=hangman><font size=2>'+ plugins.hangman.show +'</font><br><b>Hint:</b> '+ plugins.hangman.hint +'<br><b>Guesses Left:</b> '+ plugins.hangman.guessesleft +'</div></div>');
@@ -223,7 +223,7 @@ var plugins = exports.plugins = {
 			changehint: 'edithint',
 			edithint: function(target,room,user) {
 				if (user.userid !== plugins.hangman.host) return this.sendReplyBox('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'games') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /edithint [hint]');
@@ -233,7 +233,7 @@ var plugins = exports.plugins = {
 			},
 			guess: function(target,room,user) {
 				if (!this.canTalk()) return false;
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'games') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('There is no hangman going on ;)');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
@@ -280,7 +280,7 @@ var plugins = exports.plugins = {
 			},
 			guessword: function(target,room,user) {
 				if (!this.canTalk()) return false;
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'games') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status !== 'on') return this.sendReplyBox('there is no hangman going on ;)');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /guess [letter]');
@@ -309,7 +309,7 @@ var plugins = exports.plugins = {
 			},
 			endhangman: function(target,room,user) {
 				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
-				if (room.id !== 'hangman') return this.sendReplyBox('Only in the hangman room');
+				if (room.id !== 'games') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status === 'off') return this.sendReplyBox('No Hangman is going on');
 				plugins.hangman.resethangman();
@@ -346,18 +346,18 @@ var plugins = exports.plugins = {
 		votes: {},
 		commands: {
 			startmafia: function(target, room, user) {
-				if (!this.can('mafia', room)) return false;
-				if (room.id !== 'mafia') return this.sendReply('You can only start mafia games in the Mafia room.');
+				if (!this.can('games', room)) return false;
+				if (room.id !== 'games') return this.sendReply('You can only start mafia games in the Mafia room.');
 				if (plugins.mafia.status !== 'off') return this.sendReply('There is already an active mafia game.');
 				plugins.mafia.status = 'signups';
-				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(
+				if (Rooms.rooms.games) Rooms.rooms.games.add(
 					'|raw|<div class="broadcast-blue"><strong>A new mafia game has been started!'
 					+ ' Type /joinmafia to sign up</strong></div>'
 				);
 			},
 
 			endsignups: function(target, room, user) {
-				if (!this.can('mafia', room)) return false;
+				if (!this.can('games', room)) return false;
 				if (plugins.mafia.status !== 'signups') return this.sendReply('Signups are not currently active');
 				if (Object.keys(plugins.mafia.participants).length < 3) return this.sendReply('There are not enough participants so signups cannot end. (minimum 3 players)')
 				plugins.mafia.status = 'on';
@@ -397,7 +397,7 @@ var plugins = exports.plugins = {
     				}
     			}
 
-				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(
+				if (Rooms.rooms.games) Rooms.rooms.games.add(
 					'|raw|<div class="broadcast-blue"><strong>Signups for the mafia game have now ended!'
 					+ ' It is ' + plugins.mafia.stage + ' and there are: ' + JSON.stringify(plugins.mafia.totals) + '. type "/myrole" to see your role</strong></div>'
 				);
@@ -425,10 +425,10 @@ var plugins = exports.plugins = {
 
 			joinmafia: function(target, room, user) {
 				if (plugins.mafia.status !== 'signups') return this.sendReply('Signups are not happening right now');
-				if (room.id !== 'mafia') return this.sendReply('You can only join mafia games in the Mafia room.');
+				if (room.id !== 'games') return this.sendReply('You can only join mafia games in the Mafia room.');
 				if (plugins.mafia.participants[user.userid]) return this.sendReply('You are already participating in the current mafia game.');
 				plugins.mafia.participants[user.userid] = '';
-				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(user + ' has joined! Total players: ' + Object.keys(plugins.mafia.participants).length);
+				if (Rooms.rooms.games) Rooms.rooms.games.add(user + ' has joined! Total players: ' + Object.keys(plugins.mafia.participants).length);
 				return this.sendReply('(You joined the mafia game!)');
 			},
 
@@ -447,9 +447,9 @@ var plugins = exports.plugins = {
 				plugins.mafia.votes[user.userid] = targetUser;
 
 				if (targetUser === 'no lynch') {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(user + ' has voted to lynch: no lynch');
+					if (Rooms.rooms.games) Rooms.rooms.games.add(user + ' has voted to lynch: no lynch');
 				} else {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add(user + ' has voted to lynch: ' + this.targetUsername);
+					if (Rooms.rooms.games) Rooms.rooms.games.add(user + ' has voted to lynch: ' + this.targetUsername);
 				}
 
 				var keys = Object.keys(plugins.mafia.votes);
@@ -470,12 +470,12 @@ var plugins = exports.plugins = {
 				if (totals[targetUser] >= (Math.floor(Object.keys(plugins.mafia.participants).length / 2) +1)) {
 					plugins.mafia.stage = 'night';
 					if (targetUser === 'no lynch') {
-						if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>No one was lynched!</strong></div>');
+						if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>No one was lynched!</strong></div>');
 					} else if (target === '1-Shot Lynchproof Townie') {
-						if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>No one was lynched!</strong></div>');
+						if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>No one was lynched!</strong></div>');
 						plugins.mafia.participants[target] = 'Villager';
 					} else {
-						if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + this.targetUsername + ' was lynched and was a ' + plugins.mafia.participants[targetUser] + '!');
+						if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>' + this.targetUsername + ' was lynched and was a ' + plugins.mafia.participants[targetUser] + '!');
 						delete plugins.mafia.participants[targetUser];
 
 						var winner = [];
@@ -495,7 +495,7 @@ var plugins = exports.plugins = {
 						}
 
 						if (winner.length === 1) {
-							if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
+							if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
 							// reset everything to starting values
 
 							plugins.mafia.status = 'off';
@@ -507,7 +507,7 @@ var plugins = exports.plugins = {
 							return;
 						}
 					}
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>It is now ' + plugins.mafia.stage + '. If you have a nightaction you can use it using "/nightaction target"</strong></div>');
+					if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>It is now ' + plugins.mafia.stage + '. If you have a nightaction you can use it using "/nightaction target"</strong></div>');
 					room.modchat = '+';
 					plugins.mafia.votes = {};
 
@@ -528,7 +528,7 @@ var plugins = exports.plugins = {
 
 				if (keys.length === Object.keys(plugins.mafia.participants).length) {
 					plugins.mafia.stage = 'night';
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>No one was lynched! </strong></div>');
+					if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>No one was lynched! </strong></div>');
 					plugins.mafia.votes = {};
 
 					for (var key in plugins.mafia.participants) {
@@ -543,7 +543,7 @@ var plugins = exports.plugins = {
     						plugins.mafia.nightactions[role][key] = '';
     					}
 					}
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>It is now ' + plugins.mafia.stage + '</strong></div>');
+					if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>It is now ' + plugins.mafia.stage + '</strong></div>');
 					room.modchat = '+';
 				}
 			},
@@ -762,9 +762,9 @@ var plugins = exports.plugins = {
 				}
 
 				if (message === '') {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>No one was killed!</strong></div>');
+					if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>No one was killed!</strong></div>');
 				} else {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>The deaths tonight are: ' + message + '</strong></div>');
+					if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>The deaths tonight are: ' + message + '</strong></div>');
 				}
 
 				// check if any side has won
@@ -786,7 +786,7 @@ var plugins = exports.plugins = {
 				}
 
 				if (winner.length === 1) {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
+					if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
 					// reset everything to starting values
 
 					plugins.mafia.status = 'off';
@@ -796,7 +796,7 @@ var plugins = exports.plugins = {
 					plugins.mafia.votes = {};
 
 				} else {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>It is now day! The remaining players are: ' + Object.keys(plugins.mafia.participants) + '</strong></div>');
+					if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>It is now day! The remaining players are: ' + Object.keys(plugins.mafia.participants) + '</strong></div>');
 				}
 
 				plugins.mafia.nightactions = {Mafia: {}};
@@ -805,8 +805,8 @@ var plugins = exports.plugins = {
 			},
 
 			modkill: function(target, room, user) {
-				if (!this.can('mafia', room)) return false;
-				if (room.id !== 'mafia') return this.sendReply('You can only modkill in the Mafia room.');
+				if (!this.can('games', room)) return false;
+				if (room.id !== 'games') return this.sendReply('You can only modkill in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('There is no active mafia game.');
 				target = this.splitTarget(target);
 				var targetUser = this.targetUser;
@@ -823,7 +823,7 @@ var plugins = exports.plugins = {
 					delete plugins.mafia.nightactions.role[targetUser];
 				}
 
-				if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + this.targetUsername + ' the ' + role + ' was killed by a mod!</strong></div>');
+				if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>' + this.targetUsername + ' the ' + role + ' was killed by a mod!</strong></div>');
 
 				var winner = [];
 
@@ -842,7 +842,7 @@ var plugins = exports.plugins = {
 				}
 
 				if (winner.length === 1) {
-					if (Rooms.rooms.mafia) Rooms.rooms.mafia.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
+					if (Rooms.rooms.games) Rooms.rooms.games.add('|raw|<div class="broadcast-blue"><strong>' + winner[0] + ' Have won!</strong></div>');
 					// reset everything to starting values
 
 					plugins.mafia.status = 'off';
@@ -855,7 +855,7 @@ var plugins = exports.plugins = {
 			},
 
 			inspections: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only see mafia votes in the Mafia room.');
+				if (room.id !== 'games') return this.sendReply('You can only see mafia votes in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('A mafia game hasn\'t started yet');
 				if (plugins.mafia.participants[user.userid] !== 'Cop' && plugins.mafia.participants[user.userid] !== 'Mafia Seer') return this.sendReply('You are not a cop or mafia seer');
 
@@ -863,7 +863,7 @@ var plugins = exports.plugins = {
 			},
 
 			votes: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only see mafia votes in the Mafia room.');
+				if (room.id !== 'games') return this.sendReply('You can only see mafia votes in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('A mafia game hasn\'t started yet');
 				if (plugins.mafia.stage !== 'day') return this.sendReply('You can only have votes during the day');
 				if (!this.canBroadcast()) return;
@@ -882,21 +882,21 @@ var plugins = exports.plugins = {
 			},
 
 			players: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only use this command in the Mafia room.');
+				if (room.id !== 'games') return this.sendReply('You can only use this command in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('A mafia game hasn\'t started yet');
 				if (!this.canBroadcast()) return;
 				return this.sendReply('Current players are: ' + Object.keys(plugins.mafia.participants));
 			},
 
 			roles: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only use this command in the Mafia room.');
+				if (room.id !== 'games') return this.sendReply('You can only use this command in the Mafia room.');
 				if (plugins.mafia.status !== 'on') return this.sendReply('A mafia game hasn\'t started yet');
 				if (!this.canBroadcast()) return;
 				return this.sendReply('Current roles are: ' + JSON.stringify(plugins.mafia.totals));
 			},
 
 			mafiahelp: function(target, room, user) {
-				if (room.id !== 'mafia') return this.sendReply('You can only use this command in the Mafia room.');
+				if (room.id !== 'games') return this.sendReply('You can only use this command in the Mafia room.');
 				if (!this.canBroadcast()) return;
 				this.sendReplyBox(
 					'<strong>Player commands:</strong><br />' +
@@ -1045,7 +1045,7 @@ var plugins = exports.plugins = {
 		},
 		commands: {
 			trivia: function(target,room,user) {
-				if (room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.');
+				if (room.id !== 'games') return this.sendReplyBox('This command can only be used in the trivia room.');
 				var tlc = target.toLowerCase().split(',');
 				var targets = target.split(',');
 				if (tlc[0] === 'importquestions') {
