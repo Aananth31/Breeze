@@ -75,6 +75,21 @@ var commands = exports.commands = {
 			}
 		});
 	},
+	
+	createmoney: function(target, room, user, connection) {
+		if(!user.can('hotpatch')) return this.sendReply('You do not have enough authority to do this.');
+		fs.exists('config/gamepoint.csv', function (exists) {
+			if(exists){
+			return connection.sendTo(room, 'Since this file already exists, you cannot do this.');
+			} else {
+				fs.writeFile('config/gamepoint.csv', function (err) {
+					if (err) throw err;
+					console.log('config/gamepoint.csv created.');
+					connection.sendTo(room, 'config/gamepoint.csv created.');
+				});
+			}
+		});
+	},
 
 	roomlist: function(target, room, user, connection) {
 		if (!user.can('makeroom')) return false;
@@ -673,8 +688,71 @@ var commands = exports.commands = {
 				targetUser.send(user.name + ' has given you ' + giveMoney + ' ' + p + '.');
 				} else {
 						return this.parse('/help givebucks');
+			}
+		},
+
+		gp: 'givepoint',
+		gamepoint: 'givepoint',
+		givepoint: function (target, room, user) {
+				if (room.id === 'games') return this.sendReply('This command can only be used in the Games chatroom.');
+				if (user.gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
+				if(!target) return this.parse('/help givepoints');
+				if (target.indexOf(',') != -1) {
+					var parts = target.split(',');
+					parts[0] = this.splitTarget(parts[0]);
+					var targetUser = this.targetUser;
+					if (!targetUser) {
+				return this.sendReply('User '+this.targetUsername+' not found.');
+			}
+			if (isNaN(parts[1])) {
+			return this.sendReply('Very funny, now use a real number.');
+			}
+				var cleanedUp = parts[1].trim();
+				var givePoint = Number(cleanedUp);
+				var data = fs.readFileSync('config/gamepoint.csv','utf8')
+				var match = false;
+				var gamePoint = 0;
+				var line = '';
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+					if (!row[i]) continue;
+					var parts = row[i].split(",");
+					var userid = toId(parts[0]);
+					if (targetUser.userid == userid) {
+					var x = Number(parts[1]);
+					var gamePoint = x;
+					match = true;
+					if (match === true) {
+						line = line + row[i];
+						break;
+					}
+					}
 				}
-				},
+				targetUser.gamePoint = gamePoint;
+				targetUser.gamePoint += givePoint;
+				if (match === true) {
+					var re = new RegExp(line,"g");
+					fs.readFile('config/gamepoint.csv', 'utf8', function (err,data) {
+					if (err) {
+					return console.log(err);
+				}
+				var result = data.replace(re, targetUser.userid+','+targetUser.gamePoint);
+				fs.writeFile('config/gamepoint.csv', result, 'utf8', function (err) {
+					if (err) return console.log(err);
+				});
+				});
+				} else {
+						var log = fs.createWriteStream('config/gamepoint.csv', {'flags': 'a'});
+						log.write("\n"+targetUser.userid+','+targetUser.gamePoint);
+				}
+				var g = 'points';
+				if (givePoint < 2) g = 'point';
+				this.sendReply(targetUser.name + ' was given ' + givePoint + ' ' + g + '. This user now has ' + targetUser.gamePoint + ' points.');
+				targetUser.send(user.name + ' has given you ' + givePoint + ' ' + g + '.');
+				} else {
+						return this.parse('/help givepoints');
+			}
+		},
 
 		rfc: 'registerfriendcode',
 		registerfc: 'registerfriendcode',
@@ -783,6 +861,69 @@ var commands = exports.commands = {
 		targetUser.send(user.name + ' has removed ' + takeMoney + ' bucks from you.');
 		} else {
 			return this.parse('/help removebucks');
+		}
+	},
+	
+	tp: 'removepoints',
+	takepoints: 'removepoints',
+	removepoints: function(target, room, user) {
+		if (room.id === 'games') return this.sendReply('This command can only be used in the Games chatroom.');
+		if (user.gameStaff) return this.sendReply ('You have to be Games chatroom staff to perform this action.');
+		if(!target) return this.parse('/help removepoints');
+		if (target.indexOf(',') != -1) {
+			var parts = target.split(',');
+			parts[0] = this.splitTarget(parts[0]);
+			var targetUser = this.targetUser;
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+		if (isNaN(parts[1])) {
+			return this.sendReply('Very funny, now use a real number.');
+		}
+		var cleanedUp = parts[1].trim();
+		var takeMoney = Number(cleanedUp);
+		var data = fs.readFileSync('config/gamepoint.csv','utf8')
+		var match = false;
+		var gamePoint = 0;
+		var line = '';
+		var row = (''+data).split("\n");
+		for (var i = row.length; i > -1; i--) {
+			if (!row[i]) continue;
+			var parts = row[i].split(",");
+			var userid = toId(parts[0]);
+			if (targetUser.userid == userid) {
+			var x = Number(parts[1]);
+			var money = x;
+			match = true;
+			if (match === true) {
+				line = line + row[i];
+				break;
+			}
+			}
+		}
+		targetUser.gamePoint = point;
+		targetUser.gamePoint -= takePoint;
+		if (match === true) {
+			var re = new RegExp(line,"g");
+			fs.readFile('config/gamepoint.csv', 'utf8', function (err,data) {
+			if (err) {
+				return console.log(err);
+			}
+			var result = data.replace(re, targetUser.userid+','+targetUser.gamePoint);
+			fs.writeFile('config/gamepoint.csv', result, 'utf8', function (err) {
+				if (err) return console.log(err);
+			});
+			});
+		} else {
+			var log = fs.createWriteStream('config/gamepoint.csv', {'flags': 'a'});
+			log.write("\n"+targetUser.userid+','+targetUser.gamePoint);
+		}
+		var p = 'bucks';
+		if (takeMoney < 2) p = 'buck';
+		this.sendReply(targetUser.name + ' has had ' + takePoint + ' ' + p + ' removed. This user now has ' + targetUser.gamePoint + ' points.');
+		targetUser.send(user.name + ' has removed ' + takePoint + ' bucks from you.');
+		} else {
+			return this.parse('/help removepoints');
 		}
 	},
 
