@@ -517,8 +517,10 @@ var commands = exports.commands = {
 		if (!this.canBroadcast()) return;
 		var cMatch = false;
 		var mMatch = false;
+		var gpMatch = false;
 		var money = 0;
 		var coins = 0;
+		var gamePoint = 0;
 		var total = '';
 		if (!target) {
 		var data = fs.readFileSync('config/cash.csv','utf8')
@@ -569,6 +571,31 @@ var commands = exports.commands = {
 						total += 'You have no coins.'
 				}
 				user.coins = coins;
+				var data = fs.readFileSync('config/gamepoint.csv','utf8')
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (user.userid == userid) {
+						var x = Number(parts[1]);
+						var gamePoint = x;
+						gpMatch = true;
+						if (gpMatch === true) {
+								break;
+						}
+						}
+				}
+				if (gpMatch === true) {
+						var g = 'points';
+						if (gamePoint < 2) g = 'point';
+						total += user.name + ' has ' + gamePoint + ' ' + g + '.'
+				}
+				if (gpMatch === false || gamePoint == 0) {
+						total += 'You have no points.<br />';
+				}
+				user.gamePoint = gamePoint;
+				
 		} else {
 				var data = fs.readFileSync('config/cash.csv','utf8')
 				target = this.splitTarget(target);
@@ -625,6 +652,36 @@ var commands = exports.commands = {
 						total += targetUser.name + ' has no coins.<br />';
 				}
 				targetUser.coins = coins;
+				var data = fs.readFileSync('config/gamepoint.csv','utf8')
+				target = this.splitTarget(target);
+				var targetUser = this.targetUser;
+				if (!targetUser) {
+						return this.sendReply('User '+this.targetUsername+' not found.');
+				}
+				var gamePoint = 0;
+				var row = (''+data).split("\n");
+				for (var i = row.length; i > -1; i--) {
+						if (!row[i]) continue;
+						var parts = row[i].split(",");
+						var userid = toId(parts[0]);
+						if (targetUser.userid == userid || target == userid) {
+						var x = Number(parts[1]);
+						var gamePoint = x;
+						gpMatch = true;
+						if (gpMatch === true) {
+								break;
+						}
+						}
+				}
+				if (gpMatch === true) {
+						var g = 'points';
+						if (gamePoint < 2) g = 'point';
+						total += targetUser.name + ' has ' + gamePoint + ' ' + g + '.<br />';
+				}
+				if (gpMatch === false) {
+						total += targetUser.name + ' has no points.<br />';
+				}
+				targetUser.gamePoint = gamePoint;
 		}
 		return this.sendReplyBox(total);
 		},
@@ -748,8 +805,8 @@ var commands = exports.commands = {
 				}
 				var g = 'points';
 				if (givePoint < 2) g = 'point';
-				this.sendReply(targetUser.name + ' was given ' + givePoint + ' ' + g + '. This user now has ' + targetUser.gamePoint + ' points.');
-				targetUser.send(user.name + ' has given you ' + givePoint + ' ' + g + '.');
+				this.sendReply(targetUser.name + ' was given ' + givePoint + ' ' + g + '. This user now has ' + targetUser.gamePoint + ' points. Kindly supply the user 1 buck if he/she has bucks in a multiple of ten and you\'re an admin.');
+				targetUser.send(user.name + ' has given you ' + givePoint + ' ' + g + '. Kindly contact an Admin for your buck if you now have bucks in a multiple of ten.');
 				} else {
 						return this.parse('/help givepoint');
 			}
@@ -883,7 +940,7 @@ var commands = exports.commands = {
 			return this.sendReply('Very funny, now use a real number.');
 		}
 		var cleanedUp = parts[1].trim();
-		var takeMoney = Number(cleanedUp);
+		var takePoint = Number(cleanedUp);
 		var data = fs.readFileSync('config/gamepoint.csv','utf8')
 		var match = false;
 		var gamePoint = 0;
@@ -895,7 +952,7 @@ var commands = exports.commands = {
 			var userid = toId(parts[0]);
 			if (targetUser.userid == userid) {
 			var x = Number(parts[1]);
-			var money = x;
+			var gamePoint = x;
 			match = true;
 			if (match === true) {
 				line = line + row[i];
@@ -903,7 +960,7 @@ var commands = exports.commands = {
 			}
 			}
 		}
-		targetUser.gamePoint = point;
+		targetUser.gamePoint = gamePoint;
 		targetUser.gamePoint -= takePoint;
 		if (match === true) {
 			var re = new RegExp(line,"g");
@@ -920,10 +977,10 @@ var commands = exports.commands = {
 			var log = fs.createWriteStream('config/gamepoint.csv', {'flags': 'a'});
 			log.write("\n"+targetUser.userid+','+targetUser.gamePoint);
 		}
-		var p = 'bucks';
-		if (takeMoney < 2) p = 'buck';
-		this.sendReply(targetUser.name + ' has had ' + takePoint + ' ' + p + ' removed. This user now has ' + targetUser.gamePoint + ' points.');
-		targetUser.send(user.name + ' has removed ' + takePoint + ' bucks from you.');
+		var g = 'points';
+		if (takePoint < 2) g = 'point';
+		this.sendReply(targetUser.name + ' has had ' + takePoint + ' ' + g + ' removed. This user now has ' + targetUser.gamePoint + ' points.');
+		targetUser.send(user.name + ' has removed ' + takePoint + ' points from you.');
 		} else {
 			return this.parse('/help removepoint');
 		}
