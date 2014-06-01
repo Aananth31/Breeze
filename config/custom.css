@@ -11,10 +11,9 @@ body {
 }
 
 .chat-log {
-    top right: url(http://askaround.typepad.com/.a/6a00d834d074f153ef01156fa85c5e970c-pi);
+    background: url("http://i.imgur.com/BrmWF72.gif") right top no-repeat;
     font-family: Geneva, Tahoma, Verdana, sans-serif;
 }
- 
 .menugroup .button {
     background-image: url(http://img2.findthebest.com/sites/default/files/2307/media/images/Light_Brown_429913_i0.png);
 }
