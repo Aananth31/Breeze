@@ -6,6 +6,10 @@ body {
     background-image: url(http://media.moddb.com/images/members/1/137/136034/cafe.jpg);
 }
 
+.logo {
+  content: url(http://i.imgur.com/dAeys2H.png);
+}
+
 .chat-log {
     background-image: url();
     font-family: Geneva, Tahoma, Verdana, sans-serif;
