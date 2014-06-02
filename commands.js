@@ -384,8 +384,6 @@ var commands = exports.commands = {
 	},
 
 	back: function(target, room, user, connection) {
-		if (!this.can('lock')) return false;
-
 		if (user.isAway) {
 			if (user.name === user.originalName) {
 				user.isAway = false;
