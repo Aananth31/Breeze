@@ -325,9 +325,10 @@ var commands = exports.commands = {
 	working: 'away',
 	sleeping: 'away',
 	busy: 'away',
+	coding: 'away',
+	partying: 'away',
 	afk: 'away',
 	away: function(target, room, user, connection, cmd) {
-		if (!this.can('lock')) return false;
 		var t = 'Away';
 		switch (cmd) {
 			case 'busy':
@@ -350,6 +351,12 @@ var commands = exports.commands = {
 			break;
 			case 'eating':
 			t = 'Eating';
+			break;
+			case 'coding':
+			t = 'Coding';
+			break;
+			case 'partying':
+			t = 'Partying';
 			break;
 			default:
 			t = 'Away'
