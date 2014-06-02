@@ -2097,6 +2097,9 @@ requestroom: 'request',
 		if (target.toLowerCase() == "modernleague") {
 					return connection.sendTo('modernleague','|raw|<div class=infobox><center><img src="http://i.imgur.com/b4SkDMa.gif"> <p>The timepass league...challenge for fun! <a href="http://modernleagues.weebly.com/">Our Site</a> <a href="http://plug.dj/modernfamily/">Our Plug Dj</a></p> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/mawile-mega.gif"> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/salamence.gif"> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/mamoswine.gif"><br></div>');
 		}
+		if (target.toLowerCase() == "theleagueofillusions") {
+					return connection.sendTo('theleagueofillusions','|raw|<div class=infobox><center><img src="http://i.imgur.com/J5eLteO.png"></center><br><center><Illusions... or real illusions. Hidden in an illusion is the real illusion. From one illusion will sprout another illusion. Hidden in truths lie lies, hidden in lies hides the truth.</center><center>To Join this League, you must become an Illusionist acknowledged by us.</center><center>However, an Illusionist\'s illusion countered by another illusion, has already lost it\'s own perception.</center><center>Kufufufu, Maybe this is an Illusion too~</center></div>');
+		}
 	},
 
 	rb: 'roomban',
