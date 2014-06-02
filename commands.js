@@ -570,10 +570,10 @@ var commands = exports.commands = {
 				if (cMatch === true) {
 						var p = 'coins';
 						if (coins < 2) p = 'coin';
-						total += user.name + ' has ' + coins + ' ' + p + '.'
+						' ' total += user.name + ' has ' + coins + ' ' + p + '.'
 				}
 				if (cMatch === false) {
-						total += 'You have no coins.'
+						' ' total += 'You have no coins.'
 				}
 				user.coins = coins;
 				var data = fs.readFileSync('config/gamepoint.csv','utf8')
@@ -594,10 +594,10 @@ var commands = exports.commands = {
 				if (gpMatch === true) {
 						var g = 'points';
 						if (gamePoint < 2) g = 'point';
-						total += user.name + ' has ' + gamePoint + ' ' + g + '.'
+						' ' total += user.name + ' has ' + gamePoint + ' ' + g + '.'
 				}
 				if (gpMatch === false || gamePoint == 0) {
-						total += 'You have no points.<br />';
+						' ' total += 'You have no points.<br />';
 				}
 				user.gamePoint = gamePoint;
 				
@@ -651,10 +651,10 @@ var commands = exports.commands = {
 				if (cMatch === true) {
 						var p = 'coins';
 						if (coins < 2) p = 'coin';
-						total += targetUser.name + ' has ' + coins + ' ' + p + '.<br />';
+						' ' total += targetUser.name + ' has ' + coins + ' ' + p + '.<br />';
 				}
 				if (cMatch === false) {
-						total += targetUser.name + ' has no coins.<br />';
+						' ' total += targetUser.name + ' has no coins.<br />';
 				}
 				targetUser.coins = coins;
 				var data = fs.readFileSync('config/gamepoint.csv','utf8')
@@ -681,10 +681,10 @@ var commands = exports.commands = {
 				if (gpMatch === true) {
 						var g = 'points';
 						if (gamePoint < 2) g = 'point';
-						total += targetUser.name + ' has ' + gamePoint + ' ' + g + '.<br />';
+						' ' total += targetUser.name + ' has ' + gamePoint + ' ' + g + '.<br />';
 				}
 				if (gpMatch === false) {
-						total += targetUser.name + ' has no points.<br />';
+						' ' total += targetUser.name + ' has no points.<br />';
 				}
 				targetUser.gamePoint = gamePoint;
 		}
