@@ -1200,8 +1200,8 @@ requestroom: 'request',
 			price = 0;
 			if (price <= user.money) {
 				user.money = user.money - price;
-				this.sendReply('You have got a Free Buck to start with! Please PM an admin to give it to you.');
-				this.add(user.name + ' has purchased a Free Buck!');
+				this.sendReply('You have bought nothing LOL! We already removed this muahahaha!');
+				this.add(user.name + ' has purchased a Free Buck! But it was already removed, so (s)he won\'t reveive anything LOL!);
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
