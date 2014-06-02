@@ -570,10 +570,10 @@ var commands = exports.commands = {
 				if (cMatch === true) {
 						var p = 'coins';
 						if (coins < 2) p = 'coin';
-						total += user.name + ' has ' + coins + ' ' + p + '.'
+						total += user.name + ' has ' + coins + ' ' + p + '.';
 				}
 				if (cMatch === false) {
-						total += 'You have no coins.'
+						total += 'You have no coins.';
 				}
 				user.coins = coins;
 				var data = fs.readFileSync('config/gamepoint.csv','utf8')
