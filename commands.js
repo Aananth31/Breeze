@@ -2086,16 +2086,13 @@ requestroom: 'request',
 					return connection.sendTo('lobby','|raw|<div class=menu><font color=brown><b><center><img src=http://i.imgur.com/k5GRKM1.png></center><br><center>Welcome to Le Cafe!</center><center>You would not find any place more cosy than this one!</center><center>Join Now! and have a chance to taste the Best Coffee!</center><center>The most important rule here is to have fun!</center><center>We hope you will have an enjoyable and comfortable stay here.</center><center>Use /room , to suggest a room to the admins</center><br><center>Dig some <a href=http://emerald.psim.us>Emeralds</a> in our allied server!</center><center>Be sure to Join our <a href=http://plug.dj/ps-cafe/>Music Community</a> too!</center><br><center><a href=http://cafepsim.weebly.com/><img src=http://i.imgur.com/sC5u1vD.png></a></center></div>');
 		}
 		if (target.toLowerCase() == "staff") {
-					return connection.sendTo('staff','|raw|<div class=infobox><center><img src=http://i.imgur.com/WEoqdtX.png></center><br><center><font size=5><font color=blue>This is  the Club where Staff Hangs Out!</center><br><center>We can talk about Promotions and Demotions here!</center><center>Also talk about suggestioins to make our server better!</center><center>However if you do not want to talk about these, you can talk whatever you like! Make this place your home!</center><br><center><font color=red>However if you spam / caps Bot v2 will mute you, so do them at your risk.</center><br></div>');
+					return connection.sendTo('staff','|raw|<div class=aqua><center><img src=http://i.imgur.com/WEoqdtX.png></center><br><center><font size=5><font color=blue>This is  the Club where Staff Hangs Out!</center><br><center>We can talk about Promotions and Demotions here!</center><center>Also talk about suggestioins to make our server better!</center><center>However if you do not want to talk about these, you can talk whatever you like! Make this place your home!</center><br><center><font color=red>However if you spam / caps Bot v2 will mute you, so do them at your risk.</center><br></div>');
 		}
 		if (target.toLowerCase() == "thefairytailleague") {
-					return connection.sendTo('thefairytailleague','|raw|<div class=infobox><center><img src=http://i.imgur.com/IyR3OqI.png></center><br><center><font size=5><font color=blue>o3o!</center><br><center>We are Recruiting League Members!</center><center>To get ready for the Official League competition a month later!</center><center>Feel free to give suggestions, contribute and make the room better!</center><br><center><font color=red>Remember to follow the rules in the /rules section while having fun!</center><br></div>');
+					return connection.sendTo('thefairytailleague','|raw|<div class=aqua><center><img src=http://i.imgur.com/IyR3OqI.png></center><br><center><font size=5><font color=blue>o3o!</center><br><center>We are Recruiting League Members!</center><center>To get ready for the Official League competition a month later!</center><center>Feel free to give suggestions, contribute and make the room better!</center><br><center><font color=red>Remember to follow the rules in the /rules section while having fun!</center><br></div>');
 		}
 		if (target.toLowerCase() == "charizardlabs") {
 					return connection.sendTo('charizardlabs','|raw|<div class=char><center><img src=http://i.imgur.com/zAJ9vLU.png></center><br><center><font size=5><font color=red>NO TRESPASS!</center><br><font size=white><center>This is a Room to carry out dangerous experiments.</center><center>For Example, testing out Trainer Cards.</center><br><center><font color=red>As we said, this place is Dangerous.</center><center><font color=red>So, Only Authorised personnel allowed, Trespassers will be prosecuted.</center><br></div>');
-		}
-		if (target.toLowerCase() == "modernleague") {
-					return connection.sendTo('modernleague','|raw|<div class=infobox><center><img src="http://i.imgur.com/b4SkDMa.gif"> <p>The timepass league...challenge for fun! <a href="http://modernleagues.weebly.com/">Our Site</a> <a href="http://plug.dj/modernfamily/">Our Plug Dj</a></p> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/mawile-mega.gif"> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/salamence.gif"> <img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/mamoswine.gif"><br></div>');
 		}
 		if (target.toLowerCase() == "theleagueofillusions") {
 					return connection.sendTo('theleagueofillusions','|raw|<div class=menu><center><img src="http://i.imgur.com/jFuQa5U.png"></center><br><font color=blue><center>Illusions... or real illusions. Hidden in an illusion is the real illusion.~★</center><center>From one illusion will sprout another illusion.~★</center><center>Hidden in truths lie lies, hidden in lies hides the truth.~★</center><br><font color=red><center>To Join this League, you must be an Illusionist acknowledged by us.~★</center><center>However, an Illusionist\'s illusion countered by another illusion,~★</center><center>Has already lost it\'s own perception.~★</center><center>Kufufufu, Maybe this is an Illusion too~★</center><br></div>');
@@ -2672,12 +2669,12 @@ requestroom: 'request',
 		this.logModCommand(user.name + " declared " + target);
 	},
 	
-	mdeclare: function (target, room, user) {
+	adeclare: function (target, room, user) {
 		if (!this.can('declare', room)) return false;
 
 		if (!this.canTalk()) return;
 
-		this.add('|raw|<div class="music"><font color="#000000"><b>' + Tools.escapeHTML(target) + '</b></div>');
+		this.add('|raw|<div class="aqua"><font color="#000000"><b>' + Tools.escapeHTML(target) + '</b></div>');
 		this.logModCommand(user.name + " declared " + target);
 	},
 	
@@ -2707,7 +2704,7 @@ requestroom: 'request',
 
 		if (!this.canTalk()) return;
 
-		this.add('|raw|<div class="broadcast-gold"><b>' + Tools.escapeHTML(target) + '</b></div>');
+		this.add('|raw|<div class="broadcast-gold">' + Tools.escapeHTML(target) + '</b></div>');
 		this.logModCommand(user.name + " declared " + target);
 	},
 
