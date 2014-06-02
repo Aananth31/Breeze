@@ -2100,6 +2100,9 @@ requestroom: 'request',
 		if (target.toLowerCase() == "theleagueofillusions") {
 					return connection.sendTo('theleagueofillusions','|raw|<div class=menu><center><img src="http://i.imgur.com/jFuQa5U.png"></center><br><font color=blue><center>Illusions... or real illusions. Hidden in an illusion is the real illusion.~★</center><center>From one illusion will sprout another illusion.~★</center><center>Hidden in truths lie lies, hidden in lies hides the truth.~★</center><br><font color=red><center>To Join this League, you must be an Illusionist acknowledged by us.~★</center><center>However, an Illusionist\'s illusion countered by another illusion,~★</center><center>Has already lost it\'s own perception.~★</center><center>Kufufufu, Maybe this is an Illusion too~★</center><br></div>');
 		}
+		if (target.toLowerCase() == "games") {
+					return connection.sendTo('games','|raw|<div class=menu><center><img src="http://i.imgur.com/efSpMmC.png"></center><br><font color=purple><center>YAY! This is the Games Room! Party Time!~</center><center>Feel Free to Play Games here! Like Scavengers, Hangman, Mafia, Trivia!</center><center>You can even play Games designed by users!</center><center>Like Ashley\'s Nick Game!</center><br><font color=red><center>However, you must remember to follow the Rules!</center><center>There is also a Points System! Earn Points and be acknowledged by everyone!</center><center>Finally, Have Fun!</center><br></div>');
+		}
 	},
 
 	rb: 'roomban',
