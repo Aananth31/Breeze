@@ -2070,7 +2070,6 @@ requestroom: 'request',
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
 		if (target.toLowerCase() === 'task' && user.taskMember !== 'yes') return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
-		if (target.toLowerCase() === 'cafelabs' && !user.coder) return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		if (targetRoom.isPrivate) {
 			if (targetRoom.modjoin) {
 				var userGroup = user.group;
