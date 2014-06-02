@@ -26,11 +26,6 @@ body {
     background-color: #373737;
 }
 
-.welcome {
-  background: url(http://i.imgur.com/Fr33e5q.png) center repeat-y;
-  margin-top:-2px;
-  color: #ecf0f1;
-}
 .userlist {
     border-left: 1px solid #E2E2E2;
 }
@@ -44,9 +39,8 @@ body {
      color: #eff; /* Text color Making it white cause bg is black/grey. */
 }
 
-.music {
-     background: url(http://i.imgur.com/600FBHp.png) center;
-     color: #eff; /* Text color Making it black cause bg is colorful. */
+.aqua {
+     background: url(http://www.solidbackgrounds.com/images/1280x1024/1280x1024-aqua-solid-color-background.jpg) center;
 }
 
 .menu {
