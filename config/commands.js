@@ -652,10 +652,11 @@ var commands = exports.commands = {
 	opensource: function (target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox(
-			"Cafe is open source but don't copy exactly our special commands :3<br />" +
-			"- Language: JavaScript (Node.js)<br />" +
-			"- <a href=\"https://github.com/Cafe-Team/Pokemon-Showdown/commits/master\">What's new?</a><br />" +
-			"- <a href=\"https://github.com/Cafe-Team/Pokemon-Showdown\">Server source code</a><br />" 
+			"Sorry X_X<br />" +
+			"Cafe is not OpenSource anymore! Q_Q<br />" +
+			"We will inform you if we become Open Source again! :3<br />" +
+			"Once again we are really sorry!<br />" +
+			"- Kid<br />"
 		);
 	},
 
