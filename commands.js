@@ -1201,7 +1201,7 @@ requestroom: 'request',
 			if (price <= user.money) {
 				user.money = user.money - price;
 				this.sendReply('You have bought nothing LOL! We already removed this muahahaha!');
-				this.add(user.name + ' has purchased a Free Buck! But it was already removed, so (s)he won\'t reveive anything LOL!);
+				this.add(user.name + ' has purchased a Free Buck! But it was already removed, so (s)he won\'t reveive anything LOL!');
 			} else {
 				return this.sendReply('You do not have enough bucks for this. You need ' + (price - user.money) + ' more bucks to buy ' + target + '.');
 			}
