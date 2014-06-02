@@ -47,3 +47,7 @@ body {
      background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeGUDIKbi6PcTm_lOGDL9z2T5TBrWSQyRXUcyTsmEtyng6NyrP9g) center;
      color: #eff; /* Text color Making it black cause bg is white. */
 }
+
+.cafe {
+     background: url(http://i.imgur.com/J6QTGNy.jpg);
+}
