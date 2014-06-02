@@ -512,23 +512,23 @@ var commands = exports.commands = {
 	 * Money
 	 *********************************************************/
 
-	bp: 'atm',
+			bp: 'atm',
 		wallet: 'atm',
 		satchel: 'atm',
 		fannypack: 'atm',
 		purse: 'atm',
 		bag: 'atm',
 		atm: function(target, room, user, connection, cmd) {
-		if (!this.canBroadcast()) return;
-		var cMatch = false;
-		var mMatch = false;
-		var gpMatch = false;
-		var money = 0;
-		var coins = 0;
-		var gamePoint = 0;
-		var total = '';
-		if (!target) {
-		var data = fs.readFileSync('config/cash.csv','utf8')
+			if (!this.canBroadcast()) return;
+			var cMatch = false;
+			var mMatch = false;
+			var gpMatch = false;
+			var money = 0;
+			var coins = 0;
+			var gamePoint = 0;
+			var total = '';
+			if (!target) {
+				var data = fs.readFileSync('config/cash.csv','utf8')
 				var row = (''+data).split("\n");
 				for (var i = row.length; i > -1; i--) {
 						if (!row[i]) continue;
@@ -546,7 +546,7 @@ var commands = exports.commands = {
 				if (mMatch === true) {
 						var p = 'bucks';
 						if (money < 2) p = 'buck';
-						total += user.name + ' has ' + money + ' ' + p + '.'
+						total += user.name + ' has ' + money + ' ' + p + '.';
 				}
 				if (mMatch === false || money == 0) {
 						total += 'You have no bucks.<br />';
@@ -594,7 +594,7 @@ var commands = exports.commands = {
 				if (gpMatch === true) {
 						var g = 'points';
 						if (gamePoint < 2) g = 'point';
-						total += user.name + ' has ' + gamePoint + ' ' + g + '.'
+						total += user.name + ' has ' + gamePoint + ' ' + g + '.';
 				}
 				if (gpMatch === false || gamePoint == 0) {
 						total += 'You have no points.<br />';
