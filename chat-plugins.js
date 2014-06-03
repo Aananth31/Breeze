@@ -194,7 +194,7 @@ var plugins = exports.plugins = {
 				this.parse('/join games')
 			},
 			starthangman: function(target,room,user) {
-				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
+				if (!user.can('hangman', room)) return this.sendReplyBox('You do not have enough authority to do this.');
 				if (room.id !== 'games') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (!target) return this.sendReplyBox('The correct syntax for this command is /starthangman [word], [topic]');
@@ -311,7 +311,7 @@ var plugins = exports.plugins = {
 				}
 			},
 			endhangman: function(target,room,user) {
-				if (!user.can('broadcast', null, room)) return this.sendReplyBox('You do not have enough authority to do this.');
+				if (!user.can('hangman', room)) return this.sendReplyBox('You do not have enough authority to do this.');
 				if (room.id !== 'games') return this.sendReplyBox('Only in the hangman room');
 				if (room.type !== 'chat') return this.sendReplyBox('Only in chatrooms');
 				if (plugins.hangman.status === 'off') return this.sendReplyBox('No Hangman is going on');
@@ -326,8 +326,8 @@ var plugins = exports.plugins = {
 						  '<b>/guess [letter]</b> - Lets you guess a letter<br>' +
 						  '<b>/guessword [word]</b> - Lets you guess a word<br><br>' +
 						  '<b>Admin Help</b><br>' +
-						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. (Word has to be less than 10 charecters long) Requires: +<br>' +
-						  '<b>/endhangman</b> - Ends the current game of hangman. Requires +<br>' +
+						  '<b>/starthangman [word],[hint]</b> - Starts a game of hangman. (Word has to be less than 10 charecters long) Requires: ' + Users.getGroupsThatCan('hangman', room).join(" ") + '<br>' +
+						  '<b>/endhangman</b> - Ends the current game of hangman. Requires ' + Users.getGroupsThatCan('hangman', room).join(" ") + '<br>' +
 						  '<b>/changehint</b> - Changes the hint of the current hangman. Requires you to be the host (the one who started the game)');
 			}
 		}
@@ -465,13 +465,13 @@ var plugins = exports.plugins = {
 				var tlc = target.toLowerCase().split(',');
 				var targets = target.split(',');
 				if (tlc[0] === 'importquestions') {
-					if(!this.can('roomdesc')) return this.sendReplyBox('You dont have permissions to use this command');
+					if(!this.can('hotpatch')) return this.sendReplyBox('You dont have permissions to use this command');
 					if(!targets[1]) return this.sendReplyBox('/trivia importquestions,<em>url</em>.URL must be the download link.');
 					plugins.trivia.functions.importQuestions(tlc[1]);
 					return this.sendReplyBox('Trivia updated');
 				}
 				else if (tlc[0] === 'new') {
-					if(!this.can('broadcast',null,room) && tlc[1] !== 'guess') return this.sendReplyBox('You dont have permissions to use this command');
+					if(!this.can('trivia', room) && tlc[1] !== 'guess') return this.sendReplyBox('You dont have permissions to use this command');
 					if(plugins.trivia.status === 'on') return this.sendReplyBox('There is aldready a trivia game going on');
 					if (tlc[1] === 'random') {
 						plugins.trivia.functions.getRandomQuestion();
@@ -521,11 +521,11 @@ var plugins = exports.plugins = {
 				else if	(tlc[0] === 'help') {
 					if (!this.canBroadcast()) return;
 					return this.sendReplyBox('<b><u><center>Trivia Help</center></u></b><br><br>'+
-							  '<code>-/trivia new,random</code> Creates a random trivia game from the databse. Requires +<br>'+
-							  '<code>-/trivia new,randomtimer,[points lost per second]</code> Creates a random timed trivia game from the databse. Requires +<br>'+
+							  '<code>-/trivia new,random</code> Creates a random trivia game from the databse. Requires ' + Users.getGroupsThatCan('trivia', room).join(" ") + '<br>'+
+							  '<code>-/trivia new,randomtimer,[points lost per second]</code> Creates a random timed trivia game from the databse. Requires ' + Users.getGroupsThatCan('trivia', room).join(" ") + '<br>'+
 							  '<code>-/trivia guess,option</code> Guesses the answer for the current trivia game.<br>'+
 							  '<code>-/trivia score,username</code> Shows the score of username<br>'+
-							  '<code>-/trivia importquestions url</code>. Imports and updates the databse. Please dont use this command if you dont know where you are going (<a href=http://goo.gl/B7V55v>Guide</a>). Requires: #');
+							  '<code>-/trivia importquestions url</code>. Imports and updates the databse. Please dont use this command if you dont know where you are going (<a href=http://goo.gl/B7V55v>Guide</a>). Requires: ' + Users.getGroupsThatCan('hotpatch').join(" "));
 				} else {
 				this.parse('/trivia help');
 				}
