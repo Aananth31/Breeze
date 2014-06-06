@@ -2115,7 +2115,7 @@ requestroom: 'request',
 					return connection.sendTo('rawleague','|raw|<div class=char><center><img src=http://i.imgur.com/68rKZAv.png></center><font color=white><center>Welcome to the RawLeague!</center><center>In this room you will find lots of fun and enhoyment!</center><center>Do not miss the Weekly Tournaments!</center><br><font color=red><center>Please Ask Staff Members for any help~</center><center>Follow the rules and have fun at the same time!</center><br></div>');
 		}
 		if (target.toLowerCase() == "lobby") {
-					return connection.popup("Hey " + name + "! Welcome to Cafe! Please Enjoy Food/Drinks and Games! Check out our /stafflist and other Cool Rooms :D");
+					return connection.popup('Hey " + name + "! Welcome to Cafe! Please Enjoy Food/Drinks and Games! Check out our /stafflist and other Cool Rooms :D');
 		}
 	},
 
