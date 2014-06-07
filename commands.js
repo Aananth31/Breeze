@@ -603,10 +603,9 @@ var commands = exports.commands = {
 				
 		} else {
 				var data = fs.readFileSync('config/cash.csv','utf8')
-				target = this.splitTarget(target);
-				var targetUser = this.targetUser;
+				var targetUser = Users.get(target)
 				if (!targetUser) {
-						return this.sendReply('User '+this.targetUsername+' not found.');
+						return this.sendReply('User '+target+' not found.');
 				}
 				var money = 0;
 				var row = (''+data).split("\n");
