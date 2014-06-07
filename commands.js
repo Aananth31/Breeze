@@ -512,7 +512,7 @@ var commands = exports.commands = {
 	 * Money
 	 *********************************************************/
 
-			bp: 'atm',
+		bp: 'atm',
 		wallet: 'atm',
 		satchel: 'atm',
 		fannypack: 'atm',
