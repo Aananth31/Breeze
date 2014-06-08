@@ -2113,6 +2113,9 @@ requestroom: 'request',
 		if (target.toLowerCase() == "rawleague") {
 					return connection.sendTo('rawleague','|raw|<div class=char><center><img src=http://i.imgur.com/68rKZAv.png></center><font color=white><center>Welcome to the RawLeague!</center><center>In this room you will find lots of fun and enjoyment!</center><center>Do not miss the Weekly Tournaments!</center><br><font color=red><center>Please Ask Staff Members for any help~</center><center>Follow the rules and have fun at the same time!</center><br></div>');
 		}
+		if (target.toLowerCase() == "arenakalos") {
+					return connection.sendTo('arenakalos','|raw|<div class=infobox><center><b><u><img src=http://i.imgur.com/PXfmpUm.gif><img src=http://i.imgur.com/Bbc7asF.gif><img src=http://i.imgur.com/Oq5KNTX.gif></b></u></center><br><center><b>Seja bem-vindo ao Server Português!</b></center><br><center>Visite nosso <a href=http://arenakalos.forumeiros.com/>Fórum!</a></center><center>Aqui você pode relaxar, pedir dicas, brincar, participar de torneios e ganhar bucks!</center><center>Recomendamos que você leia as regras encontradas aqui. Lendo-as, estará ciente do que não pode ser feito por <a href=http://arenakalos.forumeiros.com/t1-regras-arena-kalos>aqui</a>. Ignorando-as, estará sujeito a punições, incluindo bans.</center><center>Esperamos que se divirta! E, se gostar, chame seus amigos!</center><br><center>Everyone is welcome here, even if you don not speak portuguese.</center><center>You can get more bucks with tours!<br><br><center><font color=red>Atenção: Divulgação de outros servers, via Chat ou via PM, é proibido no Arena Kalos e receberá punição a nível global caso desrespeitá-la.</center><br></div>');
+		}
 		if (target.toLowerCase() == "lobby") {
 					return connection.popup("Hey! Welcome to Cafe! Please Enjoy Food/Drinks and Games! Check out our /stafflist and other Cool Rooms :D");
 		}
