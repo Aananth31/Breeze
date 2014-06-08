@@ -14,6 +14,7 @@
 var crypto = require('crypto');
 var fs = require('fs');
 var inShop = ['symbol', 'custom', 'animated', 'room', 'trainer', 'fix', 'potd', 'bank', 'freebuck'];
+var gods = ['chaarizard','coffeebeans']
 var closeShop = false;
 var closedShop = 0;
 
@@ -2481,10 +2482,13 @@ requestroom: 'request',
 	ban: function (target, room, user) {
 		if (!target) return this.parse('/help ban');
 		if (user.locked || user.mutedRooms[room.id]) return this.sendReply("You cannot do this while unable to talk.");
-
+		
 		target = this.splitTarget(target);
 		var targetUser = this.targetUser;
 		if (!targetUser) return this.sendReply("User '" + this.targetUsername + "' does not exist.");
+		for (var i in gods) {
+			if(gods[i] === targetUser.userid) reutrn this.sendReplyBox('The action you requested cant be perfomed to this user');
+		}
 		if (target.length > MAX_REASON_LENGTH) {
 			return this.sendReply("The reason is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
 		}
