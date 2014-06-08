@@ -1237,7 +1237,7 @@ requestroom: 'request',
 	},
 	eat: function(target, room, user) {
 		if (!target) return this.sendReply('You need to order something!');
-		var target2 = target;
+		var target2 = target.toLowerCase();
 		target = target.split(', ');
 		var avatar = '';
 		var data = fs.readFileSync('config/cash.csv','utf8')
