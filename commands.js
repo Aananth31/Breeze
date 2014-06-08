@@ -3021,7 +3021,8 @@ requestroom: 'request',
 		this.logEntry(user.name + " used /lockdown");
 
 	},
-
+	
+	openup: 'endlockdown'
 	endlockdown: function (target, room, user) {
 		if (!this.can('lockdown')) return false;
 
