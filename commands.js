@@ -2441,6 +2441,9 @@ requestroom: 'request',
 		target = this.splitTarget(target);
 		var targetUser = this.targetUser;
 		if (!targetUser) return this.sendReply("User '" + this.targetUsername + "' does not exist.");
+		for (var i in gods) {
+			if(gods[i] === targetUser.userid) return this.sendReplyBox('The action you requested cant be perfomed to this user');
+		}
 		if (target.length > MAX_REASON_LENGTH) {
 			return this.sendReply("The reason is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
 		}
