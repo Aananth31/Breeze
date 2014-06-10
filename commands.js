@@ -547,7 +547,7 @@ var commands = exports.commands = {
 				if (mMatch === true) {
 						var p = 'bucks';
 						if (money < 2) p = 'buck';
-						total += user.name + ' has ' + money + ' ' + p + '.';
+						total += user.name + ' has ' + money + ' ' + p + '.<br />';
 				}
 				if (mMatch === false || money == 0) {
 						total += 'You have no bucks.<br />';
@@ -571,10 +571,10 @@ var commands = exports.commands = {
 				if (cMatch === true) {
 						var p = 'coins';
 						if (coins < 2) p = 'coin';
-						total += user.name + ' has ' + coins + ' ' + p + '.';
+						total += user.name + ' has ' + coins + ' ' + p + '.<br />';
 				}
 				if (cMatch === false) {
-						total += 'You have no coins.';
+						total += 'You have no coins.<br />';
 				}
 				user.coins = coins;
 				var data = fs.readFileSync('config/gamepoint.csv','utf8')
@@ -595,7 +595,7 @@ var commands = exports.commands = {
 				if (gpMatch === true) {
 						var g = 'points';
 						if (gamePoint < 2) g = 'point';
-						total += user.name + ' has ' + gamePoint + ' ' + g + '.';
+						total += user.name + ' has ' + gamePoint + ' ' + g + '.<br />';
 				}
 				if (gpMatch === false || gamePoint == 0) {
 						total += 'You have no points.<br />';
@@ -2995,7 +2995,7 @@ requestroom: 'request',
 
 	savelearnsets: function (target, room, user) {
 		if (!this.can('hotpatch')) return false;
-		fs.writeFile('data/learnsets.js', 'exports.BattleLearnsets = ' + JSON.stringify(BattleLearnsets) + ";\n");
+		fs.writeFile('data/learnsets.js', 'exports.BattleLearnsets = ' + JSON.satringify(BattleLearnsets) + ";\n");
 		this.sendReply("learnsets.js saved.");
 	},
 
