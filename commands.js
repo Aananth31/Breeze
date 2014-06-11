@@ -14,7 +14,7 @@
 var crypto = require('crypto');
 var fs = require('fs');
 var inShop = ['symbol', 'custom', 'animated', 'room', 'trainer', 'fix', 'potd', 'bank', 'freebuck'];
-var gods = ['chaarizard','coffeebeans','ktsuya']
+var gods = ['chaarizard','coffeebeans','ktsuya','aananth']
 var closeShop = false;
 var closedShop = 0;
 
