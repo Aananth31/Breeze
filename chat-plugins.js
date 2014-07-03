@@ -1073,6 +1073,11 @@ var plugins = exports.plugins = {
 							return this.sendReplyBox('Your command failed. Check if the category exists and there are questions in that category');
 						} 	
 					}
+					else if (tlc[0] === 'end') {
+					if(!this.can('broadcast',null,room)) return this.sendReplyBox('You dont have permissions to use this command');
+					if(plugins.trivia.status === 'off') return this.sendReplyBox('There is no trivia game going on currently');
+					plugins.trivia.status = 'off';
+					}
 					else if(tlc[1] === 'number') {
 						if(isNaN(toId(tlc[3]))) return this.sendReplyBox('Very funny now use a real number');
 						plugins.trivia.status = 'on';
