@@ -1142,5 +1142,4 @@ var plugins = exports.plugins = {
         l: function (target, room, user) {
                 plugins.trivia.functions.removeUser(user, this);
             }
-        }
 };
