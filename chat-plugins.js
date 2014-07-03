@@ -1049,17 +1049,6 @@ var plugins = exports.plugins = {
 				
 			}
 		},
-	// j is for tour
-        jointrivia: 'j',
-        j: function (target, room, user) {
-            plugins.trivia.functions.addUser(user, false, this);
-        },
-        leave: 'l',
-        l: function (target, room, user) {
-                plugins.trivia.functions.removeUser(user, this);
-            }
-        },
-
 		commands: {
 			trivia: function(target,room,user) {
 				if (room.id !== 'trivia') return this.sendReplyBox('This command can only be used in the trivia room.');
@@ -1143,5 +1132,15 @@ var plugins = exports.plugins = {
 				}
 			}
 		}
-	}
+	},
+	
+        jointrivia: 'j',
+        j: function (target, room, user) {
+            plugins.trivia.functions.addUser(user, false, this);
+        },
+        leave: 'l',
+        l: function (target, room, user) {
+                plugins.trivia.functions.removeUser(user, this);
+            }
+        }
 };
